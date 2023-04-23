@@ -1,0 +1,151 @@
+*{
+    margin:0;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
+    box-sizing: border-box;
+}
+.lienhe {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.lienhe::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width:50%;
+    height: 100%;
+}
+.lienhe  .container{
+    position: relative;
+    min-width: 1100px;
+    min-height: 550px;
+    display:flex;
+    z-index: 100;
+}
+.lienhe  .container .containerinfo{
+    position: absolute;
+    top: 40px;
+    width: 350px;
+    height: calc(100% - 80px);
+    background: #000;
+    z-index: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 20px 20px rgba(0,0,0,0.2);
+}
+.lienhe  .container .containerinfo h2{
+    color: #fff;
+    font-size: 24px;
+    margin: 20px 0;
+}
+.lienhe  .container .containerinfo li{
+    position: relative;
+    list-style: none;
+    display: flex;
+    margin: 20px 0;
+    cursor: pointer;
+    align-items: flex-start;
+}
+.lienhe  .container .containerinfo li span{
+    color: #fff;
+    margin-left: 10px;
+    font-weight: 300;
+    opacity: 0.9;
+    font-size: 20px;
+}
+ul.info {
+    padding-left: 0;
+}
+.info span{
+    text-align: justify;
+}
+/*Hiệu Ứng Hover Cho Thẻ Li*/
+.lienhe  .container .containerinfo li:hover span{
+    opacity: 1;
+}
+
+.lienhe  .container .containerForm{
+    position: absolute;
+    padding: 70px 50px;
+    background: #fff;
+    margin-left: 150px;
+    padding-left: 250px;
+    width: calc(100% - 150px);
+    height: 100%;
+    box-shadow: 0 10px 10px rgba(0,0,0,0.5);
+}
+.lienhe  .container .containerForm h2{
+    color: #0f3959;
+    font-size: 24px;
+    font-weight: 500;
+}
+.lienhe  .container .containerForm .formBox{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-top: 30px;
+}
+.lienhe  .container .containerForm .formBox .inputBox{
+    position: relative;
+    margin: 0 0 35px 0;
+}
+.lienhe  .container .containerForm .formBox .inputBox.w50{
+    width: 47%;
+}
+.lienhe  .container .containerForm .formBox .inputBox.w100{
+    width: 100%;
+}
+.lienhe  .container .containerForm .formBox .inputBox input,
+ .lienhe  .container .containerForm .formBox .inputBox textarea{
+     width: 100%;
+     padding: 5px 0;
+     resize: none;
+     font-size: 18px;
+     font-weight: 400;
+     color: #333;
+     border: none;
+     border-bottom: 1px solid #777;
+     outline: none;
+ }
+.lienhe  .container .containerForm .formBox .inputBox textarea{
+     min-height: 120px;
+ }
+.lienhe  .container .containerForm .formBox .inputBox input[type="submit"]{
+     position: relative;
+     cursor: pointer;
+     background: #333;
+     color: #fff;
+     border: none;
+     max-width: 150px;
+     padding: 12px;
+ }
+.lienhe  .container .containerForm .formBox .inputBox input[type="submit"]:hover{
+     background:  #000;
+ }
+ .lienhe  .container .containerForm .formBox .inputBox span{
+    position: absolute;
+    left: 0;
+    padding: 5px 0;
+    font-size: 18px;
+    font-weight: 400;
+    color: #333;
+    transition: 0.5s;
+    pointer-events: none;
+}
+.lienhe  .container .containerForm .formBox .inputBox input:focus ~ span,
+.lienhe  .container .containerForm .formBox .inputBox textarea:focus ~ span,
+.lienhe  .container .containerForm .formBox .inputBox input:valid ~ span,
+.lienhe  .container .containerForm .formBox .inputBox textarea:valid ~ span{
+    transform: translateY(-20px);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: #333
+}
