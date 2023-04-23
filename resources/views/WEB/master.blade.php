@@ -7,6 +7,8 @@
 </head>
 <body>
     
+    @yield('content')
+
     @include('WEB.includes.scripts')
     @stack('scripts')
 </body>
