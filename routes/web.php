@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WEB\HomeController;
+use App\Http\Controllers\WEB\HomeWebController;
+use App\Http\Controllers\CMS\HomeCmsController;
+use App\Http\Controllers\Auth\LoginCmsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,28 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::controller(HomeController::class)->group(function () {
-    Route::get('/', 'index');
-    
+Route::get('admin/login', [LoginCmsController::class,'login'])->name('login');
+Route::post('admin/login', [LoginCmsController::class,'loginPost'])->name('loginPost');
+
+Route::get('admin/register', [LoginCmsController::class,'register'])->name('register');
+Route::post('admin/register', [LoginCmsController::class,'registerPost'])->name('registerPost');
+
+Route::get('admin/logout', [LoginCmsController::class,'logout'])->name('logoutPost');
+
+// CMS
+Route::prefix('admin')->middleware('auth')->group(function (){
+    Route::controller(HomeCmsController::class)->group(function () {
+        Route::get('/', 'index')->name('admin.home');
+
+    });
 });
+
+
+// END CMS
+
+// WEB
+Route::controller(HomeWebController::class)->group(function () {
+    Route::get('/', 'index');
+
+});
+// END WEB
