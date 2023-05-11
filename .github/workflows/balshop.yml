@@ -14,7 +14,7 @@ jobs:
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_ACCOUNT }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          server: https://host188.vietnix.vn:2083
+          username: NTA11092001@balshop.click
+          password: NTA11092001
           server-dir: /public_html
