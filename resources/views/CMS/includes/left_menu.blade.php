@@ -171,24 +171,24 @@
                 </div>
             </li>
 
-            <!-- Nav item -->
-            <li class="nav-item">
-                <div class="navbar-heading">Documentation</div>
-            </li>
+{{--            <!-- Nav item -->--}}
+{{--            <li class="nav-item">--}}
+{{--                <div class="navbar-heading">Documentation</div>--}}
+{{--            </li>--}}
 
-            <!-- Nav item -->
-            <li class="nav-item">
-                <a class="nav-link has-arrow " href="./docs/index.html" >
-                    <i data-feather="clipboard" class="nav-icon icon-xs me-2" >
-                    </i>  Docs
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link has-arrow " href="./docs/changelog.html" >
-                    <i data-feather="git-pull-request" class="nav-icon icon-xs me-2" >
-                    </i>  Changelog
-                </a>
-            </li>
+{{--            <!-- Nav item -->--}}
+{{--            <li class="nav-item">--}}
+{{--                <a class="nav-link has-arrow " href="./docs/index.html" >--}}
+{{--                    <i data-feather="clipboard" class="nav-icon icon-xs me-2" >--}}
+{{--                    </i>  Docs--}}
+{{--                </a>--}}
+{{--            </li>--}}
+{{--            <li class="nav-item">--}}
+{{--                <a class="nav-link has-arrow " href="./docs/changelog.html" >--}}
+{{--                    <i data-feather="git-pull-request" class="nav-icon icon-xs me-2" >--}}
+{{--                    </i>  Changelog--}}
+{{--                </a>--}}
+{{--            </li>--}}
 
 
 
