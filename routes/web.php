@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CMS\CategoryController;
+use App\Http\Controllers\CMS\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WEB\HomeWebController;
 use App\Http\Controllers\CMS\HomeCmsController;
@@ -20,20 +22,36 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('admin/login', [LoginCmsController::class,'login'])->name('login');
-Route::post('admin/login', [LoginCmsController::class,'loginPost'])->name('loginPost');
-
-Route::get('admin/register', [LoginCmsController::class,'register'])->name('register');
-Route::post('admin/register', [LoginCmsController::class,'registerPost'])->name('registerPost');
-
-Route::get('admin/logout', [LoginCmsController::class,'logout'])->name('logoutPost');
+Route::controller(LoginCmsController::class)->group(function (){
+    Route::get('admin/login','login')->name('login');
+    Route::post('admin/login', 'loginPost')->name('loginPost');
+    Route::get('admin/register','register')->name('register');
+    Route::post('admin/register','registerPost')->name('registerPost');
+    Route::get('admin/logout','logout')->name('logout');
+});
 
 // CMS
-Route::prefix('admin')->middleware('auth')->group(function (){
+Route::middleware('auth')->prefix('admin')->group(function (){
+    // Home
     Route::controller(HomeCmsController::class)->group(function () {
-        Route::get('/', 'index')->name('admin.home');
+        Route::get('/', 'index')->name('admin.home.index');
 
     });
+
+    // Danh mục
+    Route::prefix('/category')->controller(CategoryController::class)->group(function (){
+        Route::get('/','index')->name('admin.category.index');
+        Route::get('/create','create')->name('admin.category.create');
+        Route::post('/create','store')->name('admin.category.store');
+    });
+
+    // Sản phẩm
+    Route::prefix('/product')->controller(ProductController::class)->group(function () {
+        Route::get('/', 'index')->name('admin.product.index');
+
+    });
+
+
 });
 
 

@@ -1,61 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.css">
-    <title>Đăng Nhập Trang Quản Trị</title>
+    @include('CMS.includes.head')
 </head>
-<body style="background: #E4E9F7;">
-@include('Validation.error')
-<section class="vh-100">
-    <div class="container py-6 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-xl-11">
-                <div class="card" style="border-radius: 1rem;">
-                    <div class="row g-0">
 
-                        <div class="col-md-12 col-lg-12 d-flex align-items-center">
-                            <div class="card-body p-4 p-lg-5 text-black">
-
-                                <div class="d-flex justify-content-center mb-3 pb-1">
-                                    <img src="/img/BAL-logo.png" style="width:40%">
-                                </div>
-
-                                <h4 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;text-align:center">ĐĂNG NHẬP TRANG QUẢN TRỊ</h4>
-
-                                <form action="{{route('loginPost')}}" autocomplete="off" method="POST">
-                                    @csrf
-                                    @method('post')
-                                    <div class="form-outline mb-4 justify-content-center">
-                                        <label class="form-label" for="form2Example17">Tài Khoản</label>
-                                        <input type="text" name="username" id="form2Example17" class="form-control form-control-lg" value="{{old('username')}}"/>
-                                    </div>
-
-                                    <div class="form-outline mb-4 justify-content-center">
-                                        <label class="form-label" for="form2Example27">Mật Khẩu</label>
-                                        <input type="password" name="password" id="form2Example27" class="form-control form-control-lg" value="{{old('password')}}"/>
-                                    </div>
-
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="check1" name="remember">
-                                        <label class="form-check-label">Ghi nhớ</label>
-                                    </div>
-
-                                    <div class="pt-1 mb-4">
-                                        <button class="btn btn-dark btn-lg btn-block" type="submit" name="dangnhap">Đăng Nhập</button>
-                                    </div>
-                                </form>
-                                <p class="mb-5 pb-lg-2" style="color: #393f81;">Chưa có tài khoản? <a href="{{route('register')}}" style="color: #393f81;">Đăng Ký</a>
-
-                            </div>
+<body class="bg-light">
+<div class="container d-flex flex-column">
+    <div class="row align-items-center justify-content-center g-0
+        min-vh-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xxl-4 py-8 py-xl-0">
+            <!-- Card -->
+            <div class="card smooth-shadow-md">
+                <!-- Card body -->
+                <div class="card-body p-6">
+                    <div class="mb-4">
+                        <h4 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;text-align:center">ĐĂNG NHẬP TRANG QUẢN TRỊ</h4>
+                        <div class="text-center">
+                            <img src="{{asset('img/BAL-logo.png')}}" alt="BAL-logo" class="img-fluid rounded-circle" width="132" height="132" />
                         </div>
                     </div>
+                    <!-- Form -->
+                    @include('Validation.error')
+                    <form action="{{route('loginPost')}}" autocomplete="off" method="POST">
+                    @csrf
+                    @method('post')
+                        <!-- Username -->
+                        <div class="mb-3">
+                            <label class="form-label">Tài khoản (Số điện thoại hoặc email)</label>
+                            <input class="form-control" type="text" name="username" placeholder="Nhập tài khoản" />
+                        </div>
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label class="form-label">Mật khẩu</label>
+                            <input class="form-control" type="password" name="password" placeholder="Nhập mật khẩu" />
+                        </div>
+                        <!-- Checkbox -->
+                        <div class="d-lg-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check custom-checkbox">
+                                <input type="checkbox" class="form-check-input" id="rememberme" name="remember">
+                                <label class="form-check-label" for="rememberme">Ghi nhớ</label>
+                            </div>
+
+                        </div>
+                        <div>
+                            <!-- Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-dark">Đăng Nhập</button>
+                            </div>
+
+                            <p class="mt-5 pb-lg-2" style="color: #393f81;">Chưa có tài khoản? <a href="{{route('register')}}">Đăng Ký</a>
+                        </div>
+
+
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
+
+@include('CMS.includes.scripts')
+
 </body>
+
 </html>

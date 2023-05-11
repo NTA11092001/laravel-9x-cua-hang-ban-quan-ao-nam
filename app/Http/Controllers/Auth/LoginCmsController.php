@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Session;
 
 class LoginCmsController extends Controller
 {
@@ -44,17 +43,17 @@ class LoginCmsController extends Controller
     }
 
     public function login() {
-        return view('CMS.auth.login');
+        $title = 'Đăng nhập trang quản trị';
+        return view('CMS.auth.login',compact('title'));
     }
 
     public function loginPost(Request $request)
     {
         $request->validate([
-            'username' => 'required|unique:users,email,phone',
+            'username' => 'required',
             'password' => 'required',
         ], [
             'username.required' => 'Bạn cần nhập tài khoản',
-            'username.unique' => 'Tài khoản của bạn bị trùng',
             'password.required' => 'Bạn cần nhập mật khẩu',
         ]);
         $username = $request->username;
@@ -68,9 +67,8 @@ class LoginCmsController extends Controller
             if(!$user) {
                 return redirect()->back()->with('some_error','Người dùng không tồn tại');
             }else{
-                if (Auth::guard()->attempt(['phone' => $username, 'password' => request('password'), 'status' => 1], request('remember') ? true : false) || Auth::guard('member')->attempt(['email' => $username, 'password' => request('password'), 'status' => 1], request('remember') ? true : false)) {
-                    $this->saveLogActivity();
-                    return to_route('admin.home');
+                if (Auth::guard()->attempt(['phone' => $username, 'password' => request('password'), 'status' => 1], request('remember') ? true : false) || Auth::guard()->attempt(['email' => $username, 'password' => request('password'), 'status' => 1], request('remember') ? true : false)) {
+                    return to_route('admin.home.index')->with('notice_success','Đăng nhập thành công');
                 }
                 elseif (!Hash::check($request->password, $user->password)) {
                     return to_route('login')->with('some_error','Sai mật khẩu. Vui lòng thử lại.');
@@ -86,11 +84,12 @@ class LoginCmsController extends Controller
     }
 
     public function register(){
-        return view('CMS.auth.register');
+        $title = 'Đăng ký trang quản trị';
+        return view('CMS.auth.register',compact('title'));
     }
 
     public function registerPost(Request $request){
-        $valid = $request->validate([
+        $request->validate([
             'name' => 'required|max:255|regex:/[A-Za-z]/',
             'phone' => 'min:10|required|regex:/^0[1-9][0-9]{8}$/|max:10|unique:users,phone',
             'email' => 'required|email|unique:users,email',
@@ -110,24 +109,31 @@ class LoginCmsController extends Controller
             'password.required' => 'Bạn cần nhập mật khẩu',
             'password.min' => 'Mật khẩu của bạn cần nhập ít nhất 6 ký tự',
         ]);
-        if($valid->fails()) {
-            $data = [
-                'success' => false,
-                'message' => $valid->errors()
-            ];
-            return response()->json($data);
-        }
+
         $data = $request->all();
-        return response()->json([
-            'success' => true,
-            'message' => 'Đăng ký tài khoản thành công bạn cần chờ quản trị viên phê duyệt'
-        ]);
+        $data['password'] = Hash::make($data['password']);
+        $data['status'] = 0;
+        try {
+            User::query()->create($data);
+            return response()->json([
+                'success' => true,
+                'message' => 'Đăng ký tài khoản thành công bạn cần chờ quản trị viên phê duyệt'
+            ]);
+        }catch (\Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+
     }
 
     public function logout()
     {
         Auth::guard()->logout();
-        Cookie::queue(Cookie::forget('remember_web_token'));
+        if (Cookie::get('remember_token')) {
+            Cookie::queue(Cookie::forget('remember_token'));
+        }
         return to_route('login');
     }
 }

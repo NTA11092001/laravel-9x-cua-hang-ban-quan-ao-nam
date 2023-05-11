@@ -9,6 +9,7 @@ class HomeCmsController extends Controller
 {
     public function index(Request $request)
     {
-        return view('CMS.home.index');
+        $title = 'Trang quản trị';
+        return view('CMS.home.index',compact('title'));
     }
 }
