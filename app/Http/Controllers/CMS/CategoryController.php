@@ -8,45 +8,30 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
     public function index()
     {
         $title = 'Danh mục sản phẩm';
-        $category = Categories::query()->orderBy('thutu','asc')->paginate(5);
+        $category = Categories::query()->orderBy('thutu','asc')->paginate(10);
         return view('CMS.category.index',compact('title','category'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
     public function create()
     {
         $title = 'Thêm danh mục sản phẩm';
         return view('CMS.category.create',compact('title'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function store(Request $request)
     {
         $request->validate([
             'ten' => 'required|max:255|regex:/[A-Za-z]/',
-            'thutu' => 'required|unique:categories,thutu',
+            'thutu' => 'required|unique:categories,thutu|regex:/[0-9]/',
         ], [
             'ten.required' => 'Bạn cần nhập tên',
             'ten.max' => 'Tên không được quá 255 ký tự',
             'ten.regex' => 'Tên bạn nhập phải là chữ cái',
-            'thutu.required' => 'Bạn cần nhập số điện thoại',
+            'thutu.required' => 'Bạn cần nhập số thứ tự',
+            'thutu.regex' => 'Thứ tự bạn nhập phải là chữ số',
             'thutu.unique'=>'Đã có thứ tự',
         ]);
         $data = $request->all();
@@ -65,48 +50,54 @@ class CategoryController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Categories  $categories
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Categories $categories)
+    public function edit(Categories $categories,Request $request)
     {
-        //
+        $category = $categories::query()->findOrFail($request->category_id);
+        return view('CMS.category.modal-edit',compact('category'))->render();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Categories  $categories
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Categories $categories)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Categories  $categories
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Categories $categories)
     {
-        //
+        $request->validate([
+            'ten' => 'required|max:255|regex:/[A-Za-z]/',
+            'thutu' => 'required|regex:/[0-9]/',
+        ], [
+            'ten.required' => 'Bạn cần nhập tên',
+            'ten.max' => 'Tên không được quá 255 ký tự',
+            'ten.regex' => 'Tên bạn nhập phải là chữ cái',
+            'thutu.required' => 'Bạn cần nhập số thứ tự',
+            'thutu.regex' => 'Thứ tự bạn nhập phải là chữ số',
+        ]);
+        $data = $request->except(['id']);
+        $id = $request->id;
+        try {
+            $categories::query()->findOrFail($id)->update($data);
+            return response()->json([
+                'success' => true,
+                'message' => 'Sửa danh mục thành công'
+            ]);
+        }catch (\Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Categories  $categories
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Categories $categories)
+    public function destroy(Categories $categories,Request $request)
     {
-        //
+        $id = $request->category_id;
+        try {
+            $categories::query()->findOrFail($id)->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Xóa danh mục thành công'
+            ]);
+        }catch (\Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }

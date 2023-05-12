@@ -43,6 +43,9 @@ Route::middleware('auth')->prefix('admin')->group(function (){
         Route::get('/','index')->name('admin.category.index');
         Route::get('/create','create')->name('admin.category.create');
         Route::post('/create','store')->name('admin.category.store');
+        Route::get('/edit','edit')->name('admin.category.edit');
+        Route::post('/update','update')->name('admin.category.update');
+        Route::post('/delete','destroy')->name('admin.category.delete');
     });
 
     // Sản phẩm

@@ -11,7 +11,7 @@
             padding: 5px;
         }
     </style>
-    
+
     <div class="container-fluid p-6">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-12">
@@ -40,8 +40,8 @@
                                 <td scope="row" class="text-center">{{$item->thutu}}</td>
                                 <td>{{$item->ten}}</td>
                                 <td>
-                                    <a class="btn btn-sm" style="color: black" data-bs-toggle="modal" data-bs-target="#EditCategory"><i class="fas fa-edit"></i></a> |
-                                    <a class="btn btn-sm" style="color: red" ><i class="fas fa-trash-alt"></i></a>
+                                    <a class="btn btn-sm btn-edit-category" style="color: black" data-bs-toggle="modal" data-bs-target="#EditCategory" data-category-id="{{$item->id}}"><i class="fas fa-edit"></i></a> |
+                                    <a class="btn btn-sm btn-delete-category" style="color: red" data-category-id="{{$item->id}}"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -55,7 +55,7 @@
                     @endif
                 </table>
                 <div class="d-flex justify-content-end">
-                    {!! $category->links('pagination.custom') !!}
+                    {!! $category->links('vendor/pagination/bootstrap-5') !!}
                 </div>
 
             </div>
@@ -65,21 +65,61 @@
     <!-- Modal -->
     <div class="modal fade" id="EditCategory" tabindex="-1" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Large modal</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body m-3">
-                    <p class="mb-0">Use Bootstrap’s JavaScript modal plugin to add dialogs to your site for lightboxes, user
-                        notifications, or completely custom content.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+            <div class="modal-content" id="contentCategory">
+{{--                @include('CMS.category.modal-edit')--}}
             </div>
         </div>
     </div>
 
 @endsection
+
+@push('scripts')
+    <script>
+        $(function () {
+
+            $('.btn-delete-category').click(function() {
+                let categoryId = $(this).attr('data-category-id')
+                if(categoryId !== undefined) {
+                    Swal.fire({
+                        text: 'Bạn chắn chắn muốn xoá ?',
+                        showDenyButton: true,
+                        // showCancelButton: true,
+                        confirmButtonColor: '#008243',
+                        confirmButtonText: 'Xác nhận',
+                        denyButtonText: 'Huỷ bỏ',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.post('{{route('admin.category.delete')}}', {category_id: categoryId}, function (res) {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: res.message,
+                                    showConfirmButton: false,
+                                    timer: 2500,
+                                    toast: true,
+                                    didClose: () => {
+                                        location.reload(true)
+                                    }
+                                })
+
+                            })
+                        }
+
+                    })
+
+                }
+            })
+
+            $('.btn-edit-category').click(function(){
+                var categoryId = $(this).attr('data-category-id')
+                if(categoryId !== undefined) {
+                    $.get('{{route('admin.category.edit')}}', {category_id: categoryId}, function(res) {
+                        $('#contentCategory').html(res)
+                        $('#EditCategory').modal('show')
+                    })
+                }
+            })
+
+        })
+    </script>
+@endpush

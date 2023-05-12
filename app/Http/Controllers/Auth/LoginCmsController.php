@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -68,6 +67,7 @@ class LoginCmsController extends Controller
                 return redirect()->back()->with('some_error','Người dùng không tồn tại');
             }else{
                 if (Auth::guard()->attempt(['phone' => $username, 'password' => request('password'), 'status' => 1], request('remember') ? true : false) || Auth::guard()->attempt(['email' => $username, 'password' => request('password'), 'status' => 1], request('remember') ? true : false)) {
+                    
                     return to_route('admin.home.index')->with('notice_success','Đăng nhập thành công');
                 }
                 elseif (!Hash::check($request->password, $user->password)) {
@@ -131,9 +131,6 @@ class LoginCmsController extends Controller
     public function logout()
     {
         Auth::guard()->logout();
-        if (Cookie::get('remember_token')) {
-            Cookie::queue(Cookie::forget('remember_token'));
-        }
         return to_route('login');
     }
 }

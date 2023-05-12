@@ -10,4 +10,5 @@
 <link href="{{asset('CMS/libs/prismjs/themes/prism-okaidia.css')}}" rel="stylesheet">
 <!-- Theme CSS -->
 <link rel="stylesheet" href="{{asset('CMS/css/theme.min.css')}}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <title>{{$title}}</title>

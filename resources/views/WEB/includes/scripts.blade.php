@@ -9,3 +9,10 @@
 <script src="js/slick.js"></script>
 <script src="js/ADV.js"></script>
 <script src="js/JS.js"></script>
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>

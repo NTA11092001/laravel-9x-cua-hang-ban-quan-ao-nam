@@ -32,9 +32,8 @@
                         </div>
                     </div>
 
-
                     <div class="mt-3">
-                        <button class="btn btn-dark btn-lg btn-block" id="BtnCreateCategory" type="button">Thêm danh mục sản phẩm</button>
+                        <button class="btn btn-dark btn-block" id="BtnCreateCategory" type="button">Thêm danh mục sản phẩm</button>
                     </div>
                 </form>
 

@@ -15,3 +15,11 @@
 <script src="https://kit.fontawesome.com/ca9212d4c2.js" crossorigin="anonymous"></script>
 <script src="{{asset('js/bootstrap-input-spinner.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+
