@@ -1,6 +1,6 @@
 <header>
     <nav class="navmenu js-navmenu">
-        <a href="{{route('WEB.home.index')}}"><img src="{{asset('img/BAl-logo.png')}}" alt="" class="navmenu-logo"></a>
+        <a href="{{route('WEB.home.index')}}"><img src="{{asset('img/BAL-logo.png')}}" alt="" class="navmenu-logo"></a>
         <div class="navmenu-list">
             <div class="navmenu-items">
                 <a href="{{route('WEB.home.index')}}" class="navmenu-items-link">Trang chủ</a>
