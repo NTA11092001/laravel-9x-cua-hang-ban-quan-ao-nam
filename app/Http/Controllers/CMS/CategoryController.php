@@ -100,4 +100,23 @@ class CategoryController extends Controller
             ]);
         }
     }
+
+    public function status(Request $request){
+        try{
+            $category = Categories::query()->findOrFail($request->id);
+            $category->status = $request->status;
+            $category->save();
+
+            return response()->json([
+                'success' => true,
+                'status' => $category->status,
+                'message' => 'Đổi trạng thái danh mục thành công'
+            ]);
+        } catch(\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 }

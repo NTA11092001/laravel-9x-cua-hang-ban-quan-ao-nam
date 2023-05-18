@@ -183,6 +183,7 @@ margin-bottom: 0;
 .navmenu-icon-list .navmenu-icon-item {
 padding: 0 6px;
 font-size: 20px;
+cursor: pointer;
 }
 
 .navmenu-icon-list .navmenu-icon-item:hover {

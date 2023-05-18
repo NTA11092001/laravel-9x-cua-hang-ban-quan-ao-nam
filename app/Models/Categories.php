@@ -12,7 +12,8 @@ class Categories extends Model
     protected $table = 'categories';
     protected $fillable = [
         'ten',
-        'thutu'
+        'thutu',
+        'status'
     ];
     protected $hidden = [
         'created_at',

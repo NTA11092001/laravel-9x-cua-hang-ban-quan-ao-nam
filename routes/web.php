@@ -1,11 +1,16 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginWebController;
 use App\Http\Controllers\CMS\CategoryController;
+use App\Http\Controllers\CMS\MemberController;
 use App\Http\Controllers\CMS\ProductController;
+use App\Http\Controllers\WEB\ProductWebController;
+use App\Http\Controllers\CMS\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WEB\HomeWebController;
-use App\Http\Controllers\CMS\HomeCmsController;
+use App\Http\Controllers\WEB\MainWebController;
+use App\Http\Controllers\CMS\MainCmsController;
 use App\Http\Controllers\Auth\LoginCmsController;
+use App\Http\Controllers\WEB\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +38,7 @@ Route::controller(LoginCmsController::class)->group(function (){
 // CMS
 Route::middleware('auth')->prefix('admin')->group(function (){
     // Home
-    Route::controller(HomeCmsController::class)->group(function () {
+    Route::controller(MainCmsController::class)->group(function () {
         Route::get('/', 'index')->name('admin.home.index');
 
     });
@@ -46,23 +51,61 @@ Route::middleware('auth')->prefix('admin')->group(function (){
         Route::get('/edit','edit')->name('admin.category.edit');
         Route::post('/update','update')->name('admin.category.update');
         Route::post('/delete','destroy')->name('admin.category.delete');
+        Route::post('/status','status')->name('admin.category.status');
     });
 
     // Sản phẩm
     Route::prefix('/product')->controller(ProductController::class)->group(function () {
         Route::get('/', 'index')->name('admin.product.index');
-
+        Route::get('/create', 'create')->name('admin.product.create');
+        Route::post('/store', 'store')->name('admin.product.store');
+        Route::get('/edit','edit')->name('admin.product.edit');
+        Route::post('/update','update')->name('admin.product.update');
+        Route::post('/delete','destroy')->name('admin.product.delete');
+        Route::post('/status','status')->name('admin.product.status');
     });
 
+    Route::prefix('/member')->controller(MemberController::class)->group(function (){
+        Route::get('/', 'index')->name('admin.member.index');
+    });
+
+    Route::prefix('user')->controller(UserController::class)->group(function (){
+        Route::post('/store', 'store')->name('admin.user.store');
+        Route::get('/edit','edit')->name('admin.user.edit');
+        Route::post('/update','update')->name('admin.user.update');
+        Route::post('/delete','destroy')->name('admin.user.delete');
+        Route::post('/status','status')->name('admin.user.status');
+        Route::get('/create', 'create')->name('admin.user.create');
+        Route::post('/password','password')->name('admin.user.password');
+        Route::get('/{status}', 'index')->name('admin.user.index');
+        Route::post('/destroy','delete')->name('admin.user.destroy');
+    });
 
 });
-
-
 // END CMS
 
-// WEB
-Route::controller(HomeWebController::class)->group(function () {
-    Route::get('/', 'index');
+Route::controller(LoginWebController::class)->group(function (){
+    Route::post('/login', 'loginPost')->name('loginWebPost');
+    Route::post('/register','registerPost')->name('registerWebPost');
+    Route::get('/logout','logout')->name('logoutWeb');
+});
 
+// WEB
+Route::controller(MainWebController::class)->group(function () {
+    Route::get('/', 'index')->name('WEB.home.index');
+    Route::get('/lien-he', 'contact')->name('WEB.contact.index');
+});
+
+Route::prefix('san-pham')->controller(ProductWebController::class)->group(function (){
+    Route::get('/danh-muc-{id}','category')->name('WEB.product.category');
+    Route::get('/{id}','show')->name('WEB.product.detail');
+});
+
+Route::prefix('gio-hang')->controller(CartController::class)->group(function (){
+    Route::get('/', 'cartList')->name('WEB.cart.list');
+    Route::post('/store', 'addToCart')->name('WEB.cart.store');
+    Route::post('/update', 'updateCart')->name('WEB.cart.update');
+    Route::post('/remove', 'removeCart')->name('WEB.cart.remove');
+    Route::post('/clear', 'clearAll')->name('WEB.cart.clear');
 });
 // END WEB

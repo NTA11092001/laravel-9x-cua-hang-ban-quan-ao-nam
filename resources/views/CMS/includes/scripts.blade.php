@@ -1,7 +1,5 @@
 <!-- Scripts -->
 <!-- Libs JS -->
-<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
-<script src="{{asset('CMS/libs/jquery/dist/jquery.min.js')}}"></script>
 <script src="{{asset('CMS/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('CMS/libs/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
 <script src="{{asset('CMS/libs/feather-icons/dist/feather.min.js')}}"></script>
@@ -15,6 +13,7 @@
 <script src="https://kit.fontawesome.com/ca9212d4c2.js" crossorigin="anonymous"></script>
 <script src="{{asset('js/bootstrap-input-spinner.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{asset('ckeditor/ckeditor.js')}}"></script>
 <script>
     $.ajaxSetup({
         headers: {

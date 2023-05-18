@@ -17,6 +17,7 @@ class Product extends Model
         'giakm',
         'soluong',
         'hinhanh',
+        'images',
         'chitiet',
         'id_danhmuc',
         'status',

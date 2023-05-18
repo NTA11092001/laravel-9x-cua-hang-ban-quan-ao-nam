@@ -34,142 +34,201 @@
                 </div>
             </li>
 
-
-            <!-- Nav item -->
             <li class="nav-item">
-                <a class="nav-link has-arrow  collapsed " href="#!" data-bs-toggle="collapse" data-bs-target="#navPages" aria-expanded="false" aria-controls="navPages">
-                    <i
-                        data-feather="layers"
-
-                        class="nav-icon icon-xs me-2">
-                    </i> Pages
+                <a class="nav-link has-arrow  collapsed {{ request()->routeIs('admin.product.index') || request()->routeIs('admin.product.create') ? 'active' : '' }}" href="#!" data-bs-toggle="collapse" data-bs-target="#navProduct" aria-expanded="false" aria-controls="navAuthentication">
+                    <i class="fa-solid fa-shirt nav-icon icon-xs me-2">
+                    </i> Sản phẩm
                 </a>
-
-                <div id="navPages" class="collapse " data-bs-parent="#sideNavbar">
+                <div id="navProduct" class="collapse {{ request()->routeIs('admin.product.index') || request()->routeIs('admin.product.create') ? 'show' : '' }}" data-bs-parent="#sideNavbar">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link " href="./pages/profile.html">
-                                Profile
+                            <a class="nav-link {{ request()->routeIs('admin.product.index') ? 'active' : '' }}" href="{{route('admin.product.index')}}">
+                                <i data-feather="list" class="nav-icon icon-xs me-2"></i> Danh sách
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link has-arrow   "  href="./pages/settings.html" >
-                                Settings
-                            </a>
-
-                        </li>
-
-
-                        <li class="nav-item">
-                            <a class="nav-link " href="./pages/billing.html">
-                                Billing
-                            </a>
-                        </li>
-
-
-
-
-                        <li class="nav-item">
-                            <a class="nav-link " href="./pages/pricing.html">
-                                Pricing
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="./pages/404-error.html">
-                                404 Error
+                            <a class="nav-link {{ request()->routeIs('admin.product.create') ? 'active' : '' }}" href="{{route('admin.product.create')}}">
+                                <i data-feather="plus-square" class="nav-icon icon-xs me-2"></i> Thêm sản phẩm
                             </a>
                         </li>
                     </ul>
                 </div>
-
             </li>
 
-
-            <!-- Nav item -->
-
             <li class="nav-item">
-                <a class="nav-link " href="./pages/layout.html">
-                    <i
-                        data-feather="sidebar"
-
-                        class="nav-icon icon-xs me-2"
-                    >
-                    </i
-                    >
-                    Layouts
+                <a class="nav-link {{ request()->routeIs('admin.member.index') ? 'active' : '' }}" href="{{route('admin.member.index')}}">
+                    <i class="fa-solid fa-user-group icon-xs me-2"></i> Tài khoản khách hàng
                 </a>
             </li>
 
-            <!-- Nav item -->
             <li class="nav-item">
-                <div class="navbar-heading">UI Components</div>
-            </li>
-
-            <!-- Nav item -->
-            <li class="nav-item">
-                <a class="nav-link has-arrow " href="./docs/accordions.html" >
-                    <i data-feather="package" class="nav-icon icon-xs me-2" >
-                    </i>  Components
+                <a class="nav-link has-arrow  collapsed {{ request()->is('admin/user/1') || request()->is('admin/user/0') || request()->is('admin/user/create') ? 'active' : '' }}" href="#!" data-bs-toggle="collapse" data-bs-target="#navUser" aria-expanded="false" aria-controls="navUser">
+                    <i class="fa-solid fa-users nav-icon icon-xs me-2">
+                    </i> Tài khoản quản trị
                 </a>
-            </li>
-
-
-            <li class="nav-item">
-                <a class="nav-link has-arrow  collapsed " href="#!" data-bs-toggle="collapse" data-bs-target="#navMenuLevel" aria-expanded="false" aria-controls="navMenuLevel">
-                    <i
-                        data-feather="corner-left-down"
-
-                        class="nav-icon icon-xs me-2"
-                    >
-                    </i
-                    > Menu Level
-                </a>
-                <div id="navMenuLevel" class="collapse " data-bs-parent="#sideNavbar">
+                <div id="navUser" class="collapse {{ request()->is('admin/user/1') || request()->is('admin/user/0') || request()->is('admin/user/create') ? 'show' : '' }}" data-bs-parent="#sideNavbar">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link has-arrow " href="#!" data-bs-toggle="collapse" data-bs-target="#navMenuLevelSecond" aria-expanded="false" aria-controls="navMenuLevelSecond">
-                                Two Level
+                            <a class="nav-link {{ request()->is('admin/user/1') ? 'active' : '' }}" href="{{route('admin.user.index',['status'=>1])}}">
+                                <i class="fa-solid fa-user-check icon-xs me-2"></i> Tài khoản đã duyệt
                             </a>
-                            <div id="navMenuLevelSecond" class="collapse" data-bs-parent="#navMenuLevel">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link " href="#!">  NavItem 1</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link " href="#!">  NavItem 2</a>
-                                    </li>
-                                </ul>
-                            </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link has-arrow  collapsed  " href="#!" data-bs-toggle="collapse" data-bs-target="#navMenuLevelThree" aria-expanded="false" aria-controls="navMenuLevelThree">
-                                Three Level
+                            <a class="nav-link {{ request()->is('admin/user/0') ? 'active' : '' }}" href="{{route('admin.user.index',['status'=>0])}}">
+                                <i class="fa-solid fa-user-xmark icon-xs me-2"></i> Tài khoản chưa duyệt
                             </a>
-                            <div id="navMenuLevelThree" class="collapse " data-bs-parent="#navMenuLevel">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link  collapsed " href="#!" data-bs-toggle="collapse" data-bs-target="#navMenuLevelThreeOne" aria-expanded="false" aria-controls="navMenuLevelThreeOne">
-                                            NavItem 1
-                                        </a>
-                                        <div id="navMenuLevelThreeOne" class="collapse collapse " data-bs-parent="#navMenuLevelThree">
-                                            <ul class="nav flex-column">
-                                                <li class="nav-item">
-                                                    <a class="nav-link " href="#!">
-                                                        NavChild Item 1
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link " href="#!">  Nav Item 2</a>
-                                    </li>
-                                </ul>
-                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('admin/user/create') ? 'active' : '' }}" href="{{route('admin.user.create')}}">
+                                <i data-feather="plus-square" class="nav-icon icon-xs me-2"></i> Thêm tài khoản quản trị
+                            </a>
                         </li>
                     </ul>
                 </div>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link has-arrow {{ request()->routeIs('admin.user.edit') ? 'active' : '' }}" href="{{route('admin.user.edit')}}">
+                    <i data-feather="user" class="nav-icon icon-xs me-2"></i>  Thông tin tài khoản
+                </a>
+
+            </li>
+
+{{--            <!-- Nav item -->--}}
+{{--            <li class="nav-item">--}}
+{{--                <a class="nav-link has-arrow  collapsed " href="#!" data-bs-toggle="collapse" data-bs-target="#navPages" aria-expanded="false" aria-controls="navPages">--}}
+{{--                    <i--}}
+{{--                        data-feather="layers"--}}
+
+{{--                        class="nav-icon icon-xs me-2">--}}
+{{--                    </i> Pages--}}
+{{--                </a>--}}
+
+{{--                <div id="navPages" class="collapse " data-bs-parent="#sideNavbar">--}}
+{{--                    <ul class="nav flex-column">--}}
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link " href="./pages/profile.html">--}}
+{{--                                Profile--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link has-arrow   "  href="./pages/settings.html" >--}}
+{{--                                Settings--}}
+{{--                            </a>--}}
+
+{{--                        </li>--}}
+
+
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link " href="./pages/billing.html">--}}
+{{--                                Billing--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+
+
+
+
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link " href="./pages/pricing.html">--}}
+{{--                                Pricing--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link " href="./pages/404-error.html">--}}
+{{--                                404 Error--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
+
+{{--            </li>--}}
+
+
+{{--            <!-- Nav item -->--}}
+
+{{--            <li class="nav-item">--}}
+{{--                <a class="nav-link " href="./pages/layout.html">--}}
+{{--                    <i--}}
+{{--                        data-feather="sidebar"--}}
+
+{{--                        class="nav-icon icon-xs me-2"--}}
+{{--                    >--}}
+{{--                    </i--}}
+{{--                    >--}}
+{{--                    Layouts--}}
+{{--                </a>--}}
+{{--            </li>--}}
+
+{{--            <!-- Nav item -->--}}
+{{--            <li class="nav-item">--}}
+{{--                <div class="navbar-heading">UI Components</div>--}}
+{{--            </li>--}}
+
+{{--            <!-- Nav item -->--}}
+{{--            <li class="nav-item">--}}
+{{--                <a class="nav-link has-arrow " href="./docs/accordions.html" >--}}
+{{--                    <i data-feather="package" class="nav-icon icon-xs me-2" >--}}
+{{--                    </i>  Components--}}
+{{--                </a>--}}
+{{--            </li>--}}
+
+
+{{--            <li class="nav-item">--}}
+{{--                <a class="nav-link has-arrow  collapsed " href="#!" data-bs-toggle="collapse" data-bs-target="#navMenuLevel" aria-expanded="false" aria-controls="navMenuLevel">--}}
+{{--                    <i--}}
+{{--                        data-feather="corner-left-down"--}}
+
+{{--                        class="nav-icon icon-xs me-2"--}}
+{{--                    >--}}
+{{--                    </i--}}
+{{--                    > Menu Level--}}
+{{--                </a>--}}
+{{--                <div id="navMenuLevel" class="collapse " data-bs-parent="#sideNavbar">--}}
+{{--                    <ul class="nav flex-column">--}}
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link has-arrow " href="#!" data-bs-toggle="collapse" data-bs-target="#navMenuLevelSecond" aria-expanded="false" aria-controls="navMenuLevelSecond">--}}
+{{--                                Two Level--}}
+{{--                            </a>--}}
+{{--                            <div id="navMenuLevelSecond" class="collapse" data-bs-parent="#navMenuLevel">--}}
+{{--                                <ul class="nav flex-column">--}}
+{{--                                    <li class="nav-item">--}}
+{{--                                        <a class="nav-link " href="#!">  NavItem 1</a>--}}
+{{--                                    </li>--}}
+{{--                                    <li class="nav-item">--}}
+{{--                                        <a class="nav-link " href="#!">  NavItem 2</a>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                        </li>--}}
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link has-arrow  collapsed  " href="#!" data-bs-toggle="collapse" data-bs-target="#navMenuLevelThree" aria-expanded="false" aria-controls="navMenuLevelThree">--}}
+{{--                                Three Level--}}
+{{--                            </a>--}}
+{{--                            <div id="navMenuLevelThree" class="collapse " data-bs-parent="#navMenuLevel">--}}
+{{--                                <ul class="nav flex-column">--}}
+{{--                                    <li class="nav-item">--}}
+{{--                                        <a class="nav-link  collapsed " href="#!" data-bs-toggle="collapse" data-bs-target="#navMenuLevelThreeOne" aria-expanded="false" aria-controls="navMenuLevelThreeOne">--}}
+{{--                                            NavItem 1--}}
+{{--                                        </a>--}}
+{{--                                        <div id="navMenuLevelThreeOne" class="collapse collapse " data-bs-parent="#navMenuLevelThree">--}}
+{{--                                            <ul class="nav flex-column">--}}
+{{--                                                <li class="nav-item">--}}
+{{--                                                    <a class="nav-link " href="#!">--}}
+{{--                                                        NavChild Item 1--}}
+{{--                                                    </a>--}}
+{{--                                                </li>--}}
+{{--                                            </ul>--}}
+{{--                                        </div>--}}
+{{--                                    </li>--}}
+{{--                                    <li class="nav-item">--}}
+{{--                                        <a class="nav-link " href="#!">  Nav Item 2</a>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--            </li>--}}
 
 {{--            <!-- Nav item -->--}}
 {{--            <li class="nav-item">--}}

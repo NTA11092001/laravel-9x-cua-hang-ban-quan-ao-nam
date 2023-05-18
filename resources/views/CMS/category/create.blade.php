@@ -13,30 +13,44 @@
         <!-- content -->
         <div class="row">
             <div class="col-12">
-
-                <form action="" autocomplete="off" method="POST" enctype="multipart/form-data" id="CreateCategory">
-                    @csrf
-                    @method('post')
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="mb-3">
-                                <label class="form-label">Tên danh mục</label>
-                                <input class="form-control form-control-lg" type="text" name="ten" placeholder="Nhập tên danh mục" />
+                <div class="card">
+                    <div class="card-body">
+                        <form action="" autocomplete="off" method="POST" enctype="multipart/form-data" id="CreateCategory">
+                            @csrf
+                            @method('post')
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Tên danh mục</label>
+                                        <input class="form-control form-control-lg" type="text" name="ten" placeholder="Nhập tên danh mục"/>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Thứ tự</label>
+                                        <input class="form-control form-control-lg" type="number" name="thutu" value="1"/>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="mb-3">
-                                <label class="form-label">Thứ tự</label>
-                                <input class="form-control form-control-lg" type="number" name="thutu" value="1"/>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Trạng thái</label>
+                                        <select class="form-control form-select-lg" name="status">
+                                            <option value="1">Hiển thị</option>
+                                            <option value="0">Ẩn</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="mt-3">
-                        <button class="btn btn-dark btn-block" id="BtnCreateCategory" type="button">Thêm danh mục sản phẩm</button>
+                            <div class="mt-3">
+                                <button class="btn btn-dark btn-block" id="BtnCreateCategory" type="button">Thêm danh mục sản phẩm</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-
+                </div>
             </div>
         </div>
     </div>

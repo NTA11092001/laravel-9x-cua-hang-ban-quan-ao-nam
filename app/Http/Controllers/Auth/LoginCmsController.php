@@ -67,7 +67,7 @@ class LoginCmsController extends Controller
                 return redirect()->back()->with('some_error','Người dùng không tồn tại');
             }else{
                 if (Auth::guard()->attempt(['phone' => $username, 'password' => request('password'), 'status' => 1], request('remember') ? true : false) || Auth::guard()->attempt(['email' => $username, 'password' => request('password'), 'status' => 1], request('remember') ? true : false)) {
-                    
+
                     return to_route('admin.home.index')->with('notice_success','Đăng nhập thành công');
                 }
                 elseif (!Hash::check($request->password, $user->password)) {
@@ -93,7 +93,7 @@ class LoginCmsController extends Controller
             'name' => 'required|max:255|regex:/[A-Za-z]/',
             'phone' => 'min:10|required|regex:/^0[1-9][0-9]{8}$/|max:10|unique:users,phone',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8',
         ], [
             'name.required' => 'Bạn cần nhập tên',
             'name.max' => 'Tên không được quá 255 ký tự',
@@ -107,7 +107,7 @@ class LoginCmsController extends Controller
             'email.email' => 'Email bạn nhập không đúng định dạng',
             'email.unique'=>'Email đã được sử dụng',
             'password.required' => 'Bạn cần nhập mật khẩu',
-            'password.min' => 'Mật khẩu của bạn cần nhập ít nhất 6 ký tự',
+            'password.min' => 'Mật khẩu của bạn cần nhập ít nhất 8 ký tự',
         ]);
 
         $data = $request->all();

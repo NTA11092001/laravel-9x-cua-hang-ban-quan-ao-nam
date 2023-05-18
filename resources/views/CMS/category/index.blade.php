@@ -24,40 +24,49 @@
         <!-- content -->
         <div class="row">
             <div class="col-12">
-
-                <table class="table table-bordered table-hover">
-                    <thead style="background-color: #212B36">
-                    <tr>
-                        <th width="50px" class="text-white text-center">STT</th>
-                        <th class="text-white">Tên Danh Mục</th>
-                        <th class="text-white">Quản Lý</th>
-                    </tr>
-                    </thead>
-                    @if(count($category)>0)
-                        <tbody class="text-dark">
-                        @foreach($category as $i=>$item)
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover">
+                            <thead style="background-color: #212B36">
                             <tr>
-                                <td scope="row" class="text-center">{{$item->thutu}}</td>
-                                <td>{{$item->ten}}</td>
-                                <td>
-                                    <a class="btn btn-sm btn-edit-category" style="color: black" data-bs-toggle="modal" data-bs-target="#EditCategory" data-category-id="{{$item->id}}"><i class="fas fa-edit"></i></a> |
-                                    <a class="btn btn-sm btn-delete-category" style="color: red" data-category-id="{{$item->id}}"><i class="fas fa-trash-alt"></i></a>
-                                </td>
+                                <th width="50px" class="text-white text-center">#</th>
+                                <th class="text-white">Tên Danh Mục</th>
+                                <th class="text-white text-center">Trạng thái</th>
+                                <th class="text-white text-center">Quản Lý</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    @else
-                        <tbody>
-                        <tr class="text-center">
-                            <td colspan="8">Không có danh mục sản phẩm nào</td>
-                        </tr>
-                        </tbody>
-                    @endif
-                </table>
-                <div class="d-flex justify-content-end">
-                    {!! $category->links('vendor/pagination/bootstrap-5') !!}
+                            </thead>
+                            @if(count($category)>0)
+                                <tbody class="text-dark">
+                                @foreach($category as $i=>$item)
+                                    <tr>
+                                        <td scope="row" class="text-center">{{$item->thutu}}</td>
+                                        <td>{{$item->ten}}</td>
+                                        <td class="text-center">
+                                            <select name="status" data-category-id="{{$item->id}}" style="background-color: transparent; border: none; outline: none">
+                                                <option value="1" @if($item->status == 1) selected @endif>Hiển thị</option>
+                                                <option value="0" @if($item->status == 0) selected @endif>Ẩn</option>
+                                            </select>
+                                        </td>
+                                        <td class="text-center">
+                                            <a class="btn btn-primary btn-sm btn-edit-category" data-bs-toggle="modal" data-bs-target="#EditCategory" data-category-id="{{$item->id}}"><i class="fas fa-edit"></i></a>
+                                            <a class="btn btn-danger btn-sm btn-delete-category" data-category-id="{{$item->id}}"><i class="fas fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            @else
+                                <tbody>
+                                <tr class="text-center">
+                                    <td colspan="8">Không có danh mục sản phẩm nào</td>
+                                </tr>
+                                </tbody>
+                            @endif
+                        </table>
+                        <div class="d-flex justify-content-end">
+                            {!! $category->links('vendor/pagination/bootstrap-5') !!}
+                        </div>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -84,7 +93,7 @@
                         text: 'Bạn chắn chắn muốn xoá ?',
                         showDenyButton: true,
                         // showCancelButton: true,
-                        confirmButtonColor: '#008243',
+                        confirmButtonColor: '#212B36',
                         confirmButtonText: 'Xác nhận',
                         denyButtonText: 'Huỷ bỏ',
                     }).then((result) => {
@@ -118,6 +127,25 @@
                         $('#EditCategory').modal('show')
                     })
                 }
+            })
+
+            $('select[name="status"]').change(function() {
+                let categoryId = $(this).attr('data-category-id')
+                let status = $(this).val()
+                let data = { id: categoryId, status: status}
+
+                $.post('{{route('admin.category.status')}}', data, function(res) {
+                    if(res.success) {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            text: res.message,
+                            showConfirmButton: false,
+                            timer: 4000,
+                            toast: true,
+                        });
+                    }
+                })
             })
 
         })

@@ -87,7 +87,7 @@
                         text: res.message,
                         showConfirmButton: false,
                         toast: false,
-                        timer: 5000,
+                        timer: 4000,
                         didClose: () => {
                             window.location.replace("{{route('login')}}")
                         }
@@ -100,7 +100,7 @@
                         html: res.message,
                         showConfirmButton: false,
                         toast: false,
-                        timer: 5000,
+                        timer: 3500,
                     })
                 }
 
