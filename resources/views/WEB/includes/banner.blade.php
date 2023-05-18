@@ -1,9 +1,9 @@
 <div class="container-fluid" style="margin-bottom:20px">
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             @for($i=1;$i<4;$i++)
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{$i}}" aria-label="Slide {{$i+1}}"></button>
+            <button type="button" data-bs-target="#carouselExampleFade" data-bs-slide-to="{{$i}}" aria-label="Slide {{$i+1}}"></button>
             @endfor
         </div>
         <div class="carousel-inner">
