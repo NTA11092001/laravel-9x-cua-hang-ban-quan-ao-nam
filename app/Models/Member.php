@@ -11,6 +11,7 @@ class Member extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $table = 'members';
     /**
      * The attributes that are mass assignable.
      *
@@ -42,4 +43,12 @@ class Member extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function cart(){
+        return $this->hasMany(Cart::class,'member_id');
+    }
+
+    public function transport(){
+        return $this->hasOne(Transport::class,'member_id');
+    }
 }

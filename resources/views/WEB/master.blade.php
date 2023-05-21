@@ -12,6 +12,7 @@
 
     @include('WEB.auth.login')
     @include('WEB.auth.register')
+    @include('WEB.auth.change_pass')
 
     @include('WEB.includes.footer')
 

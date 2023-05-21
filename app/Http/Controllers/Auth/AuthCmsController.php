@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Member;
-use Illuminate\Http\Request;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class LoginWebController extends Controller
+class AuthCmsController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -41,6 +41,11 @@ class LoginWebController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function login() {
+        $title = 'Đăng nhập trang quản trị';
+        return view('CMS.auth.login',compact('title'));
+    }
+
     public function loginPost(Request $request)
     {
         $request->validate([
@@ -52,46 +57,42 @@ class LoginWebController extends Controller
         ]);
         $username = $request->username;
         if(!is_numeric($username)) {
-            $member = Member::query()->where('email', $username )->first();
+            $user = User::query()->where('email', $username )->first();
         } else {
-            $member = Member::query()->where('phone', $username )->first();
+            $user = User::query()->where('phone', $username )->first();
         }
 
         try {
-            if(!$member) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Người dùng không tồn tại'
-                ]);
+            if(!$user) {
+                return redirect()->back()->with('some_error','Người dùng không tồn tại');
             }else{
-                if (Auth::guard('member')->attempt(['phone' => $username, 'password' => request('password')], request('remember') ? true : false) || Auth::guard('member')->attempt(['email' => $username, 'password' => request('password')], request('remember') ? true : false)) {
-                    return response()->json([
-                        'success' => true,
-                        'message' => 'Đăng nhập thành công'
-                    ]);
+                if (Auth::guard()->attempt(['phone' => $username, 'password' => request('password'), 'status' => 1], request('remember') ? true : false) || Auth::guard()->attempt(['email' => $username, 'password' => request('password'), 'status' => 1], request('remember') ? true : false)) {
+
+                    return to_route('admin.home.index')->with('notice_success','Đăng nhập thành công');
                 }
-                elseif (!Hash::check($request->password, $member->password)) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Sai mật khẩu. Vui lòng thử lại.'
-                    ]);
+                elseif (!Hash::check($request->password, $user->password)) {
+                    return to_route('login')->with('some_error','Sai mật khẩu. Vui lòng thử lại.');
+                }
+                else  {
+                    return to_route('login')->with('some_error','Tài khoản của bạn chưa được phê duyệt');
                 }
 
             }
         } catch(\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ]);
+            return to_route('login')->with('some_error', $e->getMessage());
         }
     }
 
-    public function registerPost(Request $request)
-    {
+    public function register(){
+        $title = 'Đăng ký trang quản trị';
+        return view('CMS.auth.register',compact('title'));
+    }
+
+    public function registerPost(Request $request){
         $request->validate([
             'name' => 'required|max:255|regex:/[A-Za-z]/',
-            'phone' => 'min:10|required|regex:/^0[1-9][0-9]{8}$/|max:10|unique:members,phone',
-            'email' => 'required|email|unique:members,email',
+            'phone' => 'min:10|required|regex:/^0[1-9][0-9]{8}$/|max:10|unique:users,phone',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8',
         ], [
             'name.required' => 'Bạn cần nhập tên',
@@ -111,11 +112,12 @@ class LoginWebController extends Controller
 
         $data = $request->all();
         $data['password'] = Hash::make($data['password']);
+        $data['status'] = 0;
         try {
-            Member::query()->create($data);
+            User::query()->create($data);
             return response()->json([
                 'success' => true,
-                'message' => 'Đăng ký tài khoản thành công'
+                'message' => 'Đăng ký tài khoản thành công bạn cần chờ quản trị viên phê duyệt'
             ]);
         }catch (\Exception $e){
             return response()->json([
@@ -123,12 +125,12 @@ class LoginWebController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
+
     }
 
     public function logout()
     {
-        Auth::guard('member')->logout();
-        return to_route('WEB.home.index');
+        Auth::guard()->logout();
+        return to_route('login');
     }
-
 }

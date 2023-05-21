@@ -1,15 +1,17 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginWebController;
+use App\Http\Controllers\Auth\AuthWebController;
 use App\Http\Controllers\CMS\CategoryController;
 use App\Http\Controllers\CMS\MemberController;
 use App\Http\Controllers\CMS\ProductController;
+use App\Http\Controllers\WEB\AccountController;
+use App\Http\Controllers\WEB\PaymentController;
 use App\Http\Controllers\WEB\ProductWebController;
 use App\Http\Controllers\CMS\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WEB\MainWebController;
 use App\Http\Controllers\CMS\MainCmsController;
-use App\Http\Controllers\Auth\LoginCmsController;
+use App\Http\Controllers\Auth\AuthCmsController;
 use App\Http\Controllers\WEB\CartController;
 
 /*
@@ -27,7 +29,7 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::controller(LoginCmsController::class)->group(function (){
+Route::controller(AuthCmsController::class)->group(function (){
     Route::get('admin/login','login')->name('login');
     Route::post('admin/login', 'loginPost')->name('loginPost');
     Route::get('admin/register','register')->name('register');
@@ -84,7 +86,7 @@ Route::middleware('auth')->prefix('admin')->group(function (){
 });
 // END CMS
 
-Route::controller(LoginWebController::class)->group(function (){
+Route::controller(AuthWebController::class)->group(function (){
     Route::post('/login', 'loginPost')->name('loginWebPost');
     Route::post('/register','registerPost')->name('registerWebPost');
     Route::get('/logout','logout')->name('logoutWeb');
@@ -94,6 +96,7 @@ Route::controller(LoginWebController::class)->group(function (){
 Route::controller(MainWebController::class)->group(function () {
     Route::get('/', 'index')->name('WEB.home.index');
     Route::get('/lien-he', 'contact')->name('WEB.contact.index');
+    Route::post('/password','password')->name('admin.member.password');
 });
 
 Route::prefix('san-pham')->controller(ProductWebController::class)->group(function (){
@@ -107,5 +110,15 @@ Route::prefix('gio-hang')->controller(CartController::class)->group(function (){
     Route::post('/update', 'updateCart')->name('WEB.cart.update');
     Route::post('/remove', 'removeCart')->name('WEB.cart.remove');
     Route::post('/clear', 'clearAll')->name('WEB.cart.clear');
+});
+
+Route::controller(PaymentController::class)->group(function (){
+    Route::get('/dat-hang', 'index')->name('WEB.payment');
+    Route::post('/store', 'store')->name('WEB.payment.store');
+    Route::get('/thanh-cong', 'success')->name('WEB.payment.success');
+});
+
+Route::controller(AccountController::class)->group(function (){
+    Route::get('/lich-su', 'index')->name('WEB.history');
 });
 // END WEB

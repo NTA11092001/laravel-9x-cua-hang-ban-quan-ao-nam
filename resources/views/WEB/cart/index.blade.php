@@ -1,23 +1,6 @@
 @extends('WEB.master')
 @section('content')
-
-    <div class="d-flex justify-content-center" style="margin-left: 30%;">
-        <!-- thanh quá trình thanh toán -->
-        <div class="container">
-            <!-- Responsive Arrow Progress Bar -->
-            <div class="arrow-steps clearfix">
-                <div class="step current"> <span> <a href="{{route('WEB.cart.list')}}" >Giỏ hàng</a></span> </div>
-                @if(auth('member')->user() != null)
-                <div class="step"> <span><a href="#" >Thông tin giao hàng</a></span> </div>
-                <div class="step"> <span><a href="#" >Thanh toán</a><span> </div>
-                @else
-                <div class="step" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#registerModal"> <span>Thông tin giao hàng</span> </div>
-                <div class="step" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#registerModal"> <span>Thanh toán<span> </div>
-                @endif
-            </div>
-            <!-- end Responsive Arrow Progress Bar -->
-        </div>
-    </div>
+@include('WEB.includes.payment_bar')
 <div class="container-fluid">
     @if ($message = Session::get('success'))
         <div class="container-fluid d-flex justify-content-center">
@@ -129,7 +112,7 @@
             </div>
             <div class="row" style="margin-top:20px">
                 @if(auth('member')->user() != null)
-                    <a class="text-decoration-none" href="#"><button style="width:260px" class="btn btn-outline-dark">Thông tin giao hàng</button></a>
+                    <a class="text-decoration-none count-cart" href="{{count($cart)>0 ? route('WEB.payment') : '#'}}"><button style="width:260px" class="btn btn-outline-dark">Tiến hành đặt hàng @if(count($cart)>0) ({{count($cart)}}) @endif</button></a>
                 @else
                     <a class="text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#registerModal"><button style="width:260px" class="btn btn-outline-dark">Đăng ký đặt hàng</button></a>
                 @endif
@@ -209,6 +192,19 @@
                     }
                 })
             })
+
+            @if(count($cart)==0)
+            $('.count-cart').click(function () {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'info',
+                    text: 'Bạn cần thêm sản phẩm vào giỏ hàng!',
+                    showConfirmButton: false,
+                    timer: 2500,
+                    toast: true,
+                });
+            })
+            @endif
         })
     </script>
 @endpush
