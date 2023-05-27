@@ -21,11 +21,13 @@
         })
     }
 
-    @if(session('some_error'))
-    SwalText('top-end','error','{{session('some_error')}}')
+    @if (session('success'))
+        SwalText('top-end','success','{{session('success')}}')
+    @elseif(session('error'))
+        SwalText('top-end','error','{{session('error')}}')
+    @elseif(session('info'))
+    SwalText('top-end','info','{{session('info')}}')
     @elseif ($errors->any())
-    SwalHtml('top-end','info','<ul class="alert alert-primary text-justify" style="padding-left:100px;padding-right:100px">@foreach ($errors->all() as $error) <li>{{ $error }}</li> @endforeach</ul>')
-    @elseif(session('notice_success'))
-    SwalText('top-end','success','{{session('notice_success')}}')
+        SwalHtml('top-end','info','<ul class="alert alert-primary text-start" style="list-style-type: disc !important;padding-left:100px;padding-right:100px">@foreach ($errors->all() as $error) <li>&#8226; {{ $error }}</li> @endforeach</ul>')
     @endif
 </script>

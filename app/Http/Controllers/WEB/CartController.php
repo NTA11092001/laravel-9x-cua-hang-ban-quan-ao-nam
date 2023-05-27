@@ -30,34 +30,40 @@ class CartController extends Controller
 
     public function updateCart(Request $request)
     {
-        $product = Product::query()->findOrFail($request->id);
-        \Cart::update(
-            $request->id,
-            [
-                'quantity' => [
-                    'relative' => false,
-                    'value' => $request->quantity
-                ],
-                'attributes' => array(
-                    'image' => $product->hinhanh,
-                    'masp' => $product->masp,
-                    'size' => $request->size,
-                )
-            ]
-        );
+        $ids = $request->id;
+        $quantity = $request->quantity;
+        $size = $request->size;
+        foreach ($ids as $i=>$item){
+            $product = Product::query()->findOrFail($item);
+            \Cart::update(
+                $product->id,
+                [
+                    'quantity' => [
+                        'relative' => false,
+                        'value' => $quantity[$i]
+                    ],
+                    'attributes' => array(
+                        'image' => $product->hinhanh,
+                        'masp' => $product->masp,
+                        'size' => $size[$i]
+                    )
+                ]
+            );
+        }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Cập nhật giỏ hàng thành công!'
-        ]);
+        session()->flash('success', 'Cập nhật giỏ hàng thành công!');
+
+        return to_route('WEB.cart.list');
     }
 
     public function removeCart(Request $request)
     {
         \Cart::remove($request->id);
-        session()->flash('success', 'Xóa sản phẩm khỏi giỏ hàng thành công!');
 
-        return to_route('WEB.cart.list');
+        return response()->json([
+            'success' => true,
+            'message' => 'Xóa sản phẩm khỏi giỏ hàng thành công!'
+        ]);
     }
 
     public function clearAll()

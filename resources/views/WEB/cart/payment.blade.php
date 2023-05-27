@@ -266,14 +266,14 @@
                         }
                     })
                 @else
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'info',
-                    text: 'Hiện tại giỏ hàng của bạn đang trống!',
-                    showConfirmButton: false,
-                    timer: 4000,
-                    toast: true,
-                });
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'info',
+                        text: 'Hiện tại giỏ hàng của bạn đang trống!',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        toast: true,
+                    });
                 @endif
             })
         })

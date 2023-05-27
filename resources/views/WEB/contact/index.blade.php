@@ -1,5 +1,6 @@
 @extends('WEB.master')
 @section('content')
+<div class="container-fluid">
     <div class="row">
         <h1>LIÊN HỆ</h1>
         <section class="lienhe">
@@ -57,5 +58,5 @@
     <div class="container-fuild d-flex justify-content-center">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.6571856852916!2d105.78272751476362!3d21.046398585988825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abb158a2305d%3A0x5c357d21c785ea3d!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyDEkGnhu4duIEzhu7Fj!5e0!3m2!1svi!2s!4v1638678515224!5m2!1svi!2s" width="80%" height="450" style="border:0;margin-left:50px" allowfullscreen="" loading="lazy"></iframe>
     </div>
-
+</div>
 @endsection

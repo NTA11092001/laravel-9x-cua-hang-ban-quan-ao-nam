@@ -2,13 +2,6 @@
 @section('content')
 @include('WEB.includes.payment_bar')
 <div class="container-fluid">
-    @if ($message = Session::get('success'))
-        <div class="container-fluid d-flex justify-content-center">
-            <div class="w-25 alert alert-success p-2 mt-3 rounded text-center">
-                <p class="text-success">{{ $message }}</p>
-            </div>
-        </div>
-    @endif
 
     <!-- giỏ hàng -->
     <div class="row" style="margin-top:20px">
@@ -23,61 +16,58 @@
                     <th style="width: 10%" class="text-center">Số lượng</th>
                     <th style="width: 5%" class="text-center">Size</th>
                     <th style="width: 10%">Thành tiền</th>
-                    <th colspan="2" @if(count($cart)>0) style="width: 1%" @else style="width: 5%" @endif class="text-center">Quản Lý</th>
+                    <th style="width: 5%" class="text-center">Quản Lý</th>
                 </tr>
                 </thead>
                 <tbody>
                 @if(count($cart)>0)
-                    @foreach($cart as $item)
-                        <tr>
-                            <td>
-                                <div class="img">
-                                    <img src="{{asset($item->attributes['image'])}}" class="img-responsive" style="width:100%">
-                                    <input type="hidden" name="image" value="{{$item->attributes['image']}}">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="info">
-                                    <h5 class="nomargin">{{$item->name}}</h5>
-                                    <p>
-                                        <label>Mã SP</label>: <span></span>
-                                    </p>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="price">
+                    <form method="POST" action="{{route('WEB.cart.update')}}" id="formCart">
+                        @foreach($cart as $item)
+                            @csrf
+                            @method('post')
+                            <tr>
+                                <td>
+                                    <div class="img">
+                                        <img src="{{asset($item->attributes['image'])}}" class="img-responsive" style="width:100%">
+                                        <input type="hidden" name="image[]" value="{{$item->attributes['image']}}">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="info">
+                                        <h5 class="nomargin">{{$item->name}}</h5>
+                                        <p>
+                                            <label>Mã SP</label>: {{$item->attributes['masp']}}<span></span>
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="price">
 
-                                    <span style="color:red">{{number_format($item->price,0,',','.')}} VNĐ</span>
+                                        <span style="color:red">{{number_format($item->price,0,',','.')}} VNĐ</span>
 
-                                </div>
+                                    </div>
 
-                            </td>
-                            <td>
-                                <input name="quantity" type="number" value="{{$item->quantity}}">
-                            </td>
-                            <td class="text-center">
-                                <select class="bootstrap-select p-1 text-center" name="size">
-                                    @for($i=38;$i<=42;$i++)
-                                        <option value="{{$i}}" @if($item->attributes['size'] == $i) selected @endif>{{$i}}</option>
-                                    @endfor
-                                </select>
-                            </td>
-                            <td>
-                                <span style="color: red">{{number_format($item->price*$item->quantity,0,',','.')}} VNĐ</span>
-                            </td>
-                            <td>
-                                <button class="btn btn-outline-dark text-center btn-update-cart" data-id="{{$item->id}}"><i class="fa fa-save"></i></button>
-                            </td>
-                            <td class="text-center">
-                                <form method="POST" action="{{route('WEB.cart.remove')}}">
-                                    @csrf
-                                    @method('post')
-                                    <input type="hidden" name="id" value="{{$item->id}}">
-                                    <button type="submit" class="btn btn-outline-danger"><i class="fa fa-trash-alt"></i></button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
+                                </td>
+                                <td>
+                                    <input name="quantity[]" type="number" value="{{$item->quantity}}">
+                                </td>
+                                <td class="text-center">
+                                    <select class="bootstrap-select p-1 text-center" name="size[]">
+                                        @for($i=38;$i<=42;$i++)
+                                            <option value="{{$i}}" @if($item->attributes['size'] == $i) selected @endif>{{$i}}</option>
+                                        @endfor
+                                    </select>
+                                </td>
+                                <td>
+                                    <span style="color: red">{{number_format($item->price*$item->quantity,0,',','.')}} VNĐ</span>
+                                </td>
+                                <td class="text-center">
+                                    <input type="hidden" name="id[]" value="{{$item->id}}">
+                                    <button type="button" class="btn btn-outline-danger btn-delete-cart" data-id="{{$item->id}}"><i class="fa fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </form>
                 @else
                     <tr class="text-center">
                         <td colspan="8">
@@ -100,13 +90,18 @@
                     <h5 style="color:red">{{ number_format(Cart::getTotal(),0,',','.') }} VNĐ</h5>
                 </div>
             </div>
-            <div class="row" style="margin-top:20px">
-                <form method="POST" action="{{route('WEB.cart.clear')}}">
-                    @csrf
-                    @method('post')
-                    <button type="submit" style="width:260px" class="btn btn-outline-danger">Xoá tất cả giỏ hàng</button>
-                </form>
-            </div>
+            @if(count($cart)>0)
+                <div class="row" style="margin-top:20px">
+                    <form method="POST" action="{{route('WEB.cart.clear')}}">
+                        @csrf
+                        @method('post')
+                        <button type="submit" style="width:260px" class="btn btn-outline-danger">Xoá tất cả giỏ hàng</button>
+                    </form>
+                </div>
+                <div class="row" style="margin-top:20px">
+                    <a class="text-decoration-none" href="#"><button style="width:260px" class="btn btn-outline-dark btn-update-cart">Cập nhật giỏ hàng</button></a>
+                </div>
+            @endif
             <div class="row" style="margin-top:20px">
                 <a class="text-decoration-none" href="{{route('WEB.home.index')}}"><button style="width:260px" class="btn btn-outline-dark">Quay trở lại trang chủ</button></a>
             </div>
@@ -170,13 +165,10 @@
     <script>
         $(function () {
             $('input[type="number"]').inputSpinner()
-            $('.btn-update-cart').click(function () {
+            $('.btn-delete-cart').click(function () {
                 let id = $(this).attr('data-id')
-                let quantity = $('input[name="quantity"]').val()
-                let size = $('input[name="size"]').val()
-                let image = $('input[name="image"]').val()
-                var data = {id: id,quantity: quantity,size: size,image: image}
-                $.post('{{route('WEB.cart.update')}}',data,function (res) {
+                var data = {id: id}
+                $.post('{{route('WEB.cart.remove')}}',data,function (res) {
                     if(res.success) {
                         Swal.fire({
                             position: 'top-end',
@@ -191,6 +183,10 @@
                         });
                     }
                 })
+            })
+
+            $('.btn-update-cart').click(function () {
+                $('#formCart').submit()
             })
 
             @if(count($cart)==0)

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthWebController;
+use App\Http\Controllers\CMS\CartCmsController;
 use App\Http\Controllers\CMS\CategoryController;
 use App\Http\Controllers\CMS\MemberController;
 use App\Http\Controllers\CMS\ProductController;
@@ -67,6 +68,14 @@ Route::middleware('auth')->prefix('admin')->group(function (){
         Route::post('/status','status')->name('admin.product.status');
     });
 
+    Route::prefix('/cart')->controller(CartCmsController::class)->group(function (){
+        Route::get('/', 'index')->name('admin.cart.index');
+        Route::get('/show','show')->name('admin.cart.show');
+        Route::post('/status','status')->name('admin.cart.status');
+        Route::post('/delete','destroy')->name('admin.cart.delete');
+        Route::post('/cancel/{id}','cancel')->name('admin.cart.cancel');
+    });
+
     Route::prefix('/member')->controller(MemberController::class)->group(function (){
         Route::get('/', 'index')->name('admin.member.index');
     });
@@ -96,7 +105,6 @@ Route::controller(AuthWebController::class)->group(function (){
 Route::controller(MainWebController::class)->group(function () {
     Route::get('/', 'index')->name('WEB.home.index');
     Route::get('/lien-he', 'contact')->name('WEB.contact.index');
-    Route::post('/password','password')->name('admin.member.password');
 });
 
 Route::prefix('san-pham')->controller(ProductWebController::class)->group(function (){
@@ -111,14 +119,22 @@ Route::prefix('gio-hang')->controller(CartController::class)->group(function (){
     Route::post('/remove', 'removeCart')->name('WEB.cart.remove');
     Route::post('/clear', 'clearAll')->name('WEB.cart.clear');
 });
+Route::middleware('member')->group(function (){
+    Route::controller(PaymentController::class)->group(function (){
+        Route::get('/dat-hang', 'index')->name('WEB.payment');
+        Route::post('/store', 'store')->name('WEB.payment.store');
+        Route::get('/thanh-cong', 'success')->name('WEB.payment.success');
+        Route::post('/change-status','status')->name('WEB.change-status');
+    });
 
-Route::controller(PaymentController::class)->group(function (){
-    Route::get('/dat-hang', 'index')->name('WEB.payment');
-    Route::post('/store', 'store')->name('WEB.payment.store');
-    Route::get('/thanh-cong', 'success')->name('WEB.payment.success');
+    Route::prefix('tai-khoan')->controller(AccountController::class)->group(function (){
+        Route::get('/','index')->name('WEB.account');
+        Route::get('/lich-su', 'history')->name('WEB.history');
+        Route::get('/xem-don-hang','show')->name('WEB.cart_detail');
+        Route::post('/password','password')->name('WEB.member.password');
+        Route::post('/update','update')->name('WEB.member.update');
+        Route::post('/cancel/{id}','cancel')->name('WEB.cart.cancel');
+    });
 });
 
-Route::controller(AccountController::class)->group(function (){
-    Route::get('/lich-su', 'index')->name('WEB.history');
-});
 // END WEB

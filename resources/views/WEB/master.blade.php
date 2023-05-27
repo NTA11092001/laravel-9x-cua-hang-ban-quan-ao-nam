@@ -12,11 +12,11 @@
 
     @include('WEB.auth.login')
     @include('WEB.auth.register')
-    @include('WEB.auth.change_pass')
 
     @include('WEB.includes.footer')
 
     @include('WEB.includes.scripts')
+    @include('Validation.alert')
     @stack('scripts')
 </body>
 </html>

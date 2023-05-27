@@ -103,8 +103,13 @@
 
 
                         <div class="d-flex justify-content-between  align-items-center">
-                            <button type="button" class="btn">Hủy đơn hàng</button>
-                            <button type="button" class="btn btn-dark" onclick="location.href='https://aristino.com/tai-khoan.html?tab=order'">Theo dõi đơn hàng</button>
+                            <form action="{{route('WEB.change-status')}}" method="POST" id="formCartCancel">
+                                @csrf
+                                @method('post')
+                                <input type="hidden" name="id" value="{{$cart_detail->id}}">
+                                <button type="button" class="btn btn-cancel-cart">Hủy đơn hàng</button>
+                            </form>
+                            <button type="button" class="btn btn-dark" onclick="location.href='{{route('WEB.history')}}'">Theo dõi đơn hàng</button>
                         </div>
                     </div>
                 </div>
@@ -115,5 +120,23 @@
 
 @endsection
 
-
-
+@push('scripts')
+    <script>
+        $(function () {
+            $('.btn-cancel-cart').click(function () {
+                Swal.fire({
+                    text: 'Bạn có chắc chắn muốn hủy đơn hàng này ?',
+                    showDenyButton: true,
+                    // showCancelButton: true,
+                    confirmButtonColor: '#212B36',
+                    confirmButtonText: 'Xác nhận',
+                    denyButtonText: 'Huỷ bỏ',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#formCartCancel').submit()
+                    }
+                })
+            })
+        })
+    </script>
+@endpush

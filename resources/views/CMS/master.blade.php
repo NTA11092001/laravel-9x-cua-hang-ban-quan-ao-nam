@@ -19,6 +19,7 @@
     </div>
 </div>
 @include('CMS.includes.scripts')
+@include('Validation.error')
 @stack('scripts')
 </body>
 

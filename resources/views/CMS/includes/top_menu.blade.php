@@ -18,7 +18,7 @@
                 <a class="rounded-circle" href="#" role="button" id="dropdownUser"
                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="avatar avatar-md avatar-indicators avatar-online">
-                        <img alt="avatar" src="{{asset('CMS/images/avatar/avatar-1.jpg')}}"
+                        <img alt="avatar" src="{{asset('img/BAL-logo.png')}}"
                              class="rounded-circle" />
                     </div>
                 </a>

@@ -164,65 +164,7 @@
 
         })
 
-        $('.btn-change-pass').click( function () {
 
-            var data = new FormData($('#changePassForm')[0]);
-
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                method: "POST",
-                type: "POST",
-                encytype: 'multipart/form-data',
-                url: '{{route('admin.member.password')}}',
-                data: data,
-                processData: false,
-                contentType: false,
-                success: function (res) {
-                    Swal.fire({
-                        position: 'top-start',
-                        icon: 'success',
-                        text: res.message,
-                        showConfirmButton: false,
-                        toast: false,
-                        timer: 3500,
-                        didClose: () => {
-                            location.reload()
-                        }
-                    })
-                },
-                fail: function (res) {
-                    Swal.fire({
-                        position: 'bottom-end',
-                        icon: 'error',
-                        html: res.message,
-                        showConfirmButton: false,
-                        toast: false,
-                        timer: 3500,
-                    })
-                }
-
-            }).fail(function (res) {
-                var errTxt = '<div class="bg-danger d-flex justify-content-center align-content-center"><ul class="text-start text-white pt-2">';
-
-                if (res.responseJSON.errors !== undefined) {
-                    Object.keys(res.responseJSON.errors).forEach(key => {
-                        errTxt += '<li class="py-1">' + res.responseJSON.errors[key][0] + '</li>';
-                    });
-                }
-                errTxt += '</ul></div>';
-
-                Swal.fire({
-                    position: 'bottom-end',
-                    icon: 'error',
-                    html: errTxt,
-                    showConfirmButton: false,
-                    toast: false,
-                    timer: 3500
-                })
-            })
-        })
 
     })
 </script>

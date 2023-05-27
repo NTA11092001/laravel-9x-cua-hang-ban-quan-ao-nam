@@ -4,6 +4,7 @@ namespace App\Http\Controllers\WEB;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Product;
 use App\Models\Transport;
 use Illuminate\Http\Request;
 
@@ -44,6 +45,9 @@ class PaymentController extends Controller
             $cart['status'] = -1;
             $cart_insert = Cart::query()->create($cart);
             foreach ($cart_detail as $item){
+                $product = Product::query()->findOrFail($item->id);
+                $product->soluong = $product->soluong-$item->quantity;
+                $product->save();
                 $cart_insert->cart_detail()->attach($item->id,['quantity'=>$item->quantity,'size'=>$item->attributes['size']]);
             }
 
@@ -73,5 +77,25 @@ class PaymentController extends Controller
         $cart_detail = Cart::query()->where('member_id',auth('member')->user()->id)->orderBy('id','desc')->first();
         $transport = Transport::query()->where('member_id',auth('member')->user()->id)->first();
         return view('WEB.cart.success',compact('title','cart','cart_detail','transport'));
+    }
+
+    public function status(Request $request){
+        try {
+            $cart = Cart::query()->findOrFail($request->id);
+            if ($cart->status == 0){
+                return to_route('WEB.history')->with('info', 'Đơn hàng đã được xác nhận!');
+            }else{
+                foreach ($cart->cart_detail as $item){
+                    $product = Product::query()->findOrFail($item->id);
+                    $product->soluong = $product->soluong+$item->pivot->quantity;
+                    $product->save();
+                }
+                $cart->status = -2;
+                $cart->save();
+                return to_route('WEB.history')->with('success', 'Hủy đơn hàng thành công!');
+            }
+        }catch (\Exception $e){
+            return to_route('WEB.history')->with('error', $e->getMessage());
+        }
     }
 }

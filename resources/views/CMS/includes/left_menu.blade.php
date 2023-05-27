@@ -1,14 +1,14 @@
 <nav class="navbar-vertical navbar">
     <div class="nav-scroller">
         <!-- Brand logo -->
-        <a class="navbar-brand" href="{{route('admin.home.index')}}">
-            <img src="{{asset('CMS/images/brand/logo/logo.svg')}}" alt="" />
+        <a class="navbar-brand" href="{{route('admin.home.index')}}" style="background-color: white">
+            <img src="{{asset('img/BAL-logo.png')}}" alt="BAL-logo" class="img-fluid rounded-circle"/>
         </a>
         <!-- Navbar nav -->
         <ul class="navbar-nav flex-column" id="sideNavbar">
             <li class="nav-item">
                 <a class="nav-link has-arrow {{ request()->routeIs('admin.home.index') ? 'active' : '' }}" href="{{route('admin.home.index')}}">
-                    <i data-feather="home" class="nav-icon icon-xs me-2"></i>  Trang chủ
+                    <i class="fa-solid fa-gauge-high nav-icon icon-xs me-2"></i>  Bảng điều khiển
                 </a>
 
             </li>
@@ -53,6 +53,12 @@
                         </li>
                     </ul>
                 </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.cart.index') ? 'active' : '' }}" href="{{route('admin.cart.index')}}">
+                    <i class="fa-solid fa-user-group icon-xs me-2"></i> Danh sách đơn hàng
+                </a>
             </li>
 
             <li class="nav-item">

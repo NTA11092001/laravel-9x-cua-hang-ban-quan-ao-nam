@@ -44,13 +44,8 @@
                     </a>
                 </li>
                 <li class="navmenu-icon-item">
-                    <a href="#" class="navmenu-icon-link" data-bs-toggle="modal" data-bs-target="#changePassModal">
-                        <i class="fas fa-exchange-alt"></i>
-                    </a>
-                </li>
-                <li class="navmenu-icon-item">
-                    <a href="{{route('WEB.history')}}" class="navmenu-icon-link">
-                        <i class="fas fa-shopping-bag"></i>
+                    <a href="{{route('WEB.account')}}" class="navmenu-icon-link">
+                        <i class="fas fa-user"></i>
                     </a>
                 </li>
                 @else

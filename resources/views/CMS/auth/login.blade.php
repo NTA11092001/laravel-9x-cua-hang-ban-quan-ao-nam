@@ -21,7 +21,6 @@
                         </div>
                     </div>
                     <!-- Form -->
-                    @include('Validation.error')
                     <form action="{{route('loginPost')}}" autocomplete="off" method="POST">
                     @csrf
                     @method('post')
@@ -61,6 +60,7 @@
 </div>
 
 @include('CMS.includes.scripts')
+@include('Validation.error')
 
 </body>
 
