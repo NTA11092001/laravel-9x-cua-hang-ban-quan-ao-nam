@@ -59,7 +59,7 @@
 
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.cart.index') ? 'active' : '' }}" href="{{route('admin.cart.index')}}">
-                    <i class="fa-solid fa-user-group icon-xs me-2"></i> Danh sách đơn hàng
+                    <i class="fa-solid fa-table-cells icon-xs me-2"></i> Danh sách đơn hàng
                 </a>
             </li>
 
