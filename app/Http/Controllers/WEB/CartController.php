@@ -79,7 +79,7 @@ class CartController extends Controller
     {
         $title = 'Giỏ hàng';
         $cart = \Cart::getContent();
-        $promotion = Product::query()->where('status',1)->where('giakm','<',500000)->orderBy('id','desc')->limit(20)->get();
+        $promotion = Product::query()->where('status',1)->where('giakm','<>',null)->orderBy('id','desc')->limit(20)->get();
         //dd($cartItems);
         return view('WEB.cart.index', compact('title','cart','promotion'));
     }
