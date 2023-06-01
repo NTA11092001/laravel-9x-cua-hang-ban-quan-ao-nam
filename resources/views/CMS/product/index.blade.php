@@ -37,7 +37,7 @@
                                     <th scope="col" class="text-white text-center" style="width: 150px">Giá KM (VNĐ)</th>
                                     <th scope="col" class="text-white text-center" style="width: 120px">Danh mục</th>
                                     <th scope="col" class="text-white text-center" style="width: 105px">Trạng thái</th>
-                                    <th scope="col" class="text-white text-center">Quản lý</th>
+                                    <th scope="col" class="text-white text-center"style="width: 120px">Quản lý</th>
                                 </tr>
                             </thead>
                             @if(count($products)>0)
@@ -49,7 +49,7 @@
                                         <td class="text-center">{{$item->masp}}</td>
                                         <td><img src="{{asset($item->hinhanh)}}" height="150px"></td>
                                         <td class="text-center">{{number_format($item->giathuong,0,',','.')}}</td>
-                                        <td class="text-center">{{number_format($item->giakm,0,',','.')}}</td>
+                                        <td class="text-center">{{$item->giakm ? number_format($item->giakm,0,',','.') : 'Không có giá KM'}}</td>
                                         <td>{{$item->category->ten}}</td>
 
                                         <td class="text-center">
@@ -119,7 +119,7 @@
                                     timer: 2500,
                                     toast: true,
                                     didClose: () => {
-                                        location.reload(true)
+                                        location.reload()
                                     }
                                 })
 

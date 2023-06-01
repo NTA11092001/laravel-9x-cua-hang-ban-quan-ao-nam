@@ -70,11 +70,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            @if($item->giakm != null)
-                                                {{number_format($item->pivot->quantity*$item->giakm,0,',','.')}} VNĐ
-                                            @elseif($item->giathuong != null)
-                                                {{number_format($item->pivot->quantity*$item->giathuong,0,',','.')}} VNĐ
-                                            @endif
+                                            {{number_format($item->pivot->quantity*$item->pivot->price,0,',','.')}} VNĐ
                                         </td>
                                     </tr>
                                 @endforeach

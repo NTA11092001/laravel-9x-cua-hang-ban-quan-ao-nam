@@ -38,6 +38,14 @@
                                 <input type="password" name="password" id="register_password" class="form-control form-control-lg" autocomplete="off" placeholder="Nhập mật khẩu"/>
                             </div>
 
+                            <div class="mb-3">
+                                <label class="form-label">Chức vụ</label>
+                                <select class="form-control form-select-lg" name="level">
+                                    <option value="1">Quản lý</option>
+                                    <option value="2">Nhân viên</option>
+                                </select>
+                            </div>
+
                             <div>
                                 <!-- Button -->
                                 <div>

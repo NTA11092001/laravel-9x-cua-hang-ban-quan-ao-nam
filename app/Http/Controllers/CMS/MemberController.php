@@ -41,8 +41,20 @@ class MemberController extends Controller
         //
     }
 
-    public function destroy(Member $member)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->member_id;
+        try {
+            Member::query()->findOrFail($id)->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Xóa tài khoản thành công'
+            ]);
+        }catch (\Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }

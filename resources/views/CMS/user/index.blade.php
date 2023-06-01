@@ -33,6 +33,7 @@
                                 <th class="text-white">Tên Tài khoản</th>
                                 <th class="text-white">Số điện thoại</th>
                                 <th class="text-white">Email</th>
+                                <th class="text-white text-center">Chức vụ</th>
                                 <th class="text-white text-center">Trạng thái</th>
                                 <th class="text-white text-center">Quản Lý</th>
                             </tr>
@@ -46,6 +47,13 @@
                                         <td>{{$item->phone}}</td>
                                         <td>{{$item->email}}</td>
                                         <td class="text-center">
+                                            @if($item->level == 1)
+                                                <div class="alert alert-success">Quản lý</div>
+                                            @elseif($item->level == 2)
+                                                <div class="alert alert-primary">Nhân viên</div>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
                                             @if($status == 1)
                                                 <a class="btn btn-dark btn-sm btn-unapproved-user" data-user-id="{{$item->id}}"><i class="fa-solid fa-xmark"></i></a>
                                             @elseif($status == 0)
@@ -53,6 +61,7 @@
                                             @endif
                                         </td>
                                         <td class="text-center">
+                                            <a class="btn btn-primary btn-sm btn-edit-user" data-bs-toggle="modal" data-bs-target="#EditMember" data-id="{{$item->id}}"><i class="fas fa-edit"></i></a>
                                             <a class="btn btn-danger btn-sm btn-delete-user" data-user-id="{{$item->id}}"><i class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
@@ -71,6 +80,14 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="EditMember" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" id="contentMember">
+                {{--                @include('CMS.member.modal_edit')--}}
             </div>
         </div>
     </div>
@@ -102,7 +119,7 @@
                                     timer: 2500,
                                     toast: true,
                                     didClose: () => {
-                                        location.reload(true)
+                                        location.reload()
                                     }
                                 })
 
@@ -152,6 +169,16 @@
 
                     })
 
+                }
+            })
+
+            $('.btn-edit-user').click(function(){
+                var userId = $(this).attr('data-id')
+                if(userId !== undefined) {
+                    $.get('{{route('admin.user.editModal')}}', {user_id: userId}, function(res) {
+                        $('#contentMember').html(res)
+                        $('#EditMember').modal('show')
+                    })
                 }
             })
 

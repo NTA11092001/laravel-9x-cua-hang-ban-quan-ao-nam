@@ -23,8 +23,9 @@
                                     <th class="text-center" width="200px">Tình trạng</th>
                                 </tr>
                                 </thead>
-                                <tbody>
                                 @if(count($cart)>0)
+                                <tbody>
+
                                     @foreach($cart as $item)
                                         <tr>
                                             <td>
@@ -46,6 +47,10 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                @else
+                                    <tr>
+                                        <td class="text-center" colspan="10">Bạn chưa có đơn hàng nào</td>
+                                    </tr>
                                 @endif
 
                                 </tbody>

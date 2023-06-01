@@ -67,8 +67,11 @@ class AuthCmsController extends Controller
                 return redirect()->back()->with('some_error','Người dùng không tồn tại');
             }else{
                 if (Auth::guard()->attempt(['phone' => $username, 'password' => request('password'), 'status' => 1], request('remember') ? true : false) || Auth::guard()->attempt(['email' => $username, 'password' => request('password'), 'status' => 1], request('remember') ? true : false)) {
-
-                    return to_route('admin.home.index')->with('notice_success','Đăng nhập thành công');
+                    if (auth()->user()->level == 1){
+                        return to_route('admin.home.index')->with('notice_success','Đăng nhập thành công');
+                    }elseif (auth()->user()->level == 2){
+                        return to_route('admin.cart.index')->with('notice_success','Đăng nhập thành công');
+                    }
                 }
                 elseif (!Hash::check($request->password, $user->password)) {
                     return to_route('login')->with('some_error','Sai mật khẩu. Vui lòng thử lại.');
@@ -112,6 +115,7 @@ class AuthCmsController extends Controller
 
         $data = $request->all();
         $data['password'] = Hash::make($data['password']);
+        $data['level'] = 2;
         $data['status'] = 0;
         try {
             User::query()->create($data);

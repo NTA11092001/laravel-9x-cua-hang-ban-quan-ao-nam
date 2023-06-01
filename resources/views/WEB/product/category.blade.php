@@ -24,8 +24,8 @@
                                     <div class="product_details">
                                         <a class="link-offset-2 link-underline link-underline-opacity-0 text-dark" href="{{route('WEB.product.detail',['id'=>$item->id])}}"><h5>{{$item->ten}} {{$item->masp}}</h5></a>
                                         <ul class="product_price list-unstyled">
-                                            <a class="link-offset-2 link-underline link-underline-opacity-0 text-dark" href="{{route('WEB.product.detail',['id'=>$item->id])}}"><li class="old_price" style="text-decoration: line-through">{{number_format($item->giathuong,0,',','.')}} VNĐ</li></a>
-                                            <a class="link-offset-2 link-underline link-underline-opacity-0 text-danger" href="{{route('WEB.product.detail',['id'=>$item->id])}}"><li class="new_price">{{number_format($item->giakm,0,',','.')}} VNĐ</li></a>
+                                            <a class="link-offset-2 link-underline link-underline-opacity-0 text-dark" href="{{route('WEB.product.detail',['id'=>$item->id])}}"><li class="old_price" @if($item->giakm != null) style="text-decoration: line-through" @endif>{{number_format($item->giathuong,0,',','.')}} VNĐ</li></a>
+                                            @if($item->giakm != null) <a class="link-offset-2 link-underline link-underline-opacity-0 text-danger" href="{{route('WEB.product.detail',['id'=>$item->id])}}"><li class="new_price">{{number_format($item->giakm,0,',','.')}} VNĐ</li></a> @endif
                                         </ul>
                                     </div>
                                 </form>

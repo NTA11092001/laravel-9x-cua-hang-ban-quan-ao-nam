@@ -13,7 +13,7 @@ class ProductWebController extends Controller
     public function category($id)
     {
         $category = Categories::query()->findOrFail($id);
-        $product = Product::query()->where('status',1)->where('id_danhmuc',$id)->paginate(10);
+        $product = Product::query()->where('status',1)->where('id_danhmuc',$id)->paginate(12);
         $title = $category->ten;
         return view('WEB.product.category',compact('title','product','category'));
     }

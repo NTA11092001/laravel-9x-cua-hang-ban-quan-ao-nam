@@ -6,12 +6,14 @@
         </a>
         <!-- Navbar nav -->
         <ul class="navbar-nav flex-column" id="sideNavbar">
+            @if(auth()->user()->level == 1)
             <li class="nav-item">
                 <a class="nav-link has-arrow {{ request()->routeIs('admin.home.index') ? 'active' : '' }}" href="{{route('admin.home.index')}}">
                     <i class="fa-solid fa-gauge-high nav-icon icon-xs me-2"></i>  Bảng điều khiển
                 </a>
 
             </li>
+            @endif
 
             <li class="nav-item">
                 <a class="nav-link has-arrow  collapsed {{ request()->routeIs('admin.category.index') || request()->routeIs('admin.category.create') ? 'active' : '' }}" href="#!" data-bs-toggle="collapse" data-bs-target="#navAuthentication" aria-expanded="false" aria-controls="navAuthentication">
@@ -61,6 +63,7 @@
                 </a>
             </li>
 
+            @if(auth()->user()->level == 1)
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.member.index') ? 'active' : '' }}" href="{{route('admin.member.index')}}">
                     <i class="fa-solid fa-user-group icon-xs me-2"></i> Tài khoản khách hàng
@@ -92,6 +95,7 @@
                     </ul>
                 </div>
             </li>
+            @endif
 
             <li class="nav-item">
                 <a class="nav-link has-arrow {{ request()->routeIs('admin.user.edit') ? 'active' : '' }}" href="{{route('admin.user.edit')}}">

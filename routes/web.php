@@ -43,7 +43,8 @@ Route::middleware('auth')->prefix('admin')->group(function (){
     // Home
     Route::controller(MainCmsController::class)->group(function () {
         Route::get('/', 'index')->name('admin.home.index');
-
+        Route::get('/editModal','editModal')->name('admin.user.editModal');
+        Route::post('/updateModal','updateModal')->name('admin.user.updateModal');
     });
 
     // Danh mục
@@ -78,6 +79,7 @@ Route::middleware('auth')->prefix('admin')->group(function (){
 
     Route::prefix('/member')->controller(MemberController::class)->group(function (){
         Route::get('/', 'index')->name('admin.member.index');
+        Route::post('/delete', 'destroy')->name('admin.member.delete');
     });
 
     Route::prefix('user')->controller(UserController::class)->group(function (){

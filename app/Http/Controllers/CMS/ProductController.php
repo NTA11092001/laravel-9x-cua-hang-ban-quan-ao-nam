@@ -23,21 +23,18 @@ class ProductController extends Controller
 
     public function store(Request $request){
         $request->validate([
-            'ten' => 'required|unique:products|max:191',
+            'ten' => 'required|max:191',
             'masp' => 'required|unique:products',
             'giathuong' => 'required',
-            'giakm' => 'required',
             'id_danhmuc'=> 'required',
             'soluong'=> 'required|regex:/[0-9]/',
             'hinhanh' => 'required|mimes:jpeg,jpg,png',
         ], [
             'ten.required' => 'Bạn cần nhập tên sản phẩm',
-            'ten.unique' => 'Tên sản phẩm bị trùng',
             'ten.max' => 'Tên sản phẩm quá dài',
             'masp.required' => 'Bạn cần nhập mã sản phẩm',
             'masp.unique' => 'Mã sản phẩm bị trùng',
-            'giathuong.required' => 'Bạn cần nhập mã sản phẩm',
-            'giakm.required' => 'Bạn cần chọn danh mục khách sạn',
+            'giathuong.required' => 'Bạn cần nhập giá thường',
             'id_danhmuc.required' => 'Bạn cần chọn danh mục sản phẩm',
             'soluong.required' => 'Bạn cần nhập số lượng',
             'soluong.regex' => 'Số lượng phải là chữ số',
@@ -90,15 +87,13 @@ class ProductController extends Controller
             'ten' => 'required|max:191',
             'masp' => 'required',
             'giathuong' => 'required',
-            'giakm' => 'required',
             'id_danhmuc'=> 'required',
             'soluong'=> 'required|regex:/[0-9]/'
         ], [
             'ten.required' => 'Bạn cần nhập tên sản phẩm',
             'ten.max' => 'Tên sản phẩm quá dài',
             'masp.required' => 'Bạn cần nhập mã sản phẩm',
-            'giathuong.required' => 'Bạn cần nhập mã sản phẩm',
-            'giakm.required' => 'Bạn cần chọn danh mục khách sạn',
+            'giathuong.required' => 'Bạn cần nhập giá thường',
             'id_danhmuc.required' => 'Bạn cần chọn danh mục sản phẩm',
             'soluong.required' => 'Bạn cần nhập số lượng',
             'soluong.regex' => 'Số lượng phải là chữ số'

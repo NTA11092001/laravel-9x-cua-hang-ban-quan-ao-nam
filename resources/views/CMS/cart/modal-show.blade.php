@@ -66,7 +66,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-right">{{$item->giakm ? number_format($item->giakm*$item->pivot->quantity,0,',','.').' VNĐ' : number_format($item->giathuong*$item->pivot->quantity,0,',','.').' VNĐ'}}</td>
+                                <td class="text-right">{{number_format($item->pivot->price*$item->pivot->quantity,0,',','.')}} VNĐ</td>
                             </tr>
                         @endforeach
                     @endif

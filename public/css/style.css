@@ -128,7 +128,7 @@ h1{
 
 /*113%*/
 .product_item .product_details {
-    padding-top: 113%;
+    padding-top: 80%;
     text-align: center
 }
 
@@ -382,7 +382,7 @@ h1{
 }
 
 .card .body {
-    height: 480px;
+    height: auto;
     font-size: 14px;
     color: #424242;
     padding: 20px;

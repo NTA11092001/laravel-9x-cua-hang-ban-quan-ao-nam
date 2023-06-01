@@ -68,7 +68,7 @@
                             @else
                                 <tbody>
                                     <tr class="text-center">
-                                        <td colspan="8">Không có tài khoản khách hàng nào</td>
+                                        <td colspan="8">Không có đơn hàng nào</td>
                                     </tr>
                                 </tbody>
                             @endif

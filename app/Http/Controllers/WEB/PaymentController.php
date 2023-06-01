@@ -48,7 +48,7 @@ class PaymentController extends Controller
                 $product = Product::query()->findOrFail($item->id);
                 $product->soluong = $product->soluong-$item->quantity;
                 $product->save();
-                $cart_insert->cart_detail()->attach($item->id,['quantity'=>$item->quantity,'size'=>$item->attributes['size']]);
+                $cart_insert->cart_detail()->attach($item->id,['quantity'=>$item->quantity,'size'=>$item->attributes['size'],'price'=>$item->price]);
             }
 
             \Cart::clear();

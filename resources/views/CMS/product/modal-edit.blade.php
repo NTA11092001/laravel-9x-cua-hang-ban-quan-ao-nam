@@ -43,7 +43,7 @@
                 <select class="form-control form-select-lg" name="id_danhmuc">
                     <option value="">--Chọn danh mục sản phẩm--</option>
                     @foreach($categories as $item)
-                        <option value="{{$item->id}}" @if($item->id=$product->id_danhmuc) selected @endif>{{$item->ten}}</option>
+                        <option value="{{$item->id}}" @if($item->id==$product->id_danhmuc) selected @endif>{{$item->ten}}</option>
                     @endforeach
                 </select>
             </div>
@@ -137,7 +137,6 @@
         });
 
         $('#btnUpdateProduct').on('click', function () {
-            $('#EditProduct').modal('hide')
             for (instance in CKEDITOR.instances) {
                 CKEDITOR.instances[instance].updateElement();
             }
@@ -152,6 +151,7 @@
                 processData: false,
                 contentType: false,
                 success: function (res) {
+                    $('#EditProduct').modal('hide')
                     Swal.fire({
                         position: 'top-start',
                         icon: 'success',

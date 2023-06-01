@@ -45,7 +45,7 @@
                                         <td>{{$item->phone}}</td>
                                         <td>{{$item->email}}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-danger btn-sm btn-delete-user" data-user-id="{{$item->id}}"><i class="fas fa-trash-alt"></i></a>
+                                            <a class="btn btn-danger btn-sm btn-delete-member" data-id="{{$item->id}}"><i class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -73,9 +73,9 @@
     <script>
         $(function () {
 
-            $('.btn-delete-user').click(function() {
-                let userId = $(this).attr('data-user-id')
-                if(userId !== undefined) {
+            $('.btn-delete-member').click(function() {
+                let memberId = $(this).attr('data-id')
+                if(memberId !== undefined) {
                     Swal.fire({
                         text: 'Bạn chắn chắn muốn xoá ?',
                         showDenyButton: true,
@@ -85,7 +85,7 @@
                         denyButtonText: 'Huỷ bỏ',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            $.post('{{route('admin.user.delete')}}', {user_id: userId}, function (res) {
+                            $.post('{{route('admin.member.delete')}}', {member_id: memberId}, function (res) {
                                 Swal.fire({
                                     position: 'top-end',
                                     icon: 'success',
