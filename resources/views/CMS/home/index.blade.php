@@ -74,8 +74,8 @@
             </div>
 
             <div class="row justify-content-start align-items-center">
-                <div class="col-12">
-
+                <div class="col-6">
+                    <div class="text-center mb-3">Thống kê trạng thái đơn hàng</div>
                     <div>
                         <canvas id="myChart"></canvas>
                     </div>
@@ -88,7 +88,7 @@
                         new Chart(ctx, {
                             type: 'bar',
                             data: {
-                                labels: ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'],
+                                labels: ['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'],
                                 datasets: [
                                     {
                                         label: 'Đã thanh toán',
@@ -113,6 +113,48 @@
                                         data: {{$order_fail}},
                                         borderWidth: 1,
                                         backgroundColor: '#DD0000',
+                                    }
+                                ]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+
+                </div>
+
+                <div class="col-6">
+                    <div class="text-center mb-3">Thống kê doanh thu</div>
+                    <div>
+                        <canvas id="Total"></canvas>
+                    </div>
+
+                    <script>
+                        const line = document.getElementById('Total');
+
+                        new Chart(line, {
+                            type: 'line',
+                            data: {
+                                labels: ['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'],
+                                datasets: [
+                                    {
+                                        label: 'Đã thanh toán',
+                                        data: {{$success_pay}},
+                                        borderWidth: 1,
+                                        backgroundColor: '#589F4C',
+                                        borderColor: '#589F4C',
+                                    },
+                                    {
+                                        label: 'Chưa thanh toán',
+                                        data: {{$wait_pay}},
+                                        borderWidth: 1,
+                                        backgroundColor: '#F59E34',
+                                        borderColor: '#F59E34',
                                     }
                                 ]
                             },

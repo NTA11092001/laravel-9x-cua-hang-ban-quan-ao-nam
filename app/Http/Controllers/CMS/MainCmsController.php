@@ -44,6 +44,8 @@ class MainCmsController extends Controller
         $order_wait = '[';
         $order_cancel = '[';
         $order_fail = '[';
+        $success_pay = '[';
+        $wait_pay = '[';
 
         for($i = 1; $i <= 12 ; $i ++) {
 
@@ -53,14 +55,16 @@ class MainCmsController extends Controller
             $count_wait = 0;
             $count_cancel = 0;
             $count_fail = 0;
+            $count_success_pay = 0;
+            $count_wait_pay = 0;
 
             foreach ($orders as $item) {
                 switch ($item->status) {
                     case '1':
-                        $count_success++;
+                        $count_success++;$count_success_pay += $item->total;
                         break;
                     case '0':
-                        $count_wait++;
+                        $count_wait++;$count_wait_pay += $item->total;
                         break;
                     case '-1':
                         $count_cancel++;
@@ -77,14 +81,18 @@ class MainCmsController extends Controller
             $order_wait .= $count_wait.',';
             $order_cancel .= $count_cancel.',';
             $order_fail .= $count_fail.',';
+            $success_pay .= $count_success_pay.',';
+            $wait_pay .= $count_wait_pay.',';
         }
 
         $order_success .= ']';
         $order_wait .= ']';
         $order_cancel .= ']';
         $order_fail .= ']';
+        $success_pay .= ']';
+        $wait_pay .= ']';
 
-        return view('CMS.home.index',compact('title','total_success','total_wait','total_cancel','total_fail','payment_success','payment_wait','order_success', 'order_wait', 'order_cancel','order_fail'));
+        return view('CMS.home.index',compact('title','total_success','total_wait','total_cancel','total_fail','payment_success','payment_wait','order_success', 'order_wait', 'order_cancel','order_fail','success_pay','wait_pay'));
     }
 
     public function editModal(Request $request)
