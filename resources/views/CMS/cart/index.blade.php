@@ -59,7 +59,7 @@
                                             @endif
                                         </td>
                                         <td class="text-center">
-                                            <a class="btn btn-primary btn-sm btn-edit-cart" data-bs-toggle="modal" data-bs-target="#ShowCart" data-cart-id="{{$item->id}}"><i class="fas fa-edit"></i></a>
+                                            <a class="btn btn-primary btn-sm btn-edit-cart" data-bs-toggle="modal" data-bs-target="#ShowCart" data-cart-id="{{$item->id}}"><i class="fas fa-eye"></i></a>
                                             <a class="btn btn-danger btn-sm btn-delete-cart" data-cart-id="{{$item->id}}"><i class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
