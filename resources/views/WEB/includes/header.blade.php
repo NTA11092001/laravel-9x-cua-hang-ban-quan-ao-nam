@@ -1,4 +1,4 @@
-<header>
+<header class="w-100 h-auto">
     <nav class="navmenu js-navmenu">
         <a href="{{route('WEB.home.index')}}"><img src="{{asset('img/BAL-logo.png')}}" alt="" class="navmenu-logo"></a>
         <div class="navmenu-list">

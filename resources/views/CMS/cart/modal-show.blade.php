@@ -16,15 +16,15 @@
                 <div>
                     @if($cart->payment_type=='cod')
                         Thanh toán COD
-                    @elseif($cart->payment_type=='ttnh')
-                        Thanh toán chuyển khoản
+                    @elseif($cart->payment_type=='vnpay')
+                        Thanh toán VNPAY
                     @endif
                 </div>
                 <p style="margin-top: 5px; font-style: italic;">
                     @if($cart->status == -1)
                         <span class="text-warning">Đơn hàng mới</span>
                     @elseif($cart->status == 0)
-                        <span class="text-primary">Đã xác nhận</span>
+                        <span class="text-primary">Chưa thanh toán</span>
                     @elseif($cart->status == 1)
                         <span class="text-success">Đã thanh toán</span>
                     @elseif($cart->status == -2)
@@ -55,10 +55,10 @@
                                 <td width="80%">
                                     <div class="list_cart_temp1-item no-border">
                                         <a href="">
-                                            <img src="{{asset($item->hinhanh)}}" class="thumbnail" alt="Quần âu nam Aristino ATR00203">
+                                            <img src="{{asset($item->hinhanh)}}" class="thumbnail" alt="{{$item->ten}}">
                                         </a>
                                         <div class="infoProduction">
-                                            <h3 class="infoProduction_name">Quần âu nam Aristino ATR00203</h3>
+                                            <h3 class="infoProduction_name">{{$item->ten}} {{$item->masp}}</h3>
                                             <div class="infoProduction_option">
                                                 Size: {{$item->pivot->size}}<br>
                                                 Số lượng: {{$item->pivot->quantity}}

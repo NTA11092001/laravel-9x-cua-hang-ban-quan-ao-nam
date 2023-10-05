@@ -38,7 +38,7 @@
                                                 @if($item->status == -1)
                                                     <span class="text-warning">Đơn hàng mới</span>
                                                 @elseif($item->status == 0)
-                                                    <span class="text-primary">Đã xác nhận</span>
+                                                    <span class="text-primary">Chưa thanh toán</span>
                                                 @elseif($item->status == 1)
                                                     <span class="text-success">Đã thanh toán</span>
                                                 @elseif($item->status == -2)

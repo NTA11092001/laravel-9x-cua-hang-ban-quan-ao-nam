@@ -17,8 +17,6 @@
 <form action="{{route('WEB.payment.store')}}" method="POST" id="paymentForm">
 @csrf
 @method('post')
-<input type="hidden" name="cart_date" value="{{date('Y-m-d')}}">
-    <input type="hidden" name="total" value="{{Cart::getTotal()}}">
 <div class="container-fluid">
     <div class="row">
         <div class="col-8">
@@ -86,44 +84,44 @@
                     <li class="list-group-item">
                         <div class="payment-box">
                             <div class="form-check">
-                                <input type="radio" id="TTNH" class="form-check-input" name="payment_type" value="ttnh">
+                                <input type="radio" id="TTNH" class="form-check-input" name="payment_type" value="vnpay">
                             </div>
-                            <img class="ic" src="{{asset('img/ttnh.png')}}" alt="Thanh toán chuyển khoản">
-                            <label for="PaymentID13420">Thanh toán chuyển khoản</label>
+                            <img class="ic" src="{{asset('img/vnpay.png')}}" alt="Thanh toán VNPAY">
+                            <label for="PaymentID13420">Thanh toán VNPAY</label>
                         </div>
                     </li>
-                    <div class="list_bank d-none">
-                        <div>
-                            Lưu ý: Quý khách sử dụng cú pháp sau trong nội dung chuyển khoản:
-                            <br>
-                            <span class="auto-style1">"Tên KH - Số điện thoại mua hàng - Mã đơn hàng".</span>
-                            <br>
-                            Ví dụ: Nguyen Van A - 0987654321 - DH100123
-                            <br>
-                            <ul class="listBankATM">
-                                <li>
-                                    <div class="img-bank">
-                                        <img src="{{asset('img/MB.png')}}"></div>
-                                    <div class="detail-bank">
-                                        <p><strong>Ngân hàng : Thương mại Cổ phần Quân đội</strong></p>
-                                        <p>Chủ tài khoản : <strong>NGUYEN TRUNG ANH</strong></p>
-                                        <p>Số tài khoản : 0977324362</p>
-                                        <p>Vietcombank - CN Hải Dương - Hải Dương</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="img-bank"><img src="https://www.bidv.com.vn/wps/wcm/connect/8c895b83-ce8f-44d4-af3d-f1b5c1a382b0/bidv-logo.svg?MOD=AJPERES&amp;cache=none"></div>
-                                    <div class="detail-bank">
-                                        <p><strong>Ngân hàng : Ngân hàng Đầu tư và Phát triển Việt Nam BIDV</strong></p>
-                                        <p>Chủ tài khoản : <strong>NGUYEN TRUNG ANH</strong></p>
-                                        <p>Số tài khoản : 21510002959909</p>
-                                        <p>BIDV - CN Cầu Giấy - Hà Nội</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+{{--                    <div class="list_bank d-none">--}}
+{{--                        <div>--}}
+{{--                            Lưu ý: Quý khách sử dụng cú pháp sau trong nội dung chuyển khoản:--}}
+{{--                            <br>--}}
+{{--                            <span class="auto-style1">"Tên KH - Số điện thoại mua hàng - Mã đơn hàng".</span>--}}
+{{--                            <br>--}}
+{{--                            Ví dụ: Nguyen Van A - 0987654321 - DH100123--}}
+{{--                            <br>--}}
+{{--                            <ul class="listBankATM">--}}
+{{--                                <li>--}}
+{{--                                    <div class="img-bank">--}}
+{{--                                        <img src="{{asset('img/MB.png')}}"></div>--}}
+{{--                                    <div class="detail-bank">--}}
+{{--                                        <p><strong>Ngân hàng : Thương mại Cổ phần Quân đội</strong></p>--}}
+{{--                                        <p>Chủ tài khoản : <strong>NGUYEN TRUNG ANH</strong></p>--}}
+{{--                                        <p>Số tài khoản : 0977324362</p>--}}
+{{--                                        <p>Vietcombank - CN Hải Dương - Hải Dương</p>--}}
+{{--                                    </div>--}}
+{{--                                </li>--}}
+{{--                                <li>--}}
+{{--                                    <div class="img-bank"><img src="https://www.bidv.com.vn/wps/wcm/connect/8c895b83-ce8f-44d4-af3d-f1b5c1a382b0/bidv-logo.svg?MOD=AJPERES&amp;cache=none"></div>--}}
+{{--                                    <div class="detail-bank">--}}
+{{--                                        <p><strong>Ngân hàng : Ngân hàng Đầu tư và Phát triển Việt Nam BIDV</strong></p>--}}
+{{--                                        <p>Chủ tài khoản : <strong>NGUYEN TRUNG ANH</strong></p>--}}
+{{--                                        <p>Số tài khoản : 21510002959909</p>--}}
+{{--                                        <p>BIDV - CN Cầu Giấy - Hà Nội</p>--}}
+{{--                                    </div>--}}
+{{--                                </li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
 
-                    </div>
+{{--                    </div>--}}
 
                 </ul>
 
@@ -203,7 +201,7 @@
                     </ul>
                 </div>
 
-                <button type="button" class="btn btn-outline-dark btn_buy_now">
+                <button type="button" name="redirect" class="btn btn-outline-dark btn_buy_now">
                     XÁC NHẬN ĐẶT HÀNG
                 </button>
             </div>
@@ -217,14 +215,23 @@
     <script>
         $(function () {
 
-            $('#TTNH').click(function () {
-                $('.list_bank').removeClass('d-none')
-            })
-            $('#COD').click(function () {
-                $('.list_bank').addClass('d-none')
+            // $('#TTNH').click(function () {
+            //     $('.list_bank').removeClass('d-none')
+            // })
+            // $('#COD').click(function () {
+            //     $('.list_bank').addClass('d-none')
+            // })
+            $("input[name='payment_type']").change(function () {
+                $('#paymentForm').attr("action",null)
+                let action = String();
+                if ($(this).val() === "vnpay"){
+                    action = "{{route('vnpay_payment')}}"
+                }else{
+                    action = "{{route('WEB.payment.store')}}"
+                }
+                $('#paymentForm').attr("action",action)
             })
             $('.btn_buy_now').click(function(){
-
                 @if(count($cart)>0)
                 Swal.fire({
                     text: 'Bạn có chắc chắn muốn xác nhận đặt hàng ?',
@@ -251,31 +258,6 @@
 
             })
 
-            $('.check-submit').click(function () {
-                @if(count($cart)>0)
-                    Swal.fire({
-                        text: 'Bạn có chắc chắn muốn xác nhận đặt hàng ?',
-                        showDenyButton: true,
-                        // showCancelButton: true,
-                        confirmButtonColor: '#212B36',
-                        confirmButtonText: 'Xác nhận',
-                        denyButtonText: 'Huỷ bỏ',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $('#paymentForm').submit()
-                        }
-                    })
-                @else
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'info',
-                        text: 'Hiện tại giỏ hàng của bạn đang trống!',
-                        showConfirmButton: false,
-                        timer: 4000,
-                        toast: true,
-                    });
-                @endif
-            })
         })
     </script>
 @endpush

@@ -1,9 +1,7 @@
 *{
     margin: 0;
     padding: 0;
-}
-body{
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Inter', sans-serif;
 }
 
 /* width */
@@ -279,7 +277,6 @@ h1{
 }
 
 .details .colors .not-available:before {
-    font-family: Material-Design-Iconic-Font;
     content: "\f136";
     color: #fff
 }
@@ -520,7 +517,6 @@ footer .bct{
 
 .list_bank ul li input {
     border: none;
-    background: url(images/trans.png);
     color: #fff;
     position: absolute;
     width: 100%;

@@ -51,7 +51,7 @@
                                             @if($item->status != -2)
                                             <select name="status" data-id="{{$item->id}}" style="background-color: transparent; border: none; outline: none">
                                                 <option value="-1" @if($item->status == -1) selected @endif>Đơn hàng mới</option>
-                                                <option value="0" @if($item->status == 0) selected @endif>Xác nhận</option>
+                                                <option value="0" @if($item->status == 0) selected @endif>Chưa thanh toán</option>
                                                 <option value="1" @if($item->status == 1) selected @endif>Đã thanh toán</option>
                                             </select>
                                             @else

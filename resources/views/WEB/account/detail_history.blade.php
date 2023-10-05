@@ -16,15 +16,15 @@
                 <div>
                     @if($cart->payment_type=='cod')
                         Thanh toán COD
-                    @elseif($cart->payment_type=='ttnh')
-                        Thanh toán chuyển khoản
+                    @elseif($cart->payment_type=='vnpay')
+                        Thanh toán VNPAY
                     @endif
                 </div>
                 <p style="margin-top: 5px; font-style: italic;">
                     @if($cart->status == -1)
                         <span class="text-warning">Đơn hàng mới</span>
                     @elseif($cart->status == 0)
-                        <span class="text-primary">Đã xác nhận</span>
+                        <span class="text-primary">Chưa thanh toán</span>
                     @elseif($cart->status == 1)
                         <span class="text-success">Đã thanh toán</span>
                     @elseif($cart->status == -2)
@@ -54,10 +54,10 @@
                                 <td width="80%">
                                     <div class="list_cart_temp1-item no-border">
                                         <a href="">
-                                            <img src="{{asset($item->hinhanh)}}" class="thumbnail" alt="Quần âu nam Aristino ATR00203">
+                                            <img src="{{asset($item->hinhanh)}}" class="thumbnail" alt="{{$item->ten}}">
                                         </a>
                                         <div class="infoProduction">
-                                            <h3 class="infoProduction_name">Quần âu nam Aristino ATR00203</h3>
+                                            <h3 class="infoProduction_name">{{$item->ten}} {{$item->masp}}</h3>
                                             <div class="infoProduction_option">
                                                 Size: {{$item->pivot->size}}<br>
                                                 Số lượng: {{$item->pivot->quantity}}
@@ -88,13 +88,23 @@
             </div>
         </div>
     </div>
-    @if($cart->status == -1)
-        <form action="{{route('WEB.cart.cancel',['id'=>$cart->id])}}" method="POST" id="formCartCancel" class="text-end">
-            @csrf
-            @method('post')
-            <button class="btn btn-danger btn-cancel-cart" type="button">Hủy đơn hàng</button>
-        </form>
-    @endif
+    <div class="d-flex justify-content-between  align-items-center">
+        @if($cart->status == 0 && $cart->payment_type=='vnpay')
+            <form action="{{route('vnpayment',['id'=>$cart->id])}}" method="POST" id="formCartPayment" class="text-end">
+                @csrf
+                @method('post')
+                <input type="hidden" name="total" value="{{$cart->total}}">
+                <button class="btn btn-primary btn-payment" type="button">Thanh toán lại</button>
+            </form>
+        @endif
+        @if($cart->status == -1)
+            <form action="{{route('WEB.cart.cancel',['id'=>$cart->id])}}" method="POST" id="formCartCancel" class="text-end">
+                @csrf
+                @method('post')
+                <button class="btn btn-danger btn-cancel-cart" type="button">Hủy đơn hàng</button>
+            </form>
+        @endif
+    </div>
 </div>
 
 <script>
@@ -111,6 +121,21 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $('#formCartCancel').submit()
+                }
+            })
+        })
+
+        $('.btn-payment').click(function () {
+            Swal.fire({
+                text: 'Bạn có chắc chắn muốn thanh toán lại đơn hàng này ?',
+                showDenyButton: true,
+                // showCancelButton: true,
+                confirmButtonColor: '#212B36',
+                confirmButtonText: 'Xác nhận',
+                denyButtonText: 'Huỷ bỏ',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#formCartPayment').submit()
                 }
             })
         })

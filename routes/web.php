@@ -121,9 +121,12 @@ Route::prefix('gio-hang')->controller(CartController::class)->group(function (){
     Route::post('/remove', 'removeCart')->name('WEB.cart.remove');
     Route::post('/clear', 'clearAll')->name('WEB.cart.clear');
 });
+
 Route::middleware('member')->group(function (){
     Route::controller(PaymentController::class)->group(function (){
         Route::get('/dat-hang', 'index')->name('WEB.payment');
+        Route::post('/vnpay_payment','vnpay_payment')->name('vnpay_payment');
+        Route::get('/return_vnpay','return_vnpay')->name('return_vnpay');
         Route::post('/store', 'store')->name('WEB.payment.store');
         Route::get('/thanh-cong', 'success')->name('WEB.payment.success');
         Route::post('/change-status','status')->name('WEB.change-status');
@@ -136,6 +139,8 @@ Route::middleware('member')->group(function (){
         Route::post('/password','password')->name('WEB.member.password');
         Route::post('/update','update')->name('WEB.member.update');
         Route::post('/cancel/{id}','cancel')->name('WEB.cart.cancel');
+        Route::post('/vnpayment/{id}','vnpayment')->name('vnpayment');
+        Route::get('/return_vnpayment','return_vnpayment')->name('return_vnpayment');
     });
 });
 

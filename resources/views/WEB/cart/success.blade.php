@@ -7,7 +7,7 @@
             <div class="col-4">
                 <div class="page_checkout_col_codeOder">
                     <h3 class="my_order_code">MÃ ĐƠN HÀNG: DH{{$cart_detail->id}}</h3>
-                    <p>Trạng thái: <span class="color-success">Đơn hàng mới</span></p>
+                    <p>Trạng thái: <span class="color-success">@if($cart_detail->status == 1) Đã thanh toán @elseif($cart_detail->status == 0) Chưa thanh toán @elseif($cart_detail->status == -1) Đơn hàng mới @endif</span></p>
 
                     <hr>
                     <ul class="list-checkout-info">
@@ -19,7 +19,7 @@
                         </li>
                         <li>
                             <h3 class="title_codeOder">HÌNH THỨC THANH TOÁN:</h3>
-                            <p>@if($cart_detail->payment_type == 'cod') Thanh toán COD @elseif($cart_detail->payment_type == 'ttnh') Thanh toán chuyển khoản @endif</p>
+                            <p>@if($cart_detail->payment_type == 'cod') Thanh toán COD @elseif($cart_detail->payment_type == 'vnpay') Thanh toán VNPAY @endif</p>
 
                         </li>
                         <li>
@@ -34,9 +34,11 @@
             <div class="col-8">
                 <div class="page_checkout_col_infomation_content">
                     <div class="content_cart">
-                        <h2 class="text_status_order">ĐẶT HÀNG THÀNH CÔNG</h2>
+                        <h2 class="text_status_order">{{$title}}</h2>
                         <p>Cảm ơn {{$transport->name}} đã cho BAL shop cơ hội được phục vụ!</p>
-                        <p>Đơn hàng của Quý Khách đã được đặt thành công. Hệ thống sẽ tự động gửi Email hòm thư mà Quý Khách đã cung cấp.</p>
+                        <p>Đơn hàng của Quý Khách đã được đặt thành công.
+{{--                            Hệ thống sẽ tự động gửi Email hòm thư mà Quý Khách đã cung cấp.--}}
+                        </p>
                         <hr>
                     </div>
                     <div class="list_infamation_cart">
@@ -99,12 +101,24 @@
 
 
                         <div class="d-flex justify-content-between  align-items-center">
-                            <form action="{{route('WEB.change-status')}}" method="POST" id="formCartCancel">
-                                @csrf
-                                @method('post')
-                                <input type="hidden" name="id" value="{{$cart_detail->id}}">
-                                <button type="button" class="btn btn-cancel-cart">Hủy đơn hàng</button>
-                            </form>
+                            <div class="d-flex justify-content-start">
+                                @if($cart_detail->status == 0 && $cart_detail->payment_type=='vnpay')
+                                    <form action="{{route('vnpayment',['id'=>$cart_detail->id])}}" method="POST" id="formCartPayment" class="text-end">
+                                        @csrf
+                                        @method('post')
+                                        <input type="hidden" name="total" value="{{$cart_detail->total}}">
+                                        <button class="btn btn-primary btn-payment" type="button">Thanh toán lại</button>
+                                    </form>
+                                @elseif($cart_detail->status == -1)
+                                    <form action="{{route('WEB.change-status')}}" method="POST" id="formCartCancel">
+                                        @csrf
+                                        @method('post')
+                                        <input type="hidden" name="id" value="{{$cart_detail->id}}">
+                                        <button type="button" class="btn btn-cancel-cart">Hủy đơn hàng</button>
+                                    </form>
+                                @endif
+                            </div>
+
                             <button type="button" class="btn btn-dark" onclick="location.href='{{route('WEB.history')}}'">Theo dõi đơn hàng</button>
                         </div>
                     </div>
@@ -130,6 +144,20 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $('#formCartCancel').submit()
+                    }
+                })
+            })
+            $('.btn-payment').click(function () {
+                Swal.fire({
+                    text: 'Bạn có chắc chắn muốn thanh toán lại đơn hàng này ?',
+                    showDenyButton: true,
+                    // showCancelButton: true,
+                    confirmButtonColor: '#212B36',
+                    confirmButtonText: 'Xác nhận',
+                    denyButtonText: 'Huỷ bỏ',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#formCartPayment').submit()
                     }
                 })
             })

@@ -111,4 +111,76 @@ class AccountController extends Controller
         }
     }
 
+    public function vnpayment(Request $request,$id){
+        $code_cart = rand(100000,999999);
+        $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+        $vnp_Returnurl = route('return_vnpayment');
+        $vnp_TmnCode = "I4GCRF2G";//Mã website tại VNPAY
+        $vnp_HashSecret = "BNPBDYRETSOKSPATLJRFMCHOTFDEKXHB"; //Chuỗi bí mật
+
+        $vnp_TxnRef = $id; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_OrderInfo = 'Thanh toán đơn hàng số '. str($code_cart);
+        $vnp_OrderType = 'billpayment';
+        $vnp_Amount = $request->total *100;
+        $vnp_Locale = 'vn';
+        //$vnp_BankCode = 'NCB';
+        $vnp_IpAddr = $request->ip();
+        //Add Params of 2.0.1 Version
+        //$vnp_ExpireDate = $_POST['txtexpire'];
+
+        $inputData = array(
+            "vnp_Version" => "2.1.0",
+            "vnp_TmnCode" => $vnp_TmnCode,
+            "vnp_Amount" => $vnp_Amount,
+            "vnp_Command" => "pay",
+            "vnp_CreateDate" => date('YmdHis'),
+            "vnp_CurrCode" => "VND",
+            "vnp_IpAddr" => $vnp_IpAddr,
+            "vnp_Locale" => $vnp_Locale,
+            "vnp_OrderInfo" => $vnp_OrderInfo,
+            "vnp_OrderType" => $vnp_OrderType,
+            "vnp_ReturnUrl" => $vnp_Returnurl,
+            "vnp_TxnRef" => $vnp_TxnRef
+        );
+        //dd($inputData);
+        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+            $inputData['vnp_BankCode'] = $vnp_BankCode;
+        }
+        if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+            $inputData['vnp_Bill_State'] = $vnp_Bill_State;
+        }
+
+        //var_dump($inputData);
+        ksort($inputData);
+        $query = "";
+        $i = 0;
+        $hashdata = "";
+        foreach ($inputData as $key => $value) {
+            if ($i == 1) {
+                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+            } else {
+                $hashdata .= urlencode($key) . "=" . urlencode($value);
+                $i = 1;
+            }
+            $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        }
+
+        $vnp_Url = $vnp_Url . "?" . $query;
+        if (isset($vnp_HashSecret)) {
+            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
+            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+        }
+        return redirect($vnp_Url);
+    }
+
+    public function return_vnpayment(Request $request){
+        if($request->vnp_ResponseCode == "00") {
+            $cart = Cart::query()->findOrFail($request->vnp_TxnRef);
+            $cart->status = 1;
+            $cart->save();
+            return to_route('WEB.payment.success',["status" => "1" , "type" =>"vnpay"]);
+        } else {
+            return to_route('WEB.payment.success',["status" => "0" , "type" =>"vnpay"]);
+        }
+    }
 }
