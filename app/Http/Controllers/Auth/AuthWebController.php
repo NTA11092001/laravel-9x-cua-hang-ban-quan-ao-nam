@@ -109,12 +109,14 @@ class AuthWebController extends Controller
             'password.min' => 'Mật khẩu của bạn cần nhập ít nhất 8 ký tự',
         ]);
 
-        $data = $request->all();
-        $data['password'] = Hash::make($data['password']);
+        $data = $request->except(['password']);
+        $data['password'] = Hash::make($request->password);
         try {
             Member::query()->create($data);
             return response()->json([
                 'success' => true,
+                'username' => $data['phone'],
+                'password' => $request->password,
                 'message' => 'Đăng ký tài khoản thành công'
             ]);
         }catch (\Exception $e){

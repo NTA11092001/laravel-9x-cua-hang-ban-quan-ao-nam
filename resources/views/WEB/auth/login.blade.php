@@ -18,12 +18,12 @@
                 <!-- Username -->
                     <div class="mb-3">
                         <label class="form-label">Tài khoản (Số điện thoại hoặc email)</label>
-                        <input class="form-control" type="text" name="username" placeholder="Nhập tài khoản"/>
+                        <input class="form-control" type="text" name="username" placeholder="Nhập tài khoản" id="username"/>
                     </div>
                     <!-- Password -->
                     <div class="mb-3">
                         <label class="form-label">Mật khẩu</label>
-                        <input class="form-control" type="password" name="password" placeholder="Nhập mật khẩu"/>
+                        <input class="form-control" type="password" name="password" placeholder="Nhập mật khẩu" id="password"/>
                     </div>
                     <!-- Checkbox -->
                     <div class="d-lg-flex justify-content-between align-items-center mb-4">
