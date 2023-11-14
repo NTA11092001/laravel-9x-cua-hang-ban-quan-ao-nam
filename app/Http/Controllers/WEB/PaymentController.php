@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Transport;
 use Illuminate\Http\Request;
+use App\Http\Requests\WEB\DeliveryRequest;
 
 class PaymentController extends Controller
 {
@@ -18,32 +19,27 @@ class PaymentController extends Controller
         return view('WEB.cart.payment',compact('title','cart'));
     }
 
-    public function store(Request $request)
+    public function store(DeliveryRequest $request)
     {
-        $request->validate([
-            'name' => 'required|max:255|regex:/[A-Za-z]/',
-            'phone' => 'min:10|required|regex:/^0[1-9][0-9]{8}$/|max:10',
-            'email' => 'required|email',
-            'address' => 'required',
-        ], [
-            'name.required' => 'Bạn cần nhập họ tên người nhận',
-            'name.max' => 'Tên không được quá 255 ký tự',
-            'name.regex' => 'Tên bạn nhập phải là chữ cái',
-            'phone.required' => 'Bạn cần nhập số điện thoại',
-            'phone.min' => 'Số điện thoại bạn nhập phải ít nhất 10 ký tự',
-            'phone.max' => 'Số điện thoại bạn nhập được nhiều nhất 12 ký tự',
-            'phone.regex' => 'Số điện thoại bạn nhập phải là 1 số điện thoại ở Việt Nam',
-            'email.required' => 'Bạn cần nhập email',
-            'email.email' => 'Email bạn nhập không đúng định dạng',
-            'address.required' => 'Bạn cần nhập mật khẩu'
-        ]);
+        $request->validated();
         try {
+            $member_id = auth('member')->user()->id;
+            //Create Or Update Transport
+            $transport = $request->only(['name','phone','email','address','note']);
+            $transport['member_id']= $member_id;
+            $transport_old = Transport::query()->where('member_id', $member_id)->first();
+            if ($transport_old == '' || $transport_old == null){
+                Transport::query()->create($transport);
+            } elseif ($transport_old != '' || $transport_old != null){
+                $transport_old->update($transport);
+            }
+
             $cart_detail = \Cart::getContent();
             //Create Cart
             $cart['cart_date'] = date('Y-m-d');
             $cart['payment_type'] = 'cod';
             $cart['total'] = \Cart::getTotal();
-            $cart['member_id']=auth('member')->user()->id;
+            $cart['member_id']= $member_id;
             $cart['status'] = -1;
             $cart_insert = Cart::query()->create($cart);
             foreach ($cart_detail as $item){
@@ -55,16 +51,6 @@ class PaymentController extends Controller
 
             \Cart::clear();
 
-            //Create Or Update Transport
-            $transport = $request->only(['name','phone','email','address','note']);
-            $transport['member_id']=auth('member')->user()->id;
-            $transport_old = Transport::query()->where('member_id',auth('member')->user()->id)->first();
-            if ($transport_old == '' || $transport_old == null){
-                Transport::query()->create($transport);
-            } elseif ($transport_old != '' || $transport_old != null){
-                $transport_old->update($transport);
-            }
-
             return to_route('WEB.payment.success',["type"=>"cod"]);
         }catch (\Exception $e){
             return redirect()->back()->with('error',$e->getMessage());
@@ -72,28 +58,13 @@ class PaymentController extends Controller
 
     }
 
-    public function vnpay_payment(Request $request){
-        $request->validate([
-            'name' => 'required|max:255|regex:/[A-Za-z]/',
-            'phone' => 'min:10|required|regex:/^0[1-9][0-9]{8}$/|max:10',
-            'email' => 'required|email',
-            'address' => 'required',
-        ], [
-            'name.required' => 'Bạn cần nhập họ tên người nhận',
-            'name.max' => 'Tên không được quá 255 ký tự',
-            'name.regex' => 'Tên bạn nhập phải là chữ cái',
-            'phone.required' => 'Bạn cần nhập số điện thoại',
-            'phone.min' => 'Số điện thoại bạn nhập phải ít nhất 10 ký tự',
-            'phone.max' => 'Số điện thoại bạn nhập được nhiều nhất 12 ký tự',
-            'phone.regex' => 'Số điện thoại bạn nhập phải là 1 số điện thoại ở Việt Nam',
-            'email.required' => 'Bạn cần nhập email',
-            'email.email' => 'Email bạn nhập không đúng định dạng',
-            'address.required' => 'Bạn cần nhập mật khẩu'
-        ]);
+    public function vnpay_payment(DeliveryRequest $request)
+    {
+        $request->validated();
 
         //Create Or Update Transport
         $data_transport = $request->only(['name','phone','email','address','note']);
-        $data_transport['member_id']=auth('member')->user()->id;
+        $data_transport['member_id']= auth('member')->user()->id;
         $data_transport_old = Transport::query()->where('member_id',auth('member')->user()->id)->first();
         if ($data_transport_old == '' || $data_transport_old == null){
             Transport::query()->create($data_transport);
@@ -163,33 +134,30 @@ class PaymentController extends Controller
     }
 
     public function return_vnpay(Request $request){
+        $isSuccess = true;
         $cart_detail = \Cart::getContent();
         //Create Cart
         $cart['cart_date'] = date('Y-m-d');
         $cart['payment_type'] = 'vnpay';
         $cart['total'] = \Cart::getTotal();
-        $cart['member_id']=auth('member')->user()->id;
+        $cart['member_id']= auth('member')->user()->id;
         if($request->vnp_ResponseCode == "00") {
             $cart['status'] = 1;
-            $cart_insert = Cart::query()->create($cart);
-            foreach ($cart_detail as $item){
-                $product = Product::query()->findOrFail($item->id);
-                $product->soluong = $product->soluong-$item->quantity;
-                $product->save();
-                $cart_insert->cart_detail()->attach($item->id,['quantity'=>$item->quantity,'size'=>$item->attributes['size'],'price'=>$item->price]);
-            }
-            \Cart::clear();
-            return to_route('WEB.payment.success',["status" => "1" , "type" =>"vnpay"]);
         } else {
             $cart['status'] = 0;
-            $cart_insert = Cart::query()->create($cart);
-            foreach ($cart_detail as $item){
-                $product = Product::query()->findOrFail($item->id);
-                $product->soluong = $product->soluong-$item->quantity;
-                $product->save();
-                $cart_insert->cart_detail()->attach($item->id,['quantity'=>$item->quantity,'size'=>$item->attributes['size'],'price'=>$item->price]);
-            }
-            \Cart::clear();
+            $isSuccess = false;
+        }
+        $cart_insert = Cart::query()->create($cart);
+        foreach ($cart_detail as $item){
+            $product = Product::query()->findOrFail($item->id);
+            $product->soluong = $product->soluong-$item->quantity;
+            $product->save();
+            $cart_insert->cart_detail()->attach($item->id,['quantity'=>$item->quantity,'size'=>$item->attributes['size'],'price'=>$item->price]);
+        }
+        \Cart::clear();
+        if($isSuccess == true) {
+            return to_route('WEB.payment.success',["status" => "1" , "type" =>"vnpay"]);
+        } else {
             return to_route('WEB.payment.success',["status" => "0" , "type" =>"vnpay"]);
         }
     }

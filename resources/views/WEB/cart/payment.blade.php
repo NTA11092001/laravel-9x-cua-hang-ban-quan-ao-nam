@@ -1,19 +1,19 @@
 @extends('WEB.master')
 @section('content')
 @include('WEB.includes.payment_bar')
-@if(session('error'))
-    <div class="alert alert-danger bg-danger d-flex justify-content-center align-content-center h-auto pt-2 my-3">
-        <p class="text-center text-white">{{session('error')}}</p>
-    </div>
-@elseif ($errors->any())
-    <div class="alert alert-danger d-flex justify-content-center align-content-center bg-danger h-auto my-3">
-        <ul class="pt-2 text-white">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+{{--@if(session('error'))--}}
+{{--    <div class="alert alert-danger bg-danger d-flex justify-content-center align-content-center h-auto pt-2 my-3">--}}
+{{--        <p class="text-center text-white">{{session('error')}}</p>--}}
+{{--    </div>--}}
+{{--@elseif ($errors->any())--}}
+{{--    <div class="alert alert-danger d-flex justify-content-center align-content-center bg-danger h-auto my-3">--}}
+{{--        <ul class="pt-2 text-white">--}}
+{{--            @foreach ($errors->all() as $error)--}}
+{{--                <li>{{ $error }}</li>--}}
+{{--            @endforeach--}}
+{{--        </ul>--}}
+{{--    </div>--}}
+{{--@endif--}}
 <form action="{{route('WEB.payment.store')}}" method="POST" id="paymentForm">
 @csrf
 @method('post')
