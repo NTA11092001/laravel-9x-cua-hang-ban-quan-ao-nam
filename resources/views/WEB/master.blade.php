@@ -17,6 +17,16 @@
 
     @include('WEB.includes.scripts')
     @include('Validation.alert')
+    <script>
+        $('#btnSearch').click(function() {
+            var tukhoa = $('#keyWord').val()
+            if (tukhoa != ''){
+                 window.location.replace('https://' + window.location.hostname + '/tim-kiem/' + tukhoa)
+            } else {
+                SwalText('top-start','info','Bạn cần nhập từ khóa tìm kiếm!')
+            }
+        })
+    </script>
     @stack('scripts')
 </body>
 </html>

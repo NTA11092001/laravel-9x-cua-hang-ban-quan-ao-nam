@@ -106,6 +106,7 @@ Route::controller(AuthWebController::class)->group(function (){
 // WEB
 Route::controller(MainWebController::class)->group(function () {
     Route::get('/', 'index')->name('WEB.home.index');
+    Route::get('/tim-kiem/{search}', 'search')->name('WEB.home.search');
     Route::get('/lien-he', 'contact')->name('WEB.contact.index');
 });
 

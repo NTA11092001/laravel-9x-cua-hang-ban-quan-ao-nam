@@ -32,7 +32,7 @@ class ProductWebController extends Controller
     {
         $product = Product::query()->findOrFail($id);
         $similar = Product::query()->where('id','<>',$id)->where('status',1)->where('id_danhmuc',$product->id_danhmuc)->get();
-        $title = $product->ten;
+        $title = $product->ten.' '.$product->masp;
         return view('WEB.product.detail',compact('title','product','similar'));
     }
 

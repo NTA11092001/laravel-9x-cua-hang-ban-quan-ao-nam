@@ -25,16 +25,12 @@
         <button class="navmenu-icon-search js-button-search">
             <i class="fas fa-search"></i>
         </button>
-        <form action="{{route('WEB.home.index')}}" method="GET">
-            @csrf
-            @method('get')
-            <div class="navmenu-search js-search">
-                <input type="text" name="tukhoa" placeholder="Tìm kiếm">
-                <button class="navmenu-search-icon" name="timkiem" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </form>
+        <div class="navmenu-search js-search">
+            <input type="text" id="keyWord" placeholder="Tìm kiếm">
+            <button class="navmenu-search-icon" id="btnSearch" type="button">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
         <div class="navmenu-icon">
             <ul class="navmenu-icon-list">
                 @if(auth('member')->user() != null)

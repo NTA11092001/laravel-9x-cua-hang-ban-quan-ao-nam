@@ -22,7 +22,14 @@
                                         </div>
                                     </div>
                                     <div class="product_details">
-                                        <a class="link-offset-2 link-underline link-underline-opacity-0 text-dark" href="{{route('WEB.product.detail',['id'=>$item->id])}}"><h5>{{$item->ten}} {{$item->masp}}</h5></a>
+                                        <a class="link-offset-2 link-underline link-underline-opacity-0 text-dark" href="{{route('WEB.product.detail',['id'=>$item->id])}}">
+                                            @php
+                                                $productStr = $item->ten. ' ' .$item->masp;
+                                            @endphp
+                                            <h5>
+                                                {{strlen($productStr) >= 20 ? mb_substr($productStr,0,20).'...' : $productStr}}
+                                            </h5>
+                                        </a>
                                         <ul class="product_price list-unstyled">
                                             <a class="link-offset-2 link-underline link-underline-opacity-0 text-dark" href="{{route('WEB.product.detail',['id'=>$item->id])}}"><li class="old_price" @if($item->giakm != null) style="text-decoration: line-through" @endif>{{number_format($item->giathuong,0,',','.')}} VNĐ</li></a>
                                             @if($item->giakm != null) <a class="link-offset-2 link-underline link-underline-opacity-0 text-danger" href="{{route('WEB.product.detail',['id'=>$item->id])}}"><li class="new_price">{{number_format($item->giakm,0,',','.')}} VNĐ</li></a> @endif
