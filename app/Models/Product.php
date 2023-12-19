@@ -21,6 +21,7 @@ class Product extends Model
         'chitiet',
         'id_danhmuc',
         'status',
+        'reorder_level'
     ];
     protected $hidden = [
         'created_at',
@@ -37,4 +38,7 @@ class Product extends Model
             ->withPivot('quantity', 'size', 'price');
     }
 
+    public function stockTransaction(){
+        return $this->hasMany(StockTransactions::class,'product_id');
+    }
 }

@@ -14,6 +14,7 @@ use App\Http\Controllers\WEB\MainWebController;
 use App\Http\Controllers\CMS\MainCmsController;
 use App\Http\Controllers\Auth\AuthCmsController;
 use App\Http\Controllers\WEB\CartController;
+use App\Http\Controllers\CMS\SupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,7 +83,7 @@ Route::middleware('auth')->prefix('admin')->group(function (){
         Route::post('/delete', 'destroy')->name('admin.member.delete');
     });
 
-    Route::prefix('user')->controller(UserController::class)->group(function (){
+    Route::prefix('/user')->controller(UserController::class)->group(function (){
         Route::post('/store', 'store')->name('admin.user.store');
         Route::get('/edit','edit')->name('admin.user.edit');
         Route::post('/update','update')->name('admin.user.update');
@@ -92,6 +93,14 @@ Route::middleware('auth')->prefix('admin')->group(function (){
         Route::post('/password','password')->name('admin.user.password');
         Route::get('/{status}', 'index')->name('admin.user.index');
         Route::post('/destroy','delete')->name('admin.user.destroy');
+    });
+
+    Route::prefix('/supplier')->controller(SupplierController::class)->group(function (){
+        Route::get('/','index')->name('admin.supplier.index');
+        Route::post('/store','store')->name('admin.supplier.store');
+        Route::get('/edit','edit')->name('admin.supplier.edit');
+        Route::post('/update','update')->name('admin.supplier.update');
+        Route::post('/delete','delete')->name('admin.supplier.delete');
     });
 
 });

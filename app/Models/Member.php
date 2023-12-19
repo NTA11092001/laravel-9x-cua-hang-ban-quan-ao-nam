@@ -51,4 +51,9 @@ class Member extends Authenticatable
     public function transport(){
         return $this->hasOne(Transport::class,'member_id');
     }
+
+    public function cartStatusHistory(){
+        return $this->hasMany(CartStatusHistory::class,'member_cancel');
+    }
+
 }

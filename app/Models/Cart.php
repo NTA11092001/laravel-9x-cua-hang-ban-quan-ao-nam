@@ -13,9 +13,11 @@ class Cart extends Model
     protected $fillable = [
         'member_id',
         'cart_date',
+        'estimated_arrival_date',
+        'actual_arrival_date',
         'payment_type',
         'total',
-        'status',
+        'status'
     ];
     protected $hidden = [
         'created_at',
@@ -30,5 +32,9 @@ class Cart extends Model
 
     public function member(){
         return $this->belongsTo(Member::class,'member_id');
+    }
+
+    public function history(){
+        return $this->hasMany(CartStatusHistory::class,'cart_id');
     }
 }

@@ -6,14 +6,12 @@
         </a>
         <!-- Navbar nav -->
         <ul class="navbar-nav flex-column" id="sideNavbar">
-            @if(auth()->user()->level == 1)
             <li class="nav-item">
                 <a class="nav-link has-arrow {{ request()->routeIs('admin.home.index') ? 'active' : '' }}" href="{{route('admin.home.index')}}">
                     <i class="fa-solid fa-gauge-high nav-icon icon-xs me-2"></i>  Bảng điều khiển
                 </a>
 
             </li>
-            @endif
 
             <li class="nav-item">
                 <a class="nav-link has-arrow  collapsed {{ request()->routeIs('admin.category.index') || request()->routeIs('admin.category.create') ? 'active' : '' }}" href="#!" data-bs-toggle="collapse" data-bs-target="#navAuthentication" aria-expanded="false" aria-controls="navAuthentication">
@@ -60,6 +58,12 @@
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.cart.index') ? 'active' : '' }}" href="{{route('admin.cart.index')}}">
                     <i class="fa-solid fa-table-cells icon-xs me-2"></i> Danh sách đơn hàng
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.supplier.index') ? 'active' : '' }}" href="{{route('admin.supplier.index')}}">
+                    <i class="fa-solid fa-table-cells icon-xs me-2"></i> Danh sách nhà cung cấp
                 </a>
             </li>
 

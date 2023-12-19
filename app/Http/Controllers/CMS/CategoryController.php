@@ -38,7 +38,7 @@ class CategoryController extends Controller
         try {
             Categories::query()->create($data);
             return response()->json([
-                'success' => false,
+                'success' => true,
                 'message' => 'Thêm danh mục sản phẩm thành công'
             ]);
         }catch (\Exception $e){
