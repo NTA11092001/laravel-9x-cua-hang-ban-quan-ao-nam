@@ -15,6 +15,7 @@ use App\Http\Controllers\CMS\MainCmsController;
 use App\Http\Controllers\Auth\AuthCmsController;
 use App\Http\Controllers\WEB\CartController;
 use App\Http\Controllers\CMS\SupplierController;
+use App\Http\Controllers\CMS\StockTransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,6 +102,13 @@ Route::middleware('auth')->prefix('admin')->group(function (){
         Route::get('/edit','edit')->name('admin.supplier.edit');
         Route::post('/update','update')->name('admin.supplier.update');
         Route::post('/delete','delete')->name('admin.supplier.delete');
+    });
+
+    Route::prefix('/stock-transaction')->controller(StockTransactionController::class)->group(function (){
+        Route::get('/{type}','index')->name('admin.stockTransaction.index');
+        Route::get('/product/{type}','product')->name('admin.stockTransaction.product');
+        Route::get('/create/{type}','create')->name('admin.stockTransaction.create');
+        Route::post('/store','store')->name('admin.stockTransaction.store');
     });
 
 });

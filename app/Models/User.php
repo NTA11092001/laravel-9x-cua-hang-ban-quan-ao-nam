@@ -48,4 +48,8 @@ class User extends Authenticatable
     public function cartStatusHistory(){
         return $this->hasMany(CartStatusHistory::class,'user_id');
     }
+
+    public function stockTransaction(){
+        return $this->hasMany(StockTransactions::class,'user_id');
+    }
 }

@@ -1,6 +1,5 @@
 @extends('CMS.master')
 @section('content')
-    {{$suppliers}}
     <div class="container-fluid p-6">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-12">
@@ -8,7 +7,7 @@
                 <div class="border-bottom pb-4 mb-4 d-flex justify-content-between align-content-center">
                     <h3 class="mb-0 fw-bold">Danh sách nhà cung cấp</h3>
                     <button class="btn btn-dark btn-block" data-bs-toggle="modal" data-bs-target="#CreateSupplier">
-                        Thêm nhà cung cấp
+                        <i class="fas fa-plus-circle"></i> Thêm nhà cung cấp
                     </button>
                 </div>
             </div>
