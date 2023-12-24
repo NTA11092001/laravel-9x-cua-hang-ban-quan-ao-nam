@@ -33,6 +33,7 @@
                                     <th scope="col" class="text-white" style="width: 150px">Tên sản phẩm</th>
                                     <th scope="col" class="text-white text-center">Mã SP</th>
                                     <th scope="col" class="text-white text-center">Hình ảnh</th>
+                                    <th scope="col" class="text-white text-center">Số lượng</th>
                                     <th scope="col" class="text-white text-center" style="width: 180px">Giá thường (VNĐ)</th>
                                     <th scope="col" class="text-white text-center" style="width: 150px">Giá KM (VNĐ)</th>
                                     <th scope="col" class="text-white text-center" style="width: 120px">Danh mục</th>
@@ -48,9 +49,10 @@
                                         <td>{{$item->ten}}</td>
                                         <td class="text-center">{{$item->masp}}</td>
                                         <td><img src="{{asset($item->hinhanh)}}" height="150px"></td>
+                                        <td class="text-center">{{$item->soluong}}</td>
                                         <td class="text-center">{{number_format($item->giathuong,0,',','.')}}</td>
                                         <td class="text-center">{{$item->giakm ? number_format($item->giakm,0,',','.') : 'Không có giá KM'}}</td>
-                                        <td>{{$item->category->ten}}</td>
+                                        <td>{{$item->category != null ? $item->category->ten : 'Không có danh mục'}}</td>
 
                                         <td class="text-center">
                                             <select name="status" data-id="{{$item->id}}" style="background-color: transparent; border: none; outline: none">

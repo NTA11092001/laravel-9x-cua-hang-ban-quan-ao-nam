@@ -10,13 +10,13 @@
             <input type="hidden" name="id" value="{{$category->id}}">
             <div class="col-6">
                 <div class="mb-3">
-                    <label class="form-label">Tên danh mục</label>
+                    <label class="form-label">Tên danh mục (*)</label>
                     <input class="form-control form-control-lg" type="text" name="ten" placeholder="Nhập tên danh mục" value="{{$category->ten}}"/>
                 </div>
             </div>
             <div class="col-6">
                 <div class="mb-3">
-                    <label class="form-label">Thứ tự</label>
+                    <label class="form-label">Thứ tự (*)</label>
                     <input class="form-control form-control-lg" type="number" name="thutu" value="{{$category->thutu}}"/>
                 </div>
             </div>
@@ -104,7 +104,7 @@
             Swal.fire({
                 position: 'bottom-end',
                 icon: 'error',
-                text: 'Thứ tự phải là 1 số và lớn hơn 1',
+                text: 'Thứ tự phải là 1 số và lớn hơn 0',
                 showConfirmButton: false,
                 toast: false,
                 timer: 3500

@@ -18,11 +18,15 @@
                             <thead style="background-color: #212B36">
                             <tr>
                                 <th width="50px" class="text-white text-center">#</th>
-                                <th class="text-white">Tên sản phẩm</th>
-                                <th class="text-white">Tên nhà cung cấp</th>
+                                <th class="text-white" width="250px">@if($type == 'in') Tên sản phẩm @else Mã đơn hàng @endif</th>
+                                <th class="text-white">@if($type == 'in') Tên nhà cung cấp @else Chi tiết sản phẩm @endif</th>
                                 <th class="text-white">Người thực hiện</th>
-                                <th class="text-white text-center">Số lượng</th>
+                                @if($type == 'in')
+                                    <th class="text-white text-center">Số lượng</th>
+                                    <th class="text-white text-center">Giá nhập/Sản phẩm(VNĐ)</th>
+                                @endif
                                 <th class="text-white">Ngày {{$title_stock}}</th>
+                                <th class="text-white">Trạng thái</th>
                                 <th class="text-white text-center">Quản lý</th>
                             </tr>
                             </thead>
@@ -31,11 +35,53 @@
                                 @foreach($stocks as $i=>$item)
                                     <tr>
                                         <td scope="row" class="text-center">{{$i+1}}</td>
-                                        <td>{{$item->product->ten}}</td>
-                                        <td>{{$item->supplier->name}}</td>
+                                        <td>@if($type == 'in') {{$item->product->ten}} {{$item->product->masp}} @else DH{{$item->cart->id}} @endif</td>
+
+                                        <td>
+                                            @if($type == 'in')
+                                                {{$item->supplier->name}}
+                                            @else
+                                                @if(count($item->cart->cart_detail)>0)
+                                                    @foreach($item->cart->cart_detail as $cart_detail)
+                                                        <div class="list_cart-item no-border">
+                                                            <a href="">
+                                                                <img src="{{asset($cart_detail->hinhanh)}}" class="thumbnail" alt="{{$cart_detail->ten}}">
+                                                            </a>
+                                                            <div class="infoProduction">
+                                                                <h3 class="infoProduction_name">{{$cart_detail->ten}} {{$cart_detail->masp}}</h3>
+                                                                <div class="infoProduction_option">
+                                                                    Size: {{$cart_detail->pivot->size}}<br>
+                                                                    Số lượng: {{$cart_detail->pivot->quantity}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                @else
+
+                                                @endif
+                                            @endif
+                                        </td>
                                         <td>{{$item->user->name}}</td>
-                                        <td>{{$item->quantity}}</td>
+                                        @if($type == 'in')
+                                            <td class="text-center">{{$item->quantity}}</td>
+                                            <td class="text-center">{{$item->stock_in_price}}</td>
+                                        @endif
                                         <td>{{date('d/m/Y H:i:s',strtotime($item->created_at))}}</td>
+                                        <td>
+                                            @if($type == 'in')
+                                                @if($item->status==1)
+                                                    Đã nhập kho
+                                                @else
+                                                    Đang chờ phê duyệt
+                                                @endif
+                                            @else
+                                                @if($item->status==1)
+                                                    Đã xuất kho
+                                                @else
+                                                    Đang chờ phê duyệt
+                                                @endif
+                                            @endif
+                                        </td>
                                         <td class="text-center">
                                             <a class="btn btn-primary btn-sm" href="#"><i class="fas fa-edit"></i></a>
                                             <a class="btn btn-danger btn-sm btn-delete-stock" data-stock-id="{{$item->id}}"><i class="fas fa-trash-alt"></i></a>

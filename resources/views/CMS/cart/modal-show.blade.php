@@ -12,21 +12,36 @@
                 <div>Điện thoại: {{$transport->phone}}</div>
             </div>
             <div class="info_oder__head___col">
-                <h3><strong>TÌNH TRẠNG THANH TOÁN:</strong></h3>
-                <div>
+                <h3><strong>HÌNH THỨC THANH TOÁN:</strong></h3>
+                <div class="mb-3">
                     @if($cart->payment_type=='cod')
                         Thanh toán COD
                     @elseif($cart->payment_type=='vnpay')
                         Thanh toán VNPAY
                     @endif
                 </div>
+
+                <h3><strong>TÌNH TRẠNG THANH TOÁN:</strong></h3>
+                <div class="mb-3">
+                    @if($cart->bill_staus == 0)
+                        <span class="text-warning">@if($cart->payment_type == 'cod') Chưa thanh toán @else Thanh toán thất bại @endif</span>
+                    @elseif($cart->bill_staus == 1)
+                        <span class="text-success">@if($cart->payment_type == 'cod') Đã thanh toán @else Thanh toán thành công @endif</span>
+                    @endif
+                </div>
+
+                <h3><strong>TRẠNG THÁI:</strong></h3>
                 <p style="margin-top: 5px; font-style: italic;">
                     @if($cart->status == -1)
-                        <span class="text-warning">Đơn hàng mới</span>
+                        <span class="text-warning">Đã đặt hàng</span>
                     @elseif($cart->status == 0)
-                        <span class="text-primary">Chưa thanh toán</span>
+                        <span class="text-primary">Đang chuẩn bị hàng</span>
                     @elseif($cart->status == 1)
-                        <span class="text-success">Đã thanh toán</span>
+                        <span class="text-primary">Đang vận chuyển</span>
+                    @elseif($cart->status == 2)
+                        <span class="text-primary">Đang giao hàng</span>
+                    @elseif($cart->status == 3)
+                        <span class="text-success">Đã nhận hàng</span>
                     @elseif($cart->status == -2)
                         <span class="text-danger">Đã hủy</span>
                     @endif
@@ -34,7 +49,7 @@
             </div>
             <div class="info_oder__head___col">
                 <h3><strong>THỜI GIAN GIAO HÀNG:</strong></h3>
-                <div>Dự kiến giao hàng vào Thứ Bảy, {{date('d/m/Y',strtotime('+5 day',strtotime($cart->cart_date)))}}</div>
+                <div>Dự kiến giao hàng vào ngày {{date('d/m/Y',strtotime($cart->estimated_arrival_date))}}</div>
                 <div>Ghi chú: {{$transport->note ? $transport->note : 'Không'}}</div>
             </div>
 
@@ -89,13 +104,21 @@
             </div>
         </div>
     </div>
-    @if($cart->status == -1)
-        <form action="{{route('admin.cart.cancel',['id'=>$cart->id])}}" method="POST" id="formCartCancel" class="text-end">
-            @csrf
-            @method('post')
-            <button class="btn btn-danger btn-cancel-cart" type="button">Hủy đơn hàng</button>
-        </form>
-    @endif
+    <div class="d-flex justify-content-between  align-items-center">
+        @if($cart->status == -1 || $cart->status == -2)
+{{--            <form action="{{route('admin.cart.cancel',['id'=>$cart->id])}}" method="POST" id="formCartCancel" class="text-end">--}}
+{{--                @csrf--}}
+{{--                @method('post')--}}
+{{--                <button class="btn btn-danger btn-cancel-cart" type="button">Hủy đơn hàng</button>--}}
+{{--            </form>--}}
+        @elseif($cart->status == 0 || $cart->status == 1)
+            <form action="{{route('admin.cart.status',['cart_id'=>$cart->id,'cart_status'=>$cart->status+1])}}" method="POST" id="formChangeStatus" class="text-end">
+                @csrf
+                @method('post')
+                <button class="btn btn-primary btn-change-status" type="button">@if($cart->status == 0) Vận chuyển @elseif($cart->status == 1) Giao hàng @endif</button>
+            </form>
+        @endif
+    </div>
 </div>
 
 <script>
@@ -114,5 +137,28 @@
                 }
             })
         })
+
+        $('.btn-change-status').click(function() {
+            var text = ''
+            @if($cart->status == 0)
+                text += 'vận chuyển'
+            @elseif($cart->status == 1)
+                text += 'giao'
+            @endif
+            Swal.fire({
+                text: 'Bạn có chắc chắn muốn ' + text + ' đơn hàng này ?',
+                showDenyButton: true,
+                // showCancelButton: true,
+                confirmButtonColor: '#212B36',
+                confirmButtonText: 'Xác nhận',
+                denyButtonText: 'Huỷ bỏ',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#formChangeStatus').submit()
+                }
+            })
+        })
+
+
     })
 </script>

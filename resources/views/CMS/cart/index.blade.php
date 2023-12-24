@@ -35,6 +35,8 @@
                                 <th class="text-white">Ngày mua</th>
                                 <th class="text-white text-center">Giá tiền (VNĐ)</th>
                                 <th class="text-white text-center">Trạng thái</th>
+                                <th class="text-white text-center">Tình trạng xuất kho</th>
+                                <th class="text-white text-center" width="300px">Tình trạng thanh toán</th>
                                 <th class="text-white text-center">Quản lý</th>
                             </tr>
                             </thead>
@@ -47,20 +49,53 @@
                                         <td>{{$item->member->name}}</td>
                                         <td>{{date('d/m/Y',strtotime($item->cart_date))}}</td>
                                         <td class="text-center">{{number_format($item->total,0,',','.')}}</td>
-                                        <td class="text-center">
-                                            @if($item->status != -2)
-                                            <select name="status" data-id="{{$item->id}}" style="background-color: transparent; border: none; outline: none">
-                                                <option value="-1" @if($item->status == -1) selected @endif>Đơn hàng mới</option>
-                                                <option value="0" @if($item->status == 0) selected @endif>Chưa thanh toán</option>
-                                                <option value="1" @if($item->status == 1) selected @endif>Đã thanh toán</option>
-                                            </select>
-                                            @else
-                                                <span class="text-danger">Đã hủy</span>
-                                            @endif
+                                        <td style="text-align: center;vertical-align: center">
+                                            <div class="d-flex justify-content-between align-content-center">
+                                                <div>
+                                                    @if($item->status == -1)
+                                                        <span class="text-warning">Đã đặt hàng</span>
+                                                    @elseif($item->status == 0)
+                                                        <span class="text-primary">Đang chuẩn bị hàng</span>
+                                                    @elseif($item->status == 1)
+                                                        <span class="text-primary">Đang vận chuyển</span>
+                                                    @elseif($item->status == 2)
+                                                        <span class="text-primary">Đang giao hàng</span>
+                                                    @elseif($item->status == 3)
+                                                        <span class="text-success">Đã nhận hàng</span>
+                                                    @elseif($item->status == -2)
+                                                        <span class="text-danger">Đã hủy</span>
+                                                    @endif
+                                                </div>
+                                                <div>
+                                                    <a class="btn btn-primary btn-sm btn-show-status" data-bs-toggle="modal" data-bs-target="#ShowStatus" data-cart-id="{{$item->id}}"><i class="fas fa-eye"></i></a>
+                                                </div>
+                                            </div>
                                         </td>
                                         <td class="text-center">
-                                            <a class="btn btn-primary btn-sm btn-edit-cart" data-bs-toggle="modal" data-bs-target="#ShowCart" data-cart-id="{{$item->id}}"><i class="fas fa-eye"></i></a>
-                                            <a class="btn btn-danger btn-sm btn-delete-cart" data-cart-id="{{$item->id}}"><i class="fas fa-trash-alt"></i></a>
+                                            @if($item->stock == null)
+                                                <span class="text-primary">Chưa xuất kho</span>
+                                            @else
+                                                <span class="text-success">Đã xuất kho</span>
+                                            @endif
+                                        </td>
+                                        <td style="text-align: center;vertical-align: center">
+                                            <div class="d-flex justify-content-between align-content-center">
+                                                <div class="w-75 d-flex flex-wrap text-start">
+                                                    <div class="w-100">@if($item->payment_type == 'cod') Hình thức: COD @else Hình thức: VNPAY @endif</div>
+                                                    @if($item->bill_status == 0)
+                                                        <span class="text-warning">@if($item->payment_type == 'cod') Chưa thanh toán @else Thanh toán thất bại @endif</span>
+                                                    @elseif($item->bill_status == 1)
+                                                        <span class="text-success">@if($item->payment_type == 'cod') Đã thanh toán @else Thanh toán thành công @endif</span>
+                                                    @endif
+                                                </div>
+                                                <div class="w-25">
+                                                    <a class="btn btn-primary btn-sm btn-show-bill-status" data-bs-toggle="modal" data-bs-target="#ShowBillStatus" data-cart-id="{{$item->id}}"><i class="fas fa-eye"></i></a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <a class="btn btn-primary btn-sm btn-edit-cart" data-bs-toggle="modal" data-bs-target="#ShowCart" data-cart-id="{{$item->id}}"><i class="fas fa-edit"></i></a>
+{{--                                            <a class="btn btn-danger btn-sm btn-delete-cart" data-cart-id="{{$item->id}}"><i class="fas fa-trash-alt"></i></a>--}}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -86,7 +121,23 @@
     <div class="modal fade" id="ShowCart" tabindex="-1" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content" id="contentCart">
-                {{--                @include('CMS.product.modal-edit')--}}
+                {{--                @include('CMS.cart.modal-show')--}}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ShowStatus" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" id="contentStatus">
+                {{--                @include('CMS.cart.modal-status')--}}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ShowBillStatus" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" id="contentBillStatus">
+                {{--                @include('CMS.cart.modal-bill-status')--}}
             </div>
         </div>
     </div>
@@ -95,6 +146,26 @@
 @push('scripts')
     <script>
         $(function () {
+
+            $('.btn-show-status').click(function(){
+                var cartId = $(this).attr('data-cart-id')
+                if(cartId !== undefined) {
+                    $.get('{{route('admin.cart.showStatus')}}', {cart_id: cartId}, function(res) {
+                        $('#contentStatus').html(res)
+                        $('#ShowStatus').modal('show')
+                    })
+                }
+            })
+
+            $('.btn-show-bill-status').click(function(){
+                var cartId = $(this).attr('data-cart-id')
+                if(cartId !== undefined) {
+                    $.get('{{route('admin.cart.showBillStatus')}}', {cart_id: cartId}, function(res) {
+                        $('#contentBillStatus').html(res)
+                        $('#ShowBillStatus').modal('show')
+                    })
+                }
+            })
 
             $('.btn-edit-cart').click(function(){
                 var cartId = $(this).attr('data-cart-id')
@@ -137,25 +208,6 @@
                     })
 
                 }
-            })
-
-            $('select[name="status"]').change(function() {
-                let cart_id = $(this).attr('data-id')
-                let status = $(this).val()
-                let data = { id: cart_id, status: status}
-
-                $.post('{{route('admin.cart.status')}}', data, function(res) {
-                    if(res.success) {
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            text: res.message,
-                            showConfirmButton: false,
-                            timer: 4000,
-                            toast: true,
-                        });
-                    }
-                })
             })
 
         })

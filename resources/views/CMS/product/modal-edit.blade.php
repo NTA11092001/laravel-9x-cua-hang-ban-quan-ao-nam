@@ -10,13 +10,13 @@
         <div class="row">
             <div class="col-6">
                 <div class="mb-3">
-                    <label class="form-label">Tên sản phẩm</label>
+                    <label class="form-label">Tên sản phẩm (*)</label>
                     <input class="form-control form-control-lg" type="text" name="ten" placeholder="Nhập tên sản phẩm" value="{{$product->ten}}"/>
                 </div>
             </div>
             <div class="col-6">
                 <div class="mb-3">
-                    <label class="form-label">Mã sản phẩm</label>
+                    <label class="form-label">Mã sản phẩm (*)</label>
                     <input class="form-control form-control-lg" type="text" name="masp" placeholder="Nhập mã sản phẩm" value="{{$product->masp}}"/>
                 </div>
             </div>
@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-6">
                 <div class="mb-3">
-                    <label class="form-label">Giá thường (đơn vị VNĐ)</label>
+                    <label class="form-label">Giá thường (đơn vị VNĐ) (*)</label>
                     <input class="form-control form-control-lg" type="number" name="giathuong" placeholder="Nhập giá thường" value="{{$product->giathuong}}"/>
                 </div>
             </div>
@@ -39,7 +39,7 @@
 
         <div class="row">
             <div class="col-6">
-                <label class="form-label">Danh mục sản phẩm</label>
+                <label class="form-label">Danh mục sản phẩm (*)</label>
                 <select class="form-control form-select-lg" name="id_danhmuc">
                     <option value="">--Chọn danh mục sản phẩm--</option>
                     @foreach($categories as $item)
@@ -61,19 +61,21 @@
         <div class="row">
             <div class="col-6">
                 <div class="mb-3">
-                    <label class="form-label">Số lượng</label>
-                    <input class="form-control form-control-lg" type="number" name="soluong" placeholder="Nhập số lượng" value="{{$product->soluong}}"/>
+                    <label class="form-label">Mức đặt hàng lại (*)</label>
+                    <input class="form-control form-control-lg" type="number" name="reorder_level" placeholder="Nhập mức đặt hàng lại" value="{{$product->reorder_level}}"/>
                 </div>
             </div>
             <div class="col-6">
                 <div class="mb-3">
-                    <label class="form-label">Hình ảnh đại diện</label>
+                    <label class="form-label">Hình ảnh đại diện (*)</label>
                     <input type="file" class="form-control form-control-lg" name="hinhanh" id="fileEditProduct">
-                    <div class="mt-3 show-images-edit-product d-flex justify-content-center">
-                        <img src="{{asset($product->hinhanh)}}" alt="{{$product->ten}}" height="100" class="d-inline-block me-2">
-                    </div>
-                    <div class="mt-3 show-images-update-product d-flex justify-content-center">
+                    <div class="mb-3">
+                        <div class="mt-3 show-images-edit-product d-flex justify-content-center">
+                            <img src="{{asset($product->hinhanh)}}" alt="{{$product->ten}}" height="100" class="d-inline-block me-2">
+                        </div>
+                        <div class="mt-3 show-images-update-product d-flex justify-content-center">
 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -110,7 +112,7 @@
 <script>
     $(function () {
 
-        $("input[name='soluong']").inputSpinner()
+        $("input[type='number']").inputSpinner()
 
         CKEDITOR.replace( 'chitiet' );
 

@@ -17,7 +17,8 @@ class Cart extends Model
         'actual_arrival_date',
         'payment_type',
         'total',
-        'status'
+        'status',
+        'bill_status'
     ];
     protected $hidden = [
         'created_at',
@@ -36,5 +37,13 @@ class Cart extends Model
 
     public function history(){
         return $this->hasMany(CartStatusHistory::class,'cart_id');
+    }
+
+    public function stock(){
+        return $this->hasOne(StockTransactions::class,'cart_id');
+    }
+
+    public function bill_history(){
+        return $this->hasMany(BillHistory::class,'cart_id')->with('cart_detail');
     }
 }

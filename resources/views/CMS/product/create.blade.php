@@ -21,13 +21,13 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Tên sản phẩm</label>
+                                        <label class="form-label">Tên sản phẩm (*)</label>
                                         <input class="form-control form-control-lg" type="text" name="ten" placeholder="Nhập tên sản phẩm" />
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Mã sản phẩm</label>
+                                        <label class="form-label">Mã sản phẩm (*)</label>
                                         <input class="form-control form-control-lg" type="text" name="masp" placeholder="Nhập mã sản phẩm"/>
                                     </div>
                                 </div>
@@ -36,7 +36,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Giá thường (đơn vị VNĐ)</label>
+                                        <label class="form-label">Giá thường (đơn vị VNĐ) (*)</label>
                                         <input class="form-control form-control-lg" type="number" name="giathuong" placeholder="Nhập giá thường" />
                                     </div>
                                 </div>
@@ -50,7 +50,7 @@
 
                             <div class="row">
                                 <div class="col-6">
-                                    <label class="form-label">Danh mục sản phẩm</label>
+                                    <label class="form-label">Danh mục sản phẩm (*)</label>
                                     <select class="form-control form-select-lg" name="id_danhmuc">
                                         <option value="">--Chọn danh mục sản phẩm--</option>
                                         @foreach($categories as $item)
@@ -72,13 +72,13 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Số lượng</label>
-                                        <input class="form-control form-control-lg" type="number" name="soluong" placeholder="Nhập số lượng" />
+                                        <label class="form-label">Mức đặt hàng lại (*)</label>
+                                        <input class="form-control form-control-lg" type="number" name="reorder_level" placeholder="Nhập mức đặt hàng lại" value="10"/>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Hình ảnh đại diện</label>
+                                        <label class="form-label">Hình ảnh đại diện (*)</label>
                                         <input type="file" class="form-control form-control-lg" name="hinhanh" id="fileProduct">
                                         <div class="mt-3 show-images-product d-flex justify-content-center">
 
@@ -118,8 +118,6 @@
 @push('scripts')
     <script>
         $(function () {
-
-            $("input[name='soluong']").inputSpinner()
 
             CKEDITOR.replace( 'chitiet' );
 

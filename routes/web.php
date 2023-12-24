@@ -74,6 +74,8 @@ Route::middleware('auth')->prefix('admin')->group(function (){
     Route::prefix('/cart')->controller(CartCmsController::class)->group(function (){
         Route::get('/', 'index')->name('admin.cart.index');
         Route::get('/show','show')->name('admin.cart.show');
+        Route::get('/show-status','showStatus')->name('admin.cart.showStatus');
+        Route::get('/show-bill-status','showBillStatus')->name('admin.cart.showBillStatus');
         Route::post('/status','status')->name('admin.cart.status');
         Route::post('/delete','destroy')->name('admin.cart.delete');
         Route::post('/cancel/{id}','cancel')->name('admin.cart.cancel');
@@ -109,6 +111,7 @@ Route::middleware('auth')->prefix('admin')->group(function (){
         Route::get('/product/{type}','product')->name('admin.stockTransaction.product');
         Route::get('/create/{type}','create')->name('admin.stockTransaction.create');
         Route::post('/store','store')->name('admin.stockTransaction.store');
+        Route::post('/caculator','caculator')->name('admin.stockTransaction.caculator');
     });
 
 });
@@ -141,7 +144,7 @@ Route::prefix('gio-hang')->controller(CartController::class)->group(function (){
 });
 
 Route::middleware('member')->group(function (){
-    Route::controller(PaymentController::class)->group(function (){
+    Route::prefix('payment')->controller(PaymentController::class)->group(function (){
         Route::get('/dat-hang', 'index')->name('WEB.payment');
         Route::post('/vnpay_payment','vnpay_payment')->name('vnpay_payment');
         Route::get('/return_vnpay','return_vnpay')->name('return_vnpay');
@@ -154,9 +157,12 @@ Route::middleware('member')->group(function (){
         Route::get('/','index')->name('WEB.account');
         Route::get('/lich-su', 'history')->name('WEB.history');
         Route::get('/xem-don-hang','show')->name('WEB.cart_detail');
+        Route::get('/show-status','showStatus')->name('WEB.cart.showStatus');
+        Route::get('/show-bill-status','showBillStatus')->name('WEB.cart.showBillStatus');
         Route::post('/password','password')->name('WEB.member.password');
         Route::post('/update','update')->name('WEB.member.update');
         Route::post('/cancel/{id}','cancel')->name('WEB.cart.cancel');
+        Route::post('/success','success')->name('WEB.cart.success');
         Route::post('/vnpayment/{id}','vnpayment')->name('vnpayment');
         Route::get('/return_vnpayment','return_vnpayment')->name('return_vnpayment');
     });

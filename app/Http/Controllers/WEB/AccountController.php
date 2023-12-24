@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\WEB;
 
 use App\Http\Controllers\Controller;
+use App\Models\BillHistory;
 use App\Models\Cart;
+use App\Models\CartStatusHistory;
 use App\Models\Member;
 use App\Models\Product;
 use App\Models\Transport;
@@ -97,18 +99,45 @@ class AccountController extends Controller
     public function cancel($id)
     {
         try {
+            CartStatusHistory::query()->create(['cart_id'=>$id,'cart_status'=>-2]);
             $cart = Cart::query()->findOrFail($id);
-            foreach ($cart->cart_detail as $item){
-                $product = Product::query()->findOrFail($item->id);
-                $product->soluong = $product->soluong+$item->pivot->quantity;
-                $product->save();
-            }
             $cart->status = -2;
             $cart->save();
-            return to_route('admin.cart.index')->with('success', 'Hủy đơn hàng thành công!');
+            return to_route('WEB.history')->with('success', 'Hủy đơn hàng thành công!');
         }catch (\Exception $e){
-            return to_route('admin.cart.index')->with('error', $e->getMessage());
+            return to_route('WEB.history')->with('error', $e->getMessage());
         }
+    }
+
+    public function success(Request $request)
+    {
+        $data = $request->only(['cart_id','cart_status']);
+        try {
+            CartStatusHistory::query()->create($data);
+            $cart = Cart::query()->findOrFail($request->cart_id);
+            $cart->status = 3;
+            $cart->bill_status = 1;
+            $cart->save();
+            if($request->bill_status != null){
+                $billHistory = $request->only(['cart_id','bill_status']);
+                BillHistory::query()->create($billHistory);
+            }
+            return to_route('WEB.history')->with('success', 'Nhận hàng thành công!');
+        }catch (\Exception $e){
+            return to_route('WEB.history')->with('error', $e->getMessage());
+        }
+    }
+
+    public function showStatus(Request $request){
+        $id = $request->cart_id;
+        $statusHistory = CartStatusHistory::query()->where('cart_id',$request->cart_id)->orderBy('id','desc')->get();
+        return view('WEB.account.modal-status',compact('statusHistory','id'))->render();
+    }
+
+    public function showBillStatus(Request $request){
+        $id = $request->cart_id;
+        $billHistory = BillHistory::query()->where('cart_id',$request->cart_id)->orderBy('id','desc')->get();
+        return view('WEB.account.modal-bill-status',compact('billHistory','id'))->render();
     }
 
     public function vnpayment(Request $request,$id){
@@ -175,12 +204,14 @@ class AccountController extends Controller
 
     public function return_vnpayment(Request $request){
         if($request->vnp_ResponseCode == "00") {
+            BillHistory::query()->create(['cart_id'=>$request->vnp_TxnRef,'bill_status'=>1]);
             $cart = Cart::query()->findOrFail($request->vnp_TxnRef);
-            $cart->status = 1;
+            $cart->bill_status = 1;
             $cart->save();
-            return to_route('WEB.payment.success',["status" => "1" , "type" =>"vnpay"]);
+            return to_route('WEB.payment.success',["bill_status" => "1" , "type" =>"vnpay" , "cart_id" => $request->vnp_TxnRef]);
         } else {
-            return to_route('WEB.payment.success',["status" => "0" , "type" =>"vnpay"]);
+            BillHistory::query()->create(['cart_id'=>$request->vnp_TxnRef,'bill_status'=>0]);
+            return to_route('WEB.payment.success',["bill_status" => "0" , "type" =>"vnpay" , "cart_id" => $request->vnp_TxnRef]);
         }
     }
 }

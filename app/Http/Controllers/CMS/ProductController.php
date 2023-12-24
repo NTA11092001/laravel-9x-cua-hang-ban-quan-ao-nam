@@ -24,22 +24,21 @@ class ProductController extends Controller
     public function store(Request $request){
         $request->validate([
             'ten' => 'required|max:191',
-            'masp' => 'required|unique:products',
+            'masp' => 'required|unique:products,masp',
+            'reorder_level' => 'required',
             'giathuong' => 'required',
             'id_danhmuc'=> 'required',
-            'soluong'=> 'required|regex:/[0-9]/',
             'hinhanh' => 'required|mimes:jpeg,jpg,png',
         ], [
             'ten.required' => 'Bạn cần nhập tên sản phẩm',
             'ten.max' => 'Tên sản phẩm quá dài',
             'masp.required' => 'Bạn cần nhập mã sản phẩm',
             'masp.unique' => 'Mã sản phẩm bị trùng',
+            'reorder_level.required' => 'Bạn cần nhập mức đặt hàng lại',
             'giathuong.required' => 'Bạn cần nhập giá thường',
             'id_danhmuc.required' => 'Bạn cần chọn danh mục sản phẩm',
-            'soluong.required' => 'Bạn cần nhập số lượng',
-            'soluong.regex' => 'Số lượng phải là chữ số',
             'hinhanh.required' => 'Bạn cần tải lên hình ảnh đại diện',
-            'hinhanh.mimes' => 'Hình ảnh đại diện phải là hình ảnh',
+            'hinhanh.mimes' => 'Hình ảnh đại diện phải là hình ảnh'
         ]);
         $data = $request->except(['hinhanh','images']);
         // thêm 1 ảnh
@@ -85,18 +84,18 @@ class ProductController extends Controller
         $product = Product::query()->findOrFail($id);
         $request->validate([
             'ten' => 'required|max:191',
-            'masp' => 'required',
+            'masp' => 'required|unique:products,masp,'.$request->id,
+            'reorder_level' => 'required',
             'giathuong' => 'required',
-            'id_danhmuc'=> 'required',
-            'soluong'=> 'required|regex:/[0-9]/'
+            'id_danhmuc'=> 'required'
         ], [
             'ten.required' => 'Bạn cần nhập tên sản phẩm',
             'ten.max' => 'Tên sản phẩm quá dài',
             'masp.required' => 'Bạn cần nhập mã sản phẩm',
+            'masp.unique' => 'Mã sản phẩm bị trùng',
+            'reorder_level.required' => 'Bạn cần nhập mức đặt hàng lại',
             'giathuong.required' => 'Bạn cần nhập giá thường',
-            'id_danhmuc.required' => 'Bạn cần chọn danh mục sản phẩm',
-            'soluong.required' => 'Bạn cần nhập số lượng',
-            'soluong.regex' => 'Số lượng phải là chữ số'
+            'id_danhmuc.required' => 'Bạn cần chọn danh mục sản phẩm'
         ]);
         $data = $request->except(['id','hinhanh','images']);
 

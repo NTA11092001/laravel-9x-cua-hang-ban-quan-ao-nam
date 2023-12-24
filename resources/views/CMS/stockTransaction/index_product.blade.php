@@ -23,28 +23,24 @@
                                         <th class="text-white text-center" rowspan="2">Số lượng còn lại</th>
                                     @elseif($type == 'out')
                                         <th class="text-white" rowspan="2">Mã đơn hàng</th>
-                                        <th class="text-white text-center" colspan="2">Chi tiết sản phẩm cần xuất kho</th>
+                                        <th class="text-white text-center">Chi tiết sản phẩm cần xuất kho</th>
                                     @endif
                                     <th class="text-white" rowspan="2">Quản lý</th>
-                                </tr>
-                                <tr>
-                                    @if($type == 'out')
-                                        <th class="text-white">Tên sản phẩm</th>
-                                        <th class="text-white" width="230">Số lượng cần xuất kho</th>
-                                    @endif
                                 </tr>
                             </thead>
                                 @if($type == 'in')
                                     @if(count($data_array) > 0)
                                         <tbody class="text-dark">
                                             @foreach($data_array as $i=>$item)
-                                                <td>{{$i+1}}</td>
-                                                <td>{{$item->ten}} {{$item->masp}}</td>
-                                                <td class="text-center">{{$item->soluong}}</td>
-                                                <td>
-                                                    <a class="btn btn-dark btn-block" href="{{route('admin.stockTransaction.create',$type)}}">
-                                                    <i class="fas fa-plus-circle"></i> Nhập kho</a>
-                                                </td>
+                                                <tr>
+                                                    <td>{{$i+1}}</td>
+                                                    <td>{{$item->ten}} {{$item->masp}}</td>
+                                                    <td class="text-center">{{$item->soluong}}</td>
+                                                    <td>
+                                                        <a class="btn btn-dark btn-block" href="{{route('admin.stockTransaction.create',['type'=>$type,'product_id'=>$item->id])}}">
+                                                        <i class="fas fa-plus-circle"></i> Nhập kho</a>
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     @else
@@ -63,29 +59,27 @@
                                                     <td>DH{{$item->id}}</td>
                                                     @if(count($item->cart_detail)>0)
                                                         <td>
-                                                            <div class="container-fluid d-flex flex-column">
-                                                                @foreach($item->cart_detail as $cart_detail)
-                                                                    <div class="container-fluid mb-1">
-                                                                        {{$cart_detail->ten}} {{$cart_detail->masp}}:
+                                                            @foreach($item->cart_detail as $cart_detail)
+                                                                <div class="list_cart-item no-border">
+                                                                    <a href="">
+                                                                        <img src="{{asset($cart_detail->hinhanh)}}" class="thumbnail" alt="{{$cart_detail->ten}}">
+                                                                    </a>
+                                                                    <div class="infoProduction">
+                                                                        <h3 class="infoProduction_name">{{$cart_detail->ten}} {{$cart_detail->masp}}</h3>
+                                                                        <div class="infoProduction_option">
+                                                                            Size: {{$cart_detail->pivot->size}}<br>
+                                                                            Số lượng: {{$cart_detail->pivot->quantity}}
+                                                                        </div>
                                                                     </div>
-                                                                @endforeach
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="container-fluid d-flex flex-column">
-                                                                @foreach($item->cart_detail as $cart_detail)
-                                                                    <div class="container-fluid mb-1">
-                                                                        {{$cart_detail->pivot->quantity}}
-                                                                    </div>
-                                                                @endforeach
-                                                            </div>
+                                                                </div>
+                                                            @endforeach
                                                         </td>
                                                     @else
                                                         <td></td>
                                                         <td></td>
                                                     @endif
                                                     <td>
-                                                        <a class="btn btn-dark btn-block" href="{{route('admin.stockTransaction.create',$type)}}">
+                                                        <a class="btn btn-dark btn-block" href="{{route('admin.stockTransaction.create',['type'=>$type,'cart_id'=>$item->id])}}">
                                                             <i class="fas fa-plus-circle"></i> Xuất kho
                                                         </a>
                                                     </td>

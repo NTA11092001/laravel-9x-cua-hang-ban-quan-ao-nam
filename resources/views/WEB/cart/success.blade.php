@@ -7,7 +7,21 @@
             <div class="col-4">
                 <div class="page_checkout_col_codeOder">
                     <h3 class="my_order_code">MÃ ĐƠN HÀNG: DH{{$cart_detail->id}}</h3>
-                    <p>Trạng thái: <span class="color-success">@if($cart_detail->status == 1) Đã thanh toán @elseif($cart_detail->status == 0) Chưa thanh toán @elseif($cart_detail->status == -1) Đơn hàng mới @endif</span></p>
+                    <p>Trạng thái:
+                        @if($cart_detail->status == -1)
+                            <span class="text-warning">Đã đặt hàng</span>
+                        @elseif($cart_detail->status == 0)
+                            <span class="text-primary">Đang chuẩn bị hàng</span>
+                        @elseif($cart_detail->status == 1)
+                            <span class="text-primary">Đang vận chuyển</span>
+                        @elseif($cart_detail->status == 2)
+                            <span class="text-primary">Đang giao hàng</span>
+                        @elseif($cart_detail->status == 3)
+                            <span class="text-success">Đã nhận hàng</span>
+                        @elseif($cart_detail->status == -2)
+                            <span class="text-danger">Đã hủy</span>
+                        @endif
+                    </p>
 
                     <hr>
                     <ul class="list-checkout-info">
@@ -20,6 +34,17 @@
                         <li>
                             <h3 class="title_codeOder">HÌNH THỨC THANH TOÁN:</h3>
                             <p>@if($cart_detail->payment_type == 'cod') Thanh toán COD @elseif($cart_detail->payment_type == 'vnpay') Thanh toán VNPAY @endif</p>
+
+                        </li>
+                        <li>
+                            <h3 class="title_codeOder">TRẠNG THÁI THANH TOÁN:</h3>
+                            <p>
+                                @if($cart_detail->bill_status == 0)
+                                    <span class="text-warning">@if($cart_detail->payment_type == 'cod') Chưa thanh toán @else Thanh toán thất bại @endif</span>
+                                @elseif($cart_detail->bill_status == 1)
+                                    <span class="text-success">@if($cart_detail->payment_type == 'cod') Đã thanh toán @else Thanh toán thành công @endif</span>
+                                @endif
+                            </p>
 
                         </li>
                         <li>
@@ -57,7 +82,7 @@
                                         <td width="80%">
                                             <div class="list_cart_temp1-item border-0">
                                                 <a href="https://aristino.com/quan-au-nam-aristino-atr00203.html" target="_blank">
-                                                    <img src="{{$item->hinhanh}}" class="thumbnail" alt="{{$item->ten}}">
+                                                    <img src="{{asset($item->hinhanh)}}" class="thumbnail" alt="{{$item->ten}}">
                                                 </a>
                                                 <div class="infoProduction">
                                                     <h3 class="infoProduction_name">{{$item->ten}} {{$item->masp}}</h3>
@@ -102,7 +127,7 @@
 
                         <div class="d-flex justify-content-between  align-items-center">
                             <div class="d-flex justify-content-start">
-                                @if($cart_detail->status == 0 && $cart_detail->payment_type=='vnpay')
+                                @if($cart_detail->bill_status == 0 && $cart_detail->payment_type=='vnpay')
                                     <form action="{{route('vnpayment',['id'=>$cart_detail->id])}}" method="POST" id="formCartPayment" class="text-end">
                                         @csrf
                                         @method('post')

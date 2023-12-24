@@ -53,27 +53,29 @@ class AuthWebController extends Controller
         $username = $request->username;
         if(!is_numeric($username)) {
             $member = Member::query()->where('email', $username )->first();
+            $text_user = 'email';
         } else {
             $member = Member::query()->where('phone', $username )->first();
+            $text_user = 'phone';
         }
 
         try {
             if(!$member) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Người dùng không tồn tại'
+                    'message' => 'Người dùng không tồn tại!'
                 ]);
             }else{
-                if (Auth::guard('member')->attempt(['phone' => $username, 'password' => request('password')], request('remember') ? true : false) || Auth::guard('member')->attempt(['email' => $username, 'password' => request('password')], request('remember') ? true : false)) {
+                if (Auth::guard('member')->attempt([$text_user => $username, 'password' => request('password')], request('remember') ? true : false)) {
                     return response()->json([
                         'success' => true,
-                        'message' => 'Đăng nhập thành công'
+                        'message' => 'Đăng nhập thành công!'
                     ]);
                 }
                 elseif (!Hash::check($request->password, $member->password)) {
                     return response()->json([
                         'success' => false,
-                        'message' => 'Sai mật khẩu. Vui lòng thử lại.'
+                        'message' => 'Sai mật khẩu. Vui lòng thử lại!'
                     ]);
                 }
 

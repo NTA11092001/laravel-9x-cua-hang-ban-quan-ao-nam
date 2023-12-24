@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\WEB;
 
 use App\Http\Controllers\Controller;
+use App\Models\BillHistory;
 use App\Models\Cart;
+use App\Models\CartStatusHistory;
 use App\Models\Product;
 use App\Models\Transport;
 use Illuminate\Http\Request;
@@ -36,22 +38,25 @@ class PaymentController extends Controller
 
             $cart_detail = \Cart::getContent();
             //Create Cart
+            $cart = array();
+            $cart['bill_status'] = 0;
+            $cart['status'] = -1;
             $cart['cart_date'] = date('Y-m-d');
             $cart['payment_type'] = 'cod';
             $cart['total'] = \Cart::getTotal();
             $cart['member_id']= $member_id;
-            $cart['status'] = -1;
+            $cart['estimated_arrival_date'] =  date( 'Y-m-d', strtotime( '+2 day' ) );
             $cart_insert = Cart::query()->create($cart);
             foreach ($cart_detail as $item){
-                $product = Product::query()->findOrFail($item->id);
-                $product->soluong = $product->soluong-$item->quantity;
-                $product->save();
                 $cart_insert->cart_detail()->attach($item->id,['quantity'=>$item->quantity,'size'=>$item->attributes['size'],'price'=>$item->price]);
             }
+            $new_record = Cart::query()->where('member_id',auth('member')->user()->id)->orderBy('id','desc')->first();
+            CartStatusHistory::query()->create(['cart_id'=>$new_record->id,'cart_status'=>-1]);
+            BillHistory::query()->create(['cart_id'=>$new_record->id,'bill_status'=>0]);
 
             \Cart::clear();
 
-            return to_route('WEB.payment.success',["type"=>"cod"]);
+            return to_route('WEB.payment.success',["type"=>"cod","cart_id"=>$new_record->id]);
         }catch (\Exception $e){
             return redirect()->back()->with('error',$e->getMessage());
         }
@@ -141,24 +146,27 @@ class PaymentController extends Controller
         $cart['payment_type'] = 'vnpay';
         $cart['total'] = \Cart::getTotal();
         $cart['member_id']= auth('member')->user()->id;
+        $cart['status'] = -1;
+        $cart['estimated_arrival_date'] =  date( 'Y-m-d', strtotime( '+2 day' ) );
         if($request->vnp_ResponseCode == "00") {
-            $cart['status'] = 1;
+            $cart['bill_status'] = 1;
         } else {
-            $cart['status'] = 0;
+            $cart['bill_status'] = 0;
             $isSuccess = false;
         }
         $cart_insert = Cart::query()->create($cart);
         foreach ($cart_detail as $item){
-            $product = Product::query()->findOrFail($item->id);
-            $product->soluong = $product->soluong-$item->quantity;
-            $product->save();
             $cart_insert->cart_detail()->attach($item->id,['quantity'=>$item->quantity,'size'=>$item->attributes['size'],'price'=>$item->price]);
         }
         \Cart::clear();
+        $new_record = Cart::query()->where('member_id',auth('member')->user()->id)->orderBy('id','desc')->first();
+        CartStatusHistory::query()->create(['cart_id'=>$new_record->id,'cart_status'=>-1]);
         if($isSuccess == true) {
-            return to_route('WEB.payment.success',["status" => "1" , "type" =>"vnpay"]);
+            BillHistory::query()->create(['cart_id'=>$new_record->id,'bill_status'=>1]);
+            return to_route('WEB.payment.success',["bill_status" => "1" , "type" =>"vnpay","cart_id" => $new_record->id]);
         } else {
-            return to_route('WEB.payment.success',["status" => "0" , "type" =>"vnpay"]);
+            BillHistory::query()->create(['cart_id'=>$new_record->id,'bill_status'=>0]);
+            return to_route('WEB.payment.success',["bill_status" => "0" , "type" =>"vnpay", "cart_id" => $new_record->id]);
         }
     }
 
@@ -167,33 +175,25 @@ class PaymentController extends Controller
         if($request->type == "cod") {
             $title = 'ĐẶT HÀNG THÀNH CÔNG';
         } else {
-            if ($request->status == "1"){
+            if ($request->bill_status == "1"){
                 $title = 'THANH TOÁN THÀNH CÔNG';
             } else {
                 $title = 'THANH TOÁN KHÔNG THÀNH CÔNG';
             }
         }
         $cart = \Cart::getContent();
-        $cart_detail = Cart::query()->where('member_id',auth('member')->user()->id)->orderBy('id','desc')->first();
+        $cart_detail = Cart::query()->findOrFail($request->cart_id);
         $transport = Transport::query()->where('member_id',auth('member')->user()->id)->first();
         return view('WEB.cart.success',compact('title','cart','cart_detail','transport'));
     }
 
     public function status(Request $request){
         try {
+            CartStatusHistory::query()->create(['cart_id'=>$request->id,'cart_status'=>-2,'member_cancel'=>auth('member')->user()->id]);
             $cart = Cart::query()->findOrFail($request->id);
-            if ($cart->status == 0){
-                return to_route('WEB.history')->with('info', 'Đơn hàng đã được xác nhận!');
-            }else{
-                foreach ($cart->cart_detail as $item){
-                    $product = Product::query()->findOrFail($item->id);
-                    $product->soluong = $product->soluong+$item->pivot->quantity;
-                    $product->save();
-                }
-                $cart->status = -2;
-                $cart->save();
-                return to_route('WEB.history')->with('success', 'Hủy đơn hàng thành công!');
-            }
+            $cart->status = -2;
+            $cart->save();
+            return to_route('WEB.history')->with('success', 'Hủy đơn hàng thành công!');
         }catch (\Exception $e){
             return to_route('WEB.history')->with('error', $e->getMessage());
         }

@@ -25,14 +25,14 @@ class CategoryController extends Controller
     {
         $request->validate([
             'ten' => 'required|max:255|regex:/[A-Za-z]/',
-            'thutu' => 'required|unique:categories,thutu|regex:/[0-9]/',
+            'thutu' => 'required|regex:/[0-9]/|unique:categories,thutu',
         ], [
-            'ten.required' => 'Bạn cần nhập tên',
+            'ten.required' => 'Bạn cần nhập tên danh mục',
             'ten.max' => 'Tên không được quá 255 ký tự',
             'ten.regex' => 'Tên bạn nhập phải là chữ cái',
             'thutu.required' => 'Bạn cần nhập số thứ tự',
             'thutu.regex' => 'Thứ tự bạn nhập phải là chữ số',
-            'thutu.unique'=>'Đã có thứ tự',
+            'thutu.unique'=>'Số thứ tự đã có trước đó',
         ]);
         $data = $request->all();
         try {
@@ -60,13 +60,14 @@ class CategoryController extends Controller
     {
         $request->validate([
             'ten' => 'required|max:255|regex:/[A-Za-z]/',
-            'thutu' => 'required|regex:/[0-9]/',
+            'thutu' => 'required|regex:/[0-9]/|unique:categories,thutu,'.$request->id,
         ], [
-            'ten.required' => 'Bạn cần nhập tên',
+            'ten.required' => 'Bạn cần nhập tên danh mục',
             'ten.max' => 'Tên không được quá 255 ký tự',
             'ten.regex' => 'Tên bạn nhập phải là chữ cái',
             'thutu.required' => 'Bạn cần nhập số thứ tự',
             'thutu.regex' => 'Thứ tự bạn nhập phải là chữ số',
+            'thutu.unique'=>'Số thứ tự đã có trước đó',
         ]);
         $data = $request->except(['id']);
         $id = $request->id;

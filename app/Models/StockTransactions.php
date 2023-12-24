@@ -13,8 +13,10 @@ class StockTransactions extends Model
     protected $fillable = [
         'product_id',
         'supplier_id',
+        'cart_id',
         'user_id',
         'type',
+        'stock_in_price',
         'quantity',
         'transaction_date',
         'note',
@@ -35,5 +37,9 @@ class StockTransactions extends Model
 
     public function user(){
         return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function cart(){
+        return $this->belongsTo(Cart::class,'cart_id');
     }
 }

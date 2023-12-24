@@ -27,9 +27,9 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255|regex:/[A-Za-z]/',
-            'phone' => 'min:10|required|regex:/^0[1-9][0-9]{8}$/|max:10|unique:users,phone',
+            'phone' => 'min:10|max:10|required|regex:/^0[1-9][0-9]{8}$/|unique:users,phone',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8',
         ], [
             'name.required' => 'Bạn cần nhập tên',
             'name.max' => 'Tên không được quá 255 ký tự',
@@ -43,7 +43,7 @@ class UserController extends Controller
             'email.email' => 'Email bạn nhập không đúng định dạng',
             'email.unique'=>'Email đã được sử dụng',
             'password.required' => 'Bạn cần nhập mật khẩu',
-            'password.min' => 'Mật khẩu của bạn cần nhập ít nhất 6 ký tự',
+            'password.min' => 'Mật khẩu của bạn cần nhập ít nhất 8 ký tự',
         ]);
 
         $data = $request->all();
@@ -113,8 +113,8 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255|regex:/[A-Za-z]/',
-            'phone' => 'min:10|required|regex:/^0[1-9][0-9]{8}$/|max:10',
-            'email' => 'required|email',
+            'phone' => 'min:10|max:10|required|regex:/^0[1-9][0-9]{8}$/|unique:users,phone,'.auth()->user()->id,
+            'email' => 'required|email|unique:users,email,'.auth()->user()->id,
         ], [
             'name.required' => 'Bạn cần nhập tên',
             'name.max' => 'Tên không được quá 255 ký tự',
@@ -123,8 +123,10 @@ class UserController extends Controller
             'phone.min' => 'Số điện thoại bạn nhập phải ít nhất 10 ký tự',
             'phone.max' => 'Số điện thoại bạn nhập được nhiều nhất 10 ký tự',
             'phone.regex' => 'Số điện thoại bạn nhập phải là 1 số điện thoại ở Việt Nam',
+            'phone.unique'=>'Số điện thoại đã được sử dụng',
             'email.required' => 'Bạn cần nhập email',
             'email.email' => 'Email bạn nhập không đúng định dạng',
+            'email.unique'=>'Email đã được sử dụng',
         ]);
 
         $data = $request->all();

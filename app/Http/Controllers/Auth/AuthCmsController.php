@@ -42,7 +42,7 @@ class AuthCmsController extends Controller
     }
 
     public function login() {
-        $title = 'Đăng nhập trang quản trị';
+        $title = 'BAL shop';
         return view('CMS.auth.login',compact('title'));
     }
 
@@ -50,34 +50,37 @@ class AuthCmsController extends Controller
     {
         $request->validate([
             'username' => 'required',
-            'password' => 'required',
+            'password' => 'required|min:8',
         ], [
             'username.required' => 'Bạn cần nhập tài khoản',
             'password.required' => 'Bạn cần nhập mật khẩu',
+            'password.min' => 'Mật khẩu của bạn cần nhập ít nhất 8 ký tự'
         ]);
         $username = $request->username;
         if(!is_numeric($username)) {
             $user = User::query()->where('email', $username )->first();
+            $text_user = 'email';
         } else {
             $user = User::query()->where('phone', $username )->first();
+            $text_user = 'phone';
         }
 
         try {
             if(!$user) {
-                return redirect()->back()->with('some_error','Người dùng không tồn tại');
+                return redirect()->back()->with('some_error','Tài khoản không tồn tại / không hợp lệ!');
             }else{
-                if (Auth::guard()->attempt(['phone' => $username, 'password' => request('password'), 'status' => 1], request('remember') ? true : false) || Auth::guard()->attempt(['email' => $username, 'password' => request('password'), 'status' => 1], request('remember') ? true : false)) {
+                if (Auth::guard()->attempt([$text_user => $username, 'password' => request('password'), 'status' => 1], request('remember') ? true : false)) {
                     if (auth()->user()->level == 1){
-                        return to_route('admin.home.index')->with('notice_success','Đăng nhập thành công');
+                        return to_route('admin.home.index')->with('notice_success','Đăng nhập thành công!');
                     }elseif (auth()->user()->level == 2){
-                        return to_route('admin.cart.index')->with('notice_success','Đăng nhập thành công');
+                        return to_route('admin.cart.index')->with('notice_success','Đăng nhập thành công!');
                     }
                 }
                 elseif (!Hash::check($request->password, $user->password)) {
-                    return to_route('login')->with('some_error','Sai mật khẩu. Vui lòng thử lại.');
+                    return to_route('login')->with('some_error','Sai mật khẩu. Vui lòng thử lại!');
                 }
                 else  {
-                    return to_route('login')->with('some_error','Tài khoản của bạn chưa được phê duyệt');
+                    return to_route('login')->with('some_error','Tài khoản của bạn chưa được phê duyệt!');
                 }
 
             }
@@ -94,7 +97,7 @@ class AuthCmsController extends Controller
     public function registerPost(Request $request){
         $request->validate([
             'name' => 'required|max:255|regex:/[A-Za-z]/',
-            'phone' => 'min:10|required|regex:/^0[1-9][0-9]{8}$/|max:10|unique:users,phone',
+            'phone' => 'min:10|max:10|required|regex:/^0[1-9][0-9]{8}$/|unique:users,phone',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8',
         ], [
@@ -103,7 +106,7 @@ class AuthCmsController extends Controller
             'name.regex' => 'Tên bạn nhập phải là chữ cái',
             'phone.required' => 'Bạn cần nhập số điện thoại',
             'phone.min' => 'Số điện thoại bạn nhập phải ít nhất 10 ký tự',
-            'phone.max' => 'Số điện thoại bạn nhập được nhiều nhất 12 ký tự',
+            'phone.max' => 'Số điện thoại bạn nhập được nhiều nhất 10 ký tự',
             'phone.regex' => 'Số điện thoại bạn nhập phải là 1 số điện thoại ở Việt Nam',
             'phone.unique'=>'Số điện thoại đã được sử dụng',
             'email.required' => 'Bạn cần nhập email',
