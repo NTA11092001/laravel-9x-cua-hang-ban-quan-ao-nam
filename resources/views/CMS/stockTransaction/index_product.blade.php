@@ -35,7 +35,7 @@
                                                 <tr>
                                                     <td>{{$i+1}}</td>
                                                     <td>{{$item->ten}} {{$item->masp}}</td>
-                                                    <td class="text-center">{{$item->soluong}}</td>
+                                                    <td class="text-center">{{$item->soluong ? $item->soluong : 0}}</td>
                                                     <td>
                                                         <a class="btn btn-dark btn-block" href="{{route('admin.stockTransaction.create',['type'=>$type,'product_id'=>$item->id])}}">
                                                         <i class="fas fa-plus-circle"></i> Nhập kho</a>
@@ -80,7 +80,7 @@
                                                     @endif
                                                     <td>
                                                         <a class="btn btn-dark btn-block" href="{{route('admin.stockTransaction.create',['type'=>$type,'cart_id'=>$item->id])}}">
-                                                            <i class="fas fa-plus-circle"></i> Xuất kho
+                                                            @if($type == 'in') <i class="fas fa-plus-circle"></i> @else <i class="fas fa-minus-circle"></i> @endif {{ucfirst($title_stock)}}
                                                         </a>
                                                     </td>
                                                 </tr>
@@ -89,7 +89,7 @@
                                     @else
                                         <tbody>
                                             <tr class="text-center">
-                                                <td colspan="8">Không có sản phẩm cần xuất kho nào</td>
+                                                <td colspan="8">Không có sản phẩm cần {{$title_stock}} nào</td>
                                             </tr>
                                         </tbody>
                                     @endif

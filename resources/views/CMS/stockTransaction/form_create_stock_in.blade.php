@@ -12,7 +12,7 @@
                 <tbody>
                     <tr>
                         <td width="60%">
-                            <div class="list_cart_temp1-item no-border">
+                            <div class="list_cart-item no-border">
                                 <a href="">
                                     <img src="{{asset($product->hinhanh)}}" class="thumbnail" alt="{{$product->ten}}">
                                 </a>
@@ -58,7 +58,7 @@
     <div>
         <input type="hidden" name="product_id" value="{{$product->id}}">
         <input type="hidden" name="type" value="in">
-        <button class="btn btn-dark" type="submit" >Thêm nhập kho</button>
+        <button class="btn btn-dark" type="submit"><i class="fa-solid fa-plus-circle"></i> Nhập kho</button>
     </div>
 </div>
 

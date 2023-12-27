@@ -12,20 +12,26 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
         $product = Product::query()->findOrFail($request->id);
-        \Cart::add([
-            'id' => $product->id,
-            'name' => $product->ten,
-            'price' => $product->giakm ? $product->giakm : $product->giathuong,
-            'quantity' => $request->quantity ? $request->quantity : 1,
-            'attributes' => array(
-                'image' => $product->hinhanh,
-                'masp' => $product->masp,
-                'size' => $request->size ? $request->size : 38
-            )
-        ]);
-        session()->flash('success', 'Sản phẩm đã được thêm vào giỏ hàng thành công!');
+        $quantity = $request->quantity ? $request->quantity : 1;
+        if($product->soluong - $quantity < 0){
+            session()->flash('error', 'Số lượng bạn mua vượt quá số lượng sản phẩm còn lại!');
+            return redirect()->back();
+        } else {
+            \Cart::add([
+                'id' => $product->id,
+                'name' => $product->ten,
+                'price' => $product->giakm ? $product->giakm : $product->giathuong,
+                'quantity' => $quantity,
+                'attributes' => array(
+                    'image' => $product->hinhanh,
+                    'masp' => $product->masp,
+                    'size' => $request->size ? $request->size : 38
+                )
+            ]);
+            session()->flash('success', 'Sản phẩm đã được thêm vào giỏ hàng thành công!');
+            return to_route('WEB.cart.list');
+        }
 
-        return to_route('WEB.cart.list');
     }
 
     public function updateCart(Request $request)

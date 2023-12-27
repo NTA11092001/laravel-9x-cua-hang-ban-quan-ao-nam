@@ -18,11 +18,11 @@ class StockTransactionController extends Controller
         if ($type == 'in'){
             $title = 'Danh sách phiếu nhập kho';
             $title_stock = 'nhập kho';
-            $stocks = StockTransactions::query()->where('type','in')->paginate(10);
+            $stocks = StockTransactions::query()->whereHas('product')->where('type','in')->paginate(10);
         } else if ($type == 'out'){
             $title = 'Danh sách phiếu xuất kho';
             $title_stock = 'xuất kho';
-            $stocks = StockTransactions::query()->where('type','out')->paginate(10);
+            $stocks = StockTransactions::query()->whereHas('cart')->where('type','out')->paginate(10);
         }
         return view('CMS.stockTransaction.index_stock',compact('title','type','stocks','title_stock'));
     }
@@ -31,7 +31,7 @@ class StockTransactionController extends Controller
         if ($type == 'in'){
             $title = 'Danh sách sản phẩm cần nhập kho';
             $title_stock = 'nhập kho';
-            $data_array = Product::query()->whereRaw('soluong <= reorder_level')->get();
+            $data_array = Product::query()->whereRaw('soluong <= reorder_level')->orDoesntHave('stockTransaction')->get();
         } else if ($type == 'out'){
             $title = 'Danh sách sản phẩm cần xuất kho';
             $title_stock = 'xuất kho';
@@ -100,7 +100,7 @@ class StockTransactionController extends Controller
             }
             //dd($data);
             StockTransactions::query()->create($data);
-            return to_route('admin.stockTransaction.index',$request->type)->with('notice_success','Thêm '.$title_stock.' thành công');
+            return to_route('admin.stockTransaction.index',$request->type)->with('notice_success',ucfirst($title_stock).' thành công');
         } catch (\Exception $e){
             return redirect()->back()->with('some_error',$e);
         }

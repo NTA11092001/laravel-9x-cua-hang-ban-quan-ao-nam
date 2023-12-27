@@ -109,7 +109,7 @@
                 </div>
 
                 @if($product->giakm != null)
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col-md-6">
                         <h6 class="product-price">Giá Khuyến Mãi</h6>
                     </div>
@@ -118,6 +118,17 @@
                     </div>
                 </div>
                 @endif
+
+                <div class="row mb-3">
+
+                    <div class="col-md-6">
+                        <h6 class="product-price">Số lượng sản phẩm còn lại:</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="product-price-1">{{$product->soluong}}</h6>
+                    </div>
+                </div>
+
                 <div class="wrapper1">
 
                     <div class="tab-wrapper">

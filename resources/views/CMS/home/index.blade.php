@@ -12,70 +12,109 @@
     </div>
 
     <div class="row">
-            <div class="row justify-content-between align-items-center">
-                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                    <div class="item-report mb-4 d-flex flex-row border border-2 border-dark rounded-2 p-2 border-muted" style="height: 100px">
-                        <i class="fa-solid fa-square-check fa-6x" style="color: #589F4C"></i>
-                        <div class="w-75 d-flex flex-column text-center" style="font-family: NeoSansIntelBold, sans-serif;font-weight: 700;text-transform: uppercase;">
-                            <h6 class="mt-2">Đơn hàng đã thanh toán</h6>
-                            <h6>{{$total_success}}</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                    <div class="item-report mb-4 d-flex flex-row border border-2 border-dark rounded-2 p-2 border-muted" style="height: 100px">
-
-                        <i class="fa-solid fa-square-minus fa-6x" style="color: #F59E34"></i>
-                        <div class="w-75 d-flex flex-column text-center" style="font-family: NeoSansIntelBold, sans-serif;font-weight: 700;text-transform: uppercase;">
-                            <h6 class="mt-2">Đơn hàng đã xác nhận</h6>
-                            <h6>{{$total_wait}}</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                    <div class="item-report mb-4 d-flex flex-row border border-2 border-dark rounded-2 p-2 border-muted" style="height: 100px">
-                        <i class="fa-solid fa-square-plus fa-6x"></i>
-                        <div class="w-75 d-flex flex-column text-center" style="font-family: NeoSansIntelBold, sans-serif;font-weight: 700;text-transform: uppercase;">
-                            <h6 class="mt-2">Đơn hàng mới</h6>
-                            <h6>{{$total_cancel}}</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-start align-items-center">
-
-                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                    <div class="item-report mb-4 d-flex flex-row border border-2 border-dark rounded-2 p-2 border-muted" style="height: 100px">
-                        <i class="fa-solid fa-square-xmark fa-6x" style="color: #dd0000"></i>
-                        <div class="w-75 d-flex flex-column text-center" style="font-family: NeoSansIntelBold, sans-serif;font-weight: 700;text-transform: uppercase;">
-                            <h6 class="mt-2">Đơn hàng đã hủy</h6>
-                            <h6>{{$total_fail}}</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                    <div class="item-report mb-4 d-flex flex-row border border-2 border-dark rounded-2 p-2 border-muted" style="height: 100px">
-                        <i class="fa-solid fa-money-bill-wave fa-5x" style="color: #589F4C"></i>
-                        <div class="w-75 d-flex flex-column text-center" style="font-family: NeoSansIntelBold, sans-serif;font-weight: 700;text-transform: uppercase;">
-                            <h6 class="mt-2">Đã thanh toán</h6>
-                            <h6>{{number_format($payment_success, 0, ',', '.')}} VND</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                    <div class="item-report mb-4 d-flex flex-row border border-2 border-dark rounded-2 p-2 border-muted" style="height: 100px">
-                        <i class="fa-solid fa-money-bill fa-5x" style="color: #F59E34"></i>
-                        <div class="w-75 d-flex flex-column text-center" style="font-family: NeoSansIntelBold, sans-serif;font-weight: 700;text-transform: uppercase;">
-                            <h6>Chưa thanh toán</h6>
-                            <h6>{{number_format($payment_wait,0, ',', '.')}} VND</h6>
-                        </div>
+        <div class="row justify-content-between align-items-center">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                <div class="item-report mb-4 d-flex flex-row border border-2 border-dark rounded-2 p-2 border-muted dashboard-height">
+                    <i class="fa-solid fa-clipboard-list fa-6x text-warning"></i>
+                    <div class="w-75 d-flex flex-column text-center dashboard-text">
+                        <h6 class="mt-2">Đơn hàng mới</h6>
+                        <h6>{{$data_total['total_new']}}</h6>
                     </div>
                 </div>
             </div>
 
-            <div class="row justify-content-start align-items-center">
-                <div class="col-6">
-                    <div class="text-center mb-3">Thống kê trạng thái đơn hàng</div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                <div class="item-report mb-4 d-flex flex-row border border-2 border-dark rounded-2 p-2 border-muted dashboard-height">
+                    <i class="fa-solid fa-box-open fa-6x text-primary"></i>
+                    <div class="w-75 d-flex flex-column text-center dashboard-text">
+                        <h6 class="mt-2">Đơn hàng đang chuẩn bị</h6>
+                        <h6>{{$data_total['total_ready']}}</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                <div class="item-report mb-4 d-flex flex-row border border-2 border-dark rounded-2 p-2 border-muted dashboard-height">
+                    <i class="fa-solid fa-truck fa-5x text-primary"></i>
+                    <div class="w-75 d-flex flex-column text-center dashboard-text">
+                        <h6 class="mt-2">Đơn hàng đang vận chuyển</h6>
+                        <h6>{{$data_total['total_delivery']}}</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                <div class="item-report mb-4 d-flex flex-row border border-2 border-dark rounded-2 p-2 border-muted dashboard-height">
+                    <i class="fa-solid fa-truck fa-5x text-primary"></i>
+                    <div class="w-75 d-flex flex-column text-center dashboard-text">
+                        <h6 class="mt-2">Đơn hàng đang giao</h6>
+                        <h6>{{$data_total['total_shipping']}}</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                <div class="item-report mb-4 d-flex flex-row border border-2 border-dark rounded-2 p-2 border-muted dashboard-height">
+                    <i class="fa-solid fa-circle-check fa-6x text-success"></i>
+                    <div class="w-75 d-flex flex-column text-center dashboard-text">
+                        <h6 class="mt-2">Đơn hàng đã hoàn thành</h6>
+                        <h6>{{$data_total['total_complete']}}</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                <div class="item-report mb-4 d-flex flex-row border border-2 border-dark rounded-2 p-2 border-muted dashboard-height">
+                    <i class="fa-solid fa-circle-xmark fa-6x text-danger"></i>
+                    <div class="w-75 d-flex flex-column text-center dashboard-text">
+                        <h6 class="mt-2">Đơn hàng đã hủy</h6>
+                        <h6>{{$data_total['total_cancel']}}</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                <div class="item-report mb-4 d-flex flex-row border border-2 border-dark rounded-2 p-2 border-muted dashboard-height">
+                    <i class="fa-solid fa-square-check fa-6x text-success"></i>
+                    <div class="w-75 d-flex flex-column text-center dashboard-text">
+                        <h6 class="mt-2">Đơn hàng đã thanh toán</h6>
+                        <h6>{{$data_total['payment_success']}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                <div class="item-report mb-4 d-flex flex-row border border-2 border-dark rounded-2 p-2 border-muted dashboard-height">
+
+                    <i class="fa-solid fa-square-xmark fa-6x text-warning"></i>
+                    <div class="w-75 d-flex flex-column text-center dashboard-text">
+                        <h6 class="mt-2">Đơn hàng chưa thanh toán</h6>
+                        <h6>{{$data_total['payment_fail']}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                <div class="item-report mb-4 d-flex flex-row border border-2 border-dark rounded-2 p-2 border-muted dashboard-height">
+                    <i class="fa-solid fa-money-bill-wave fa-5x text-success"></i>
+                    <div class="w-75 d-flex flex-column text-center dashboard-text">
+                        <h6 class="mt-2">Tổng tiền đã thanh toán</h6>
+                        <h6>{{number_format($data_total['total_payment_success'], 0, ',', '.')}} VND</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                <div class="item-report mb-4 d-flex flex-row border border-2 border-dark rounded-2 p-2 border-muted dashboard-height">
+                    <i class="fa-solid fa-money-bill fa-5x text-warning"></i>
+                    <div class="w-75 d-flex flex-column text-center dashboard-text">
+                        <h6>Tổng tiền chưa thanh toán</h6>
+                        <h6>{{number_format($data_total['total_payment_fail'],0, ',', '.')}} VND</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="row justify-content-center align-items-center">
+                <div class="col-12 p-6">
+                    <div class="text-center"><h4>Thống kê trạng thái đơn hàng</h4></div>
                     <div>
                         <canvas id="myChart"></canvas>
                     </div>
@@ -91,29 +130,53 @@
                                 labels: ['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'],
                                 datasets: [
                                     {
-                                        label: 'Đã thanh toán',
-                                        data: {{$order_success}},
-                                        borderWidth: 1,
-                                        backgroundColor: '#589F4C',
-                                    },
-                                    {
-                                        label: 'Đã xác nhận',
-                                        data: {{$order_wait}},
-                                        borderWidth: 1,
-                                        backgroundColor: '#F59E34',
-                                    },
-                                    {
                                         label: 'Đơn hàng mới',
-                                        data: {{$order_cancel}},
+                                        data: {{$data_12_month['order_new']}},
                                         borderWidth: 1,
-                                        backgroundColor: '#637381',
+                                        backgroundColor: '#F59E0B',
                                     },
                                     {
-                                        label: 'Đã hủy',
-                                        data: {{$order_fail}},
+                                        label: 'Đơn hàng đang chuẩn bị',
+                                        data: {{$data_12_month['order_ready']}},
                                         borderWidth: 1,
-                                        backgroundColor: '#DD0000',
-                                    }
+                                        backgroundColor: '#624BFF',
+                                    },
+                                    {
+                                        label: 'Đơn hàng đang vận chuyển',
+                                        data: {{$data_12_month['order_delivery']}},
+                                        borderWidth: 1,
+                                        backgroundColor: '#624BFF',
+                                    },
+                                    {
+                                        label: 'Đơn hàng đang giao',
+                                        data: {{$data_12_month['order_shipping']}},
+                                        borderWidth: 1,
+                                        backgroundColor: '#624BFF',
+                                    },
+                                    {
+                                        label: 'Đơn hàng đã hoàn thành',
+                                        data: {{$data_12_month['order_complete']}},
+                                        borderWidth: 1,
+                                        backgroundColor: '#198754',
+                                    },
+                                    {
+                                        label: 'Đơn hàng đã hủy',
+                                        data: {{$data_12_month['order_cancel']}},
+                                        borderWidth: 1,
+                                        backgroundColor: '#DC3545',
+                                    },
+                                    {
+                                        label: 'Đơn hàng chưa thanh toán',
+                                        data: {{$data_12_month['fail_pay']}},
+                                        borderWidth: 1,
+                                        backgroundColor: '#F59E0B'
+                                    },
+                                    {
+                                        label: 'Đơn hàng đã thanh toán',
+                                        data: {{$data_12_month['success_pay']}},
+                                        borderWidth: 1,
+                                        backgroundColor: '#198754'
+                                    },
                                 ]
                             },
                             options: {
@@ -128,33 +191,34 @@
 
                 </div>
 
-                <div class="col-6">
-                    <div class="text-center mb-3">Thống kê doanh thu</div>
+                <div class="col-12 p-10">
+                    <div class="text-center"><h4>Thống kê doanh thu</h4></div>
                     <div>
                         <canvas id="Total"></canvas>
                     </div>
 
                     <script>
-                        const line = document.getElementById('Total');
+                        var total = document.getElementById('Total');
 
-                        new Chart(line, {
+                        new Chart(total, {
                             type: 'line',
                             data: {
                                 labels: ['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'],
                                 datasets: [
+
                                     {
-                                        label: 'Đã thanh toán',
-                                        data: {{$success_pay}},
+                                        label: 'Số tiền chưa thanh toán',
+                                        data: {{$data_12_month['total_fail_12_month']}},
                                         borderWidth: 1,
-                                        backgroundColor: '#589F4C',
-                                        borderColor: '#589F4C',
+                                        backgroundColor: '#F59E0B',
+                                        borderColor: '#F59E0B'
                                     },
                                     {
-                                        label: 'Chưa thanh toán',
-                                        data: {{$wait_pay}},
+                                        label: 'Số tiền đã thanh toán',
+                                        data: {{$data_12_month['total_success_12_month']}},
                                         borderWidth: 1,
-                                        backgroundColor: '#F59E34',
-                                        borderColor: '#F59E34',
+                                        backgroundColor: '#198754',
+                                        borderColor: '#198754'
                                     }
                                 ]
                             },

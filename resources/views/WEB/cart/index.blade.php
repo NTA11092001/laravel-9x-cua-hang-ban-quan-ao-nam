@@ -28,17 +28,21 @@
                             <tr>
                                 <td>
                                     <div class="img">
+                                        <a href="{{route('WEB.product.detail',$item->id)}}">
                                         <img src="{{asset($item->attributes['image'])}}" class="img-responsive" style="width:100%">
+                                        </a>
                                         <input type="hidden" name="image[]" value="{{$item->attributes['image']}}">
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="info">
-                                        <h5 class="nomargin">{{$item->name}}</h5>
-                                        <p>
-                                            <label>Mã SP</label>: {{$item->attributes['masp']}}<span></span>
-                                        </p>
-                                    </div>
+                                    <a class="text-decoration-none text-dark" href="{{route('WEB.product.detail',$item->id)}}">
+                                        <div class="info">
+                                            <h5 class="nomargin">{{$item->name}}</h5>
+                                            <p>
+                                                <label>Mã SP</label>: {{$item->attributes['masp']}}<span></span>
+                                            </p>
+                                        </div>
+                                    </a>
                                 </td>
                                 <td>
                                     <div class="price">

@@ -7,7 +7,7 @@
                 <!-- Page header -->
                 <div class="border-bottom pb-4 mb-4 d-flex flex-row justify-content-between align-content-center">
                     <div>
-                        <h3 class="mb-0 fw-bold">Thêm {{$title_stock}}</h3>
+                        <h3 class="mb-0 fw-bold">{{ucfirst($title_stock)}}</h3>
                     </div>
                     <a class="btn btn-dark btn-block" href="{{route('admin.stockTransaction.product',$type)}}">
                         <i class="fa fa-arrow-alt-circle-left"></i> Quay lại

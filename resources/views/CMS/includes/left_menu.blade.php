@@ -8,7 +8,7 @@
         <ul class="navbar-nav flex-column" id="sideNavbar">
             <li class="nav-item">
                 <a class="nav-link has-arrow {{ request()->routeIs('admin.home.index') ? 'active' : '' }}" href="{{route('admin.home.index')}}">
-                    <i class="fa-solid fa-gauge-high nav-icon icon-xs me-2"></i>  Bảng điều khiển
+                    <i class="fa-solid fa-chart-simple nav-icon icon-xs me-2"></i>  Thống kê
                 </a>
 
             </li>
@@ -63,35 +63,35 @@
 
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.supplier.index') ? 'active' : '' }}" href="{{route('admin.supplier.index')}}">
-                    <i class="fa-solid fa-table-cells icon-xs me-2"></i> Danh sách nhà cung cấp
+                    <i class="fa-solid fa-industry icon-xs me-2"></i> Danh sách nhà cung cấp
                 </a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link has-arrow  collapsed {{ request()->routeIs('admin.stockTransaction.index') || request()->routeIs('admin.stockTransaction.create') || request()->routeIs('admin.stockTransaction.product') ? 'active' : '' }}" href="#!" data-bs-toggle="collapse" data-bs-target="#navStock" aria-expanded="false" aria-controls="navStock">
-                    <i class="fa-solid fa-users nav-icon icon-xs me-2">
+                    <i class="fa-solid fa-warehouse nav-icon icon-xs me-2">
                     </i> Quản lý kho
                 </a>
                 <div id="navStock" class="collapse {{ request()->routeIs('admin.stockTransaction.index') || request()->routeIs('admin.stockTransaction.create') || request()->routeIs('admin.stockTransaction.product') ? 'show' : '' }}" data-bs-parent="#sideNavbar">
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link {{ request()->is('admin/stock-transaction/in') ? 'active' : '' }}" href="{{route('admin.stockTransaction.index',['type'=>'in'])}}">
-                                <i class="fa-solid fa-user-check icon-xs me-2"></i> Danh sách nhập
+                                <i class="fa-solid fa-box icon-xs me-2"></i> Danh sách nhập
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->is('admin/stock-transaction/out') ? 'active' : '' }}" href="{{route('admin.stockTransaction.index',['type'=>'out'])}}">
-                                <i class="fa-solid fa-user-xmark icon-xs me-2"></i> Danh sách xuất
+                                <i class="fa-solid fa-box-open icon-xs me-2"></i> Danh sách xuất
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->is('admin/stock-transaction/product/in') || request()->is('admin/stock-transaction/create/in') ? 'active' : '' }}" href="{{route('admin.stockTransaction.product',['type'=>'in'])}}">
-                                <i class="fa-solid fa-user-check icon-xs me-2"></i> Sản phẩm cần nhập
+                                <i class="fa-solid fa-plus icon-xs me-2"></i> Sản phẩm cần nhập
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->is('admin/stock-transaction/product/out') || request()->is('admin/stock-transaction/create/out') ? 'active' : '' }}" href="{{route('admin.stockTransaction.product',['type'=>'out'])}}">
-                                <i class="fa-solid fa-user-xmark icon-xs me-2"></i> Sản phẩm cần xuất
+                                <i class="fa-solid fa-minus icon-xs me-2"></i> Sản phẩm cần xuất
                             </a>
                         </li>
                     </ul>

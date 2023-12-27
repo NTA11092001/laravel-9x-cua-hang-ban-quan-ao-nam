@@ -15,7 +15,7 @@ class CartCmsController extends Controller
 
     public function index()
     {
-        $title = 'Tài khoản khách hàng';
+        $title = 'Danh sách đơn hàng';
         $cart = Cart::query()->orderBy('id','desc')->paginate(10);
         return view('CMS.cart.index',compact('title','cart'));
     }

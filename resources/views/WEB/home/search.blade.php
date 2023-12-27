@@ -2,7 +2,7 @@
 @section('content')
     @include('WEB.includes.banner')
     <div class="container" id="product-section">
-        <h1>Bạn đang tìm kiếm theo từ khóa : {{$search ?? null}}</h1>
+        <h1>Bạn đang tìm kiếm theo từ khóa : {{$search ? $search : null}}</h1>
         <div class="container-fluid style">
             <div class="container">
                 <div class="row clearfix">

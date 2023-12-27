@@ -17,7 +17,7 @@
                 @foreach($cart->cart_detail as $item)
                     <tr>
                         <td width="80%">
-                            <div class="list_cart_temp1-item no-border">
+                            <div class="list_cart-item no-border">
                                 <a href="">
                                     <img src="{{asset($item->hinhanh)}}" class="thumbnail" alt="{{$item->ten}}">
                                 </a>
@@ -55,5 +55,5 @@
     <textarea class="form-control form-text" name="note"></textarea>
 </div>
 <div class="mt-3">
-    <button class="btn btn-dark btn-block" type="submit">@if(auth()->user()->level == 1)Thêm @else Yêu cầu @endif xuất kho</button>
+    <button class="btn btn-dark btn-block" type="submit"><i class="fa-solid fa-minus-circle"></i> @if(auth()->user()->level == 2)Yêu cầu xuất kho @else Xuất kho @endif</button>
 </div>

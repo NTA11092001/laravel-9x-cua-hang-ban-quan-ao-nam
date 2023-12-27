@@ -135,3 +135,11 @@
 .info_oder__body .list_infamation_cart table .priceTotal {
     font-size: 17px
 }
+
+.dashboard-height{
+    height: 115px;
+}
+
+.dashboard-text{
+    font-family: NeoSansIntelBold, sans-serif;font-weight: 700;text-transform: uppercase;
+}
