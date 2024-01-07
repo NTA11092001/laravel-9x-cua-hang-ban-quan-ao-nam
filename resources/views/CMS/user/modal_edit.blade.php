@@ -27,7 +27,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Chức vụ</label>
-                    <select class="form-control form-select-lg" name="level">
+                    <select class="form-control form-select form-select-lg" name="level">
                         <option value="1" @if($user->level == 1) selected @endif>Quản lý</option>
                         <option value="2" @if($user->level == 2) selected @endif>Nhân viên</option>
                     </select>

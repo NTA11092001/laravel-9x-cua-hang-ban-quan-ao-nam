@@ -6,11 +6,36 @@
         </a>
         <!-- Navbar nav -->
         <ul class="navbar-nav flex-column" id="sideNavbar">
-            <li class="nav-item">
-                <a class="nav-link has-arrow {{ request()->routeIs('admin.home.index') ? 'active' : '' }}" href="{{route('admin.home.index')}}">
-                    <i class="fa-solid fa-chart-simple nav-icon icon-xs me-2"></i>  Thống kê
-                </a>
+{{--            <li class="nav-item">--}}
+{{--                <a class="nav-link has-arrow {{ request()->routeIs('admin.home.index') ? 'active' : '' }}" href="{{route('admin.home.index')}}">--}}
+{{--                    <i class="fa-solid fa-chart-simple nav-icon icon-xs me-2"></i>  Thống kê--}}
+{{--                </a>--}}
 
+{{--            </li>--}}
+
+            <li class="nav-item">
+                <a class="nav-link has-arrow  collapsed {{ request()->routeIs('admin.home.index') || request()->routeIs('admin.home.cart') || request()->routeIs('admin.home.product') ? 'active' : '' }}" href="#!" data-bs-toggle="collapse" data-bs-target="#navChart" aria-expanded="false" aria-controls="navChart">
+                    <i class="fa-solid fa-chart-simple nav-icon icon-xs me-2"></i> Thống kê
+                </a>
+                <div id="navChart" class="collapse {{ request()->routeIs('admin.home.index') || request()->routeIs('admin.home.cart') || request()->routeIs('admin.home.product') ? 'show' : '' }}" data-bs-parent="#sideNavbar">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.home.index') ? 'active' : '' }}" href="{{route('admin.home.index')}}">
+                                Tổng quát
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.home.cart') ? 'active' : '' }}" href="{{route('admin.home.cart')}}">
+                                Đơn hàng
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.home.product') ? 'active' : '' }}" href="{{route('admin.home.product')}}">
+                                Sản phẩm
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
 
             <li class="nav-item">

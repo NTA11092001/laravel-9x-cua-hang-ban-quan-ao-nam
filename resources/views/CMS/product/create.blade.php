@@ -51,7 +51,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <label class="form-label">Danh mục sản phẩm (*)</label>
-                                    <select class="form-control form-select-lg" name="id_danhmuc">
+                                    <select class="form-control form-select form-select-lg" name="id_danhmuc">
                                         <option value="">--Chọn danh mục sản phẩm--</option>
                                         @foreach($categories as $item)
                                             <option value="{{$item->id}}">{{$item->ten}}</option>
@@ -61,7 +61,7 @@
                                 <div class="col-6">
                                     <div class="mb-3">
                                         <label class="form-label">Trạng thái</label>
-                                        <select class="form-control form-select-lg" name="status">
+                                        <select class="form-control form-select form-select-lg" name="status">
                                             <option value="1">Hiển thị</option>
                                             <option value="0">Ẩn</option>
                                         </select>

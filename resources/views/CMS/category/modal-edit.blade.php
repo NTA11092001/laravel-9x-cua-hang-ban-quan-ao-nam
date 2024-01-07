@@ -26,7 +26,7 @@
             <div class="col-6">
                 <div class="mb-3">
                     <label class="form-label">Trạng thái</label>
-                    <select class="form-control form-select-lg" name="status">
+                    <select class="form-control form-select form-select-lg" name="status">
                         <option value="1" @if($category->status == 1) selected @endif>Hiển thị</option>
                         <option value="0" @if($category->status == 0) selected @endif>Ẩn</option>
                     </select>

@@ -40,7 +40,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Chức vụ</label>
-                                <select class="form-control form-select-lg" name="level">
+                                <select class="form-control form-select form-select-lg" name="level">
                                     <option value="1">Quản lý</option>
                                     <option value="2">Nhân viên</option>
                                 </select>

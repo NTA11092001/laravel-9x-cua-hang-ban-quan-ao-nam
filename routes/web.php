@@ -45,6 +45,8 @@ Route::middleware('auth')->prefix('admin')->group(function (){
     // Home
     Route::controller(MainCmsController::class)->group(function () {
         Route::get('/', 'index')->name('admin.home.index');
+        Route::get('/cart-statistic','cart')->name('admin.home.cart');
+        Route::get('/product-statistic','product')->name('admin.home.product');
         Route::get('/editModal','editModal')->name('admin.user.editModal');
         Route::post('/updateModal','updateModal')->name('admin.user.updateModal');
     });
