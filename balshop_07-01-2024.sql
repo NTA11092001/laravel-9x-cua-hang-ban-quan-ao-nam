@@ -11,7 +11,7 @@
  Target Server Version : 50739
  File Encoding         : 65001
 
- Date: 27/12/2023 15:33:23
+ Date: 07/01/2024 17:04:47
 */
 
 SET NAMES utf8mb4;
@@ -315,7 +315,7 @@ CREATE TABLE `products`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of products
@@ -345,7 +345,6 @@ INSERT INTO `products` VALUES (25, 'Áo tanktop', '009S4', 350000, NULL, 50, 'pr
 INSERT INTO `products` VALUES (26, 'Áo tanktop', '008S4', 295000, NULL, 50, 'product/hinhanh/1685611573__TC_0092x900x900x4.webp', 'product/images/1685611573__TC_0084x900x900x4.webp,product/images/1685611573__TC_0087x900x900x4.webp,product/images/1685611573__TC_0095x900x900x4.webp,product/images/1685611573_IMG_1591x900x900x4.webp', '<p>FORM D&Aacute;NG:&nbsp;Tanktop<br />\r\nTHIẾT KẾ:<br />\r\n- &Aacute;o Tanktop (ba lỗ) thiết kế khỏe khoắn, m&agrave;u sắc cơ bản m&agrave; đa dạng, gi&uacute;p người mặc thoải m&aacute;i trong mọi vận động bất kể thời tiết m&ugrave;a n&agrave;o..<br />\r\n- Cổ &aacute;o vẫn l&agrave; dạng cổ tr&ograve;n quen thuộc, trước ngực in th&ecirc;m chi tiết nhỏ tạo điểm nhấn.<br />\r\n<br />\r\nCHẤT LIỆU:<br />\r\n- 57% Cotton mềm mịn, tho&aacute;ng kh&iacute;, thấm mồ h&ocirc;i vượt trội v&agrave; th&acirc;n thiện với l&agrave;n da<br />\r\n- 38% Polyester gi&uacute;p &aacute;o bền m&agrave;u, sắc n&eacute;t v&agrave; độ trơn trượt, mỏng nhẹ<br />\r\n- 5% Spandex tạo độ co gi&atilde;n nhẹ</p>', 6, 1, 10, '2023-06-01 16:25:39', '2023-12-24 13:37:30');
 INSERT INTO `products` VALUES (27, 'Áo tanktop', '003S3', 295000, NULL, 50, 'product/hinhanh/1685611704_Ao-tanktop-Aristino-ATT003S3-5-x900x900x4.webp', 'product/images/1685611704-Ao-tanktop-Aristino-ATT003S3-6-x900x900x4.webp,product/images/1685611704-Ao-tanktop-Aristino-ATT003S3-7-x900x900x4.webp,product/images/1685611704-Ao-tanktop-Aristino-ATT003S3-8-x900x900x4.webp,product/images/1685611704-Ao-tanktop-Aristino-ATT003S3-9-x900x900x4.webp', '<p>THIẾT KẾ:<br />\r\n- &Aacute;o Tank top (ba lỗ) thiết kế khỏe khoắn, m&agrave;u sắc cơ bản m&agrave; đa dạng, mang đến nhiều lựa chọn kết hợp trang phục cho m&ocirc;i trường ngo&agrave;i c&ocirc;ng sở.<br />\r\n<br />\r\nCHẤT LIỆU:<br />\r\n- 57% Cotton gi&uacute;p quần mềm mại, xốp nhẹ v&agrave; tho&aacute;ng kh&iacute;.<br />\r\n- 38% Polyester cho bề mặt vải b&oacute;ng mịn, sắc n&eacute;t, &iacute;t nhăn co<br />\r\n- 5% Spandex tạo độ co gi&atilde;n thoải m&aacute;i khi mặc</p>', 6, 1, 10, '2023-06-01 16:28:24', '2023-12-24 13:37:45');
 INSERT INTO `products` VALUES (28, 'Áo tank-top', 'TTR06', 295000, NULL, 50, 'product/hinhanh/1685611812_ao-tank-top-nam-aristino-ATTR06-07x900x900x4.webp', 'product/images/1685611812-ao-tank-top-nam-aristino-ATTR06-06x900x900x4.webp,product/images/1685611812-ao-tank-top-nam-aristino-ATTR06-08x900x900x4.webp,product/images/1685611812-ao-tank-top-nam-aristino-ATTR06-09x900x900x4.webp,product/images/1685611812-ao-tank-top-nam-aristino-ATTR06-10x900x900x4.webp', '<p><strong>CHI TIẾT:</strong></p>\r\n\r\n<p>- &Aacute;o Tank-top c&oacute; thiết kế cơ bản v&agrave; khỏe khoắn. M&agrave;u sắc &aacute;o trung t&iacute;nh c&oacute; thể mặc khi tham gia c&aacute;c hoạt động thể thao hoặc mặc layer cho phong c&aacute;ch ngo&agrave;i c&ocirc;ng sở.</p>\r\n\r\n<p><strong>CHẤT LIỆU:</strong></p>\r\n\r\n<p>- Chất liệu Supima Cotton cao cấp - một trong những loại cotton tốt nhất tr&ecirc;n thế giới. Sợi b&ocirc;ng si&ecirc;u d&agrave;i cho bề mặt vải b&oacute;ng đẹp, mềm mịn như lụa v&agrave; hạn chế v&oacute;n cục. Độ bền cao v&agrave; b&oacute;ng đẹp hơn sau mỗi lần giặt. Kết hợp 5% Spandex tạo n&ecirc;n độ co d&atilde;n vừa phải cho &aacute;o.</p>', 6, 1, 10, '2023-06-01 16:30:12', '2023-12-24 13:39:29');
-INSERT INTO `products` VALUES (29, 'test', 'ad123', 111500, 111111, 1, 'product/hinhanh/1703664066_ao-thun-nam-aristino-AC22x900x900x4.webp', NULL, NULL, 1, 1, 10, '2023-12-27 15:01:06', '2023-12-27 15:01:06');
 
 -- ----------------------------
 -- Table structure for stock_transactions
@@ -412,7 +411,7 @@ CREATE TABLE `suppliers`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of suppliers
