@@ -69,11 +69,11 @@ class StockTransactionController extends Controller
                 ]);
                 $title_stock = 'nhập kho';
                 $data = $request->only(['supplier_id','product_id','type','quantity','stock_in_price']);
-                if(auth()->user()->level == 1) {
+                // if(auth()->user()->level == 1) {
                     $product = Product::query()->findOrFail($request->product_id);
                     $product->soluong = $product->soluong + $request->quantity;
                     $product->save();
-                }
+                // }
             } else {
                 $title_stock = 'xuất kho';
                 $data = $request->only(['cart_id','type']);

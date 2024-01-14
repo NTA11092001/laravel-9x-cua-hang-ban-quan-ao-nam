@@ -55,5 +55,8 @@
     <textarea class="form-control form-text" name="note"></textarea>
 </div>
 <div class="mt-3">
-    <button class="btn btn-dark btn-block" type="submit"><i class="fa-solid fa-minus-circle"></i> @if(auth()->user()->level == 2)Yêu cầu xuất kho @else Xuất kho @endif</button>
+    <button class="btn btn-dark btn-block" type="submit">
+        {{-- <i class="fa-solid fa-minus-circle"></i> @if(auth()->user()->level == 2)Yêu cầu xuất kho @else Xuất kho @endif --}}
+        <i class="fa-solid fa-minus-circle"></i> Xuất kho
+    </button>
 </div>
