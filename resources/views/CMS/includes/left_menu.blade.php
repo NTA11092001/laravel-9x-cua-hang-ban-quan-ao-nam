@@ -86,11 +86,13 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.supplier.index') ? 'active' : '' }}" href="{{route('admin.supplier.index')}}">
-                    <i class="fa-solid fa-industry icon-xs me-2"></i> Danh sách nhà cung cấp
-                </a>
-            </li>
+            @if(auth()->user()->level == 1)
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.supplier.index') ? 'active' : '' }}" href="{{route('admin.supplier.index')}}">
+                        <i class="fa-solid fa-industry icon-xs me-2"></i> Danh sách nhà cung cấp
+                    </a>
+                </li>
+            @endif
 
             <li class="nav-item">
                 <a class="nav-link has-arrow  collapsed {{ request()->routeIs('admin.stockTransaction.index') || request()->routeIs('admin.stockTransaction.create') || request()->routeIs('admin.stockTransaction.product') ? 'active' : '' }}" href="#!" data-bs-toggle="collapse" data-bs-target="#navStock" aria-expanded="false" aria-controls="navStock">
