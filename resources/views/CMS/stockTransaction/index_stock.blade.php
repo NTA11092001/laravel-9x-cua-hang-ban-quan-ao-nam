@@ -22,6 +22,7 @@
                                 <th class="text-white">@if($type == 'in') Tên nhà cung cấp @else Chi tiết sản phẩm @endif</th>
                                 <th class="text-white">Người thực hiện</th>
                                 @if($type == 'in')
+                                    <th class="text-white text-center">Số lượng</th>
                                     <th class="text-white text-center">Tổng tiền (VNĐ)</th>
                                 @endif
                                 <th class="text-white">Ngày {{$title_stock}}</th>
@@ -78,6 +79,7 @@
                                         </td>
                                         <td>{{$item->user->name}}</td>
                                         @if($type == 'in')
+                                            <td class="text-center">{{$item->quantity}}</td>
                                             <td class="text-center">{{number_format($item->stock_in_price*$item->quantity,0,',','.')}}</td>
                                         @endif
                                         <td>{{date('d/m/Y H:i:s',strtotime($item->created_at))}}</td>

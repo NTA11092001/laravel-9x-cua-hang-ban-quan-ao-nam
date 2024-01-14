@@ -14,10 +14,26 @@
 
     <div class="container-fluid p-6">
         <div class="row">
-            <div class="col-lg-12 col-md-12 col-12">
-                <!-- Page header -->
-                <div class="border-bottom pb-4 mb-4">
-                    <h3 class="mb-0 fw-bold">Danh sách đơn hàng</h3>
+            <div class="container-fluid border-bottom pb-4 mb-4">
+                <div class="row">
+                    <div class="col-6">
+                        <!-- Page header -->
+                        <h3 class="mb-0 fw-bold">Danh sách đơn hàng</h3>
+                    </div>
+
+                    <div class="col-6">
+                        <form class="row justify-content-end" action="{{route('admin.cart.index')}}" method="GET">
+                            <div class="col-5">
+                                <input class="form-control" type="text" name="madh" placeholder="Nhập mã đơn hàng" value="{{request('madh') ? request('madh') : ''}}">
+                            </div>
+                            <div class="col-5">
+                                <input class="form-select" id="datepicker" type="text" name="date" placeholder="Chọn ngày mua" value="{{request('date') ? request('date') : ''}}" autocomplete="off">
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-dark" type="submit">Tìm kiếm</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -146,6 +162,9 @@
 @push('scripts')
     <script>
         $(function () {
+            $("#datepicker").datepicker({
+                dateFormat: "dd/mm/yy"
+            })
 
             $('.btn-show-status').click(function(){
                 var cartId = $(this).attr('data-cart-id')

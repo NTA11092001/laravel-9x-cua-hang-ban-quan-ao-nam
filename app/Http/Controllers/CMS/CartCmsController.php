@@ -6,17 +6,32 @@ use App\Http\Controllers\Controller;
 use App\Models\BillHistory;
 use App\Models\Cart;
 use App\Models\CartStatusHistory;
-use App\Models\Product;
 use App\Models\Transport;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class CartCmsController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Danh sách đơn hàng';
-        $cart = Cart::query()->orderBy('id','desc')->paginate(10);
+        $query = Cart::query()->orderBy('id','desc');
+        if($request->madh != null){
+            $request->validate([
+                'madh' => 'numeric'
+            ],[
+                'madh.numeric' => 'Mã đơn hàng phải là chữ số'
+            ]);
+            $query = $query->where('id','=',$request->madh);
+        }
+        if ($request->date != null){
+            $carbonDate = Carbon::createFromFormat('d/m/Y', $request->date);
+            $formattedDate = $carbonDate->format('Y-m-d');
+            $query = $query->whereDate('cart_date','=',$formattedDate);
+        }
+        //dd($query->toSql());
+        $cart = $query->paginate(10);
         return view('CMS.cart.index',compact('title','cart'));
     }
 

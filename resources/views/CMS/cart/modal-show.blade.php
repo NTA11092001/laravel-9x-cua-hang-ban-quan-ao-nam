@@ -23,10 +23,18 @@
 
                 <h3><strong>TÌNH TRẠNG THANH TOÁN:</strong></h3>
                 <div class="mb-3">
-                    @if($cart->bill_staus == 0)
-                        <span class="text-warning">@if($cart->payment_type == 'cod') Chưa thanh toán @else Thanh toán thất bại @endif</span>
-                    @elseif($cart->bill_staus == 1)
-                        <span class="text-success">@if($cart->payment_type == 'cod') Đã thanh toán @else Thanh toán thành công @endif</span>
+                    @if($cart->payment_type == 'cod')
+                        @if($cart->bill_status == 0)
+                            <span class="text-warning">Chưa thanh toán</span>
+                        @elseif($cart->bill_status == 1)
+                            <span class="text-success">Đã thanh toán</span>
+                        @endif
+                    @else
+                        @if($cart->bill_status == 0)
+                            <span class="text-warning">Thanh toán thất bại</span>
+                        @elseif($cart->bill_status == 1)
+                            <span class="text-success">Thanh toán thành công</span>
+                        @endif
                     @endif
                 </div>
 

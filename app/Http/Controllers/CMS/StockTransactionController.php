@@ -18,11 +18,11 @@ class StockTransactionController extends Controller
         if ($type == 'in'){
             $title = 'Danh sách phiếu nhập kho';
             $title_stock = 'nhập kho';
-            $stocks = StockTransactions::query()->whereHas('product')->where('type','in')->paginate(10);
+            $stocks = StockTransactions::query()->whereHas('product')->where('type','in')->orderBy('id','desc')->paginate(10);
         } else if ($type == 'out'){
             $title = 'Danh sách phiếu xuất kho';
             $title_stock = 'xuất kho';
-            $stocks = StockTransactions::query()->whereHas('cart')->where('type','out')->paginate(10);
+            $stocks = StockTransactions::query()->whereHas('cart')->where('type','out')->orderBy('id','desc')->paginate(10);
         }
         return view('CMS.stockTransaction.index_stock',compact('title','type','stocks','title_stock'));
     }
