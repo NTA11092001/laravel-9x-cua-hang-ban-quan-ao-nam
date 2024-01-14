@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost3306
+ Source Server         : BAL shop
  Source Server Type    : MySQL
- Source Server Version : 50739
- Source Host           : localhost:3306
- Source Schema         : cua_hang_ban_quan_ao_nam
+ Source Server Version : 100339
+ Source Host           : 103.200.23.188:3306
+ Source Schema         : balshopc_balshop
 
  Target Server Type    : MySQL
- Target Server Version : 50739
+ Target Server Version : 100339
  File Encoding         : 65001
 
- Date: 07/01/2024 17:04:47
+ Date: 14/01/2024 13:11:56
 */
 
 SET NAMES utf8mb4;
@@ -22,13 +22,13 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `bill_histories`;
 CREATE TABLE `bill_histories`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `cart_id` bigint(20) UNSIGNED NOT NULL,
-  `bill_status` smallint(6) NOT NULL,
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `cart_id` bigint UNSIGNED NOT NULL,
+  `bill_status` smallint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of bill_histories
@@ -40,16 +40,20 @@ INSERT INTO `bill_histories` VALUES (4, 1, 1, '2023-12-24 21:08:24', '2023-12-24
 INSERT INTO `bill_histories` VALUES (5, 3, 0, '2023-12-24 21:13:00', '2023-12-24 21:13:00');
 INSERT INTO `bill_histories` VALUES (6, 4, 0, '2023-12-24 21:33:47', '2023-12-24 21:33:47');
 INSERT INTO `bill_histories` VALUES (7, 5, 0, '2023-12-27 14:53:47', '2023-12-27 14:53:47');
+INSERT INTO `bill_histories` VALUES (8, 6, 0, '2024-01-13 14:49:20', '2024-01-13 14:49:20');
+INSERT INTO `bill_histories` VALUES (9, 7, 1, '2024-01-13 14:51:02', '2024-01-13 14:51:02');
+INSERT INTO `bill_histories` VALUES (10, 8, 0, '2024-01-13 14:53:22', '2024-01-13 14:53:22');
+INSERT INTO `bill_histories` VALUES (11, 9, 1, '2024-01-13 14:54:02', '2024-01-13 14:54:02');
 
 -- ----------------------------
 -- Table structure for cart_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `cart_detail`;
 CREATE TABLE `cart_detail`  (
-  `cart_id` bigint(20) NOT NULL,
-  `product_id` bigint(20) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `size` int(11) NOT NULL,
+  `cart_id` bigint NOT NULL,
+  `product_id` bigint NOT NULL,
+  `quantity` int NOT NULL,
+  `size` int NOT NULL,
   `price` decimal(65, 0) NULL DEFAULT NULL
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
@@ -63,20 +67,24 @@ INSERT INTO `cart_detail` VALUES (4, 13, 1, 38, 600000);
 INSERT INTO `cart_detail` VALUES (5, 13, 1, 38, 600000);
 INSERT INTO `cart_detail` VALUES (5, 14, 2, 38, 636000);
 INSERT INTO `cart_detail` VALUES (5, 4, 1, 38, 350000);
+INSERT INTO `cart_detail` VALUES (6, 6, 1, 38, 375000);
+INSERT INTO `cart_detail` VALUES (7, 20, 1, 38, 395000);
+INSERT INTO `cart_detail` VALUES (8, 5, 1, 38, 375000);
+INSERT INTO `cart_detail` VALUES (9, 11, 1, 38, 495000);
 
 -- ----------------------------
 -- Table structure for cart_status_history
 -- ----------------------------
 DROP TABLE IF EXISTS `cart_status_history`;
 CREATE TABLE `cart_status_history`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `cart_id` bigint(20) UNSIGNED NOT NULL,
-  `cart_status` smallint(6) NOT NULL,
-  `user_id` bigint(20) UNSIGNED NULL DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `cart_id` bigint UNSIGNED NOT NULL,
+  `cart_status` smallint NOT NULL,
+  `user_id` bigint UNSIGNED NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cart_status_history
@@ -93,25 +101,34 @@ INSERT INTO `cart_status_history` VALUES (9, 4, -1, NULL, '2023-12-24 21:33:47',
 INSERT INTO `cart_status_history` VALUES (11, 3, 0, 1, '2023-12-24 21:38:05', '2023-12-24 21:38:05');
 INSERT INTO `cart_status_history` VALUES (12, 4, 0, 1, '2023-12-24 21:42:04', '2023-12-24 21:42:04');
 INSERT INTO `cart_status_history` VALUES (13, 5, -1, NULL, '2023-12-27 14:53:47', '2023-12-27 14:53:47');
+INSERT INTO `cart_status_history` VALUES (14, 6, -1, NULL, '2024-01-13 14:49:20', '2024-01-13 14:49:20');
+INSERT INTO `cart_status_history` VALUES (15, 7, -1, NULL, '2024-01-13 14:51:02', '2024-01-13 14:51:02');
+INSERT INTO `cart_status_history` VALUES (16, 8, -1, NULL, '2024-01-13 14:53:22', '2024-01-13 14:53:22');
+INSERT INTO `cart_status_history` VALUES (17, 9, -1, NULL, '2024-01-13 14:54:02', '2024-01-13 14:54:02');
+INSERT INTO `cart_status_history` VALUES (18, 9, 0, 1, '2024-01-13 14:55:56', '2024-01-13 14:55:56');
+INSERT INTO `cart_status_history` VALUES (19, 9, 1, 1, '2024-01-13 14:56:04', '2024-01-13 14:56:04');
+INSERT INTO `cart_status_history` VALUES (20, 9, 2, 1, '2024-01-13 14:56:08', '2024-01-13 14:56:08');
+INSERT INTO `cart_status_history` VALUES (21, 9, 3, NULL, '2024-01-13 14:56:26', '2024-01-13 14:56:26');
+INSERT INTO `cart_status_history` VALUES (22, 8, -2, NULL, '2024-01-13 14:57:19', '2024-01-13 14:57:19');
 
 -- ----------------------------
 -- Table structure for carts
 -- ----------------------------
 DROP TABLE IF EXISTS `carts`;
 CREATE TABLE `carts`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `member_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `member_id` bigint UNSIGNED NOT NULL,
   `cart_date` date NOT NULL,
   `estimated_arrival_date` date NULL DEFAULT NULL,
   `actual_arrival_date` date NULL DEFAULT NULL,
   `payment_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `total` decimal(65, 0) NOT NULL,
-  `status` smallint(6) NOT NULL,
-  `bill_status` smallint(6) NOT NULL,
+  `status` smallint NOT NULL,
+  `bill_status` smallint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of carts
@@ -121,16 +138,20 @@ INSERT INTO `carts` VALUES (2, 1, '2023-12-24', '2023-12-26', NULL, 'vnpay', 556
 INSERT INTO `carts` VALUES (3, 1, '2023-12-24', '2023-12-26', NULL, 'cod', 556000, 0, 0, '2023-12-24 21:13:00', '2023-12-24 21:34:11');
 INSERT INTO `carts` VALUES (4, 1, '2023-12-24', '2023-12-26', NULL, 'cod', 600000, 0, 0, '2023-12-24 21:33:47', '2023-12-24 21:42:04');
 INSERT INTO `carts` VALUES (5, 1, '2023-12-27', '2023-12-29', NULL, 'cod', 2222000, -1, 0, '2023-12-27 14:53:47', '2023-12-27 14:53:47');
+INSERT INTO `carts` VALUES (6, 10, '2024-01-13', '2024-01-15', NULL, 'cod', 375000, -1, 0, '2024-01-13 14:49:20', '2024-01-13 14:49:20');
+INSERT INTO `carts` VALUES (7, 10, '2024-01-13', '2024-01-15', NULL, 'vnpay', 395000, -1, 1, '2024-01-13 14:51:02', '2024-01-13 14:51:02');
+INSERT INTO `carts` VALUES (8, 11, '2024-01-13', '2024-01-15', NULL, 'cod', 375000, -2, 0, '2024-01-13 14:53:22', '2024-01-13 14:57:19');
+INSERT INTO `carts` VALUES (9, 11, '2024-01-13', '2024-01-15', NULL, 'vnpay', 495000, 3, 1, '2024-01-13 14:54:02', '2024-01-13 14:56:26');
 
 -- ----------------------------
 -- Table structure for categories
 -- ----------------------------
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `ten` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `thutu` int(11) NOT NULL,
-  `status` smallint(6) NOT NULL,
+  `thutu` int NOT NULL,
+  `status` smallint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -151,13 +172,13 @@ INSERT INTO `categories` VALUES (6, 'ÁO TANK-TOP', 6, 1, '2023-05-08 10:11:33',
 -- ----------------------------
 DROP TABLE IF EXISTS `failed_jobs`;
 CREATE TABLE `failed_jobs`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `failed_jobs_uuid_unique`(`uuid`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
@@ -171,7 +192,7 @@ CREATE TABLE `failed_jobs`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `members`;
 CREATE TABLE `members`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -183,7 +204,7 @@ CREATE TABLE `members`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `members_email_unique`(`email`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of members
@@ -196,15 +217,17 @@ INSERT INTO `members` VALUES (6, 'Test', '0888888888', 'test@gmail.com', NULL, '
 INSERT INTO `members` VALUES (7, 'tesst', '0899999999', 'tesst@gmail.cm', NULL, '$2y$10$eliPRDpKBRzBaeXhemg8fu0TyS.wOJ5.ANeA7TlpAmjIwG31hutTu', 'HN', NULL, '2023-10-05 21:49:28', '2023-10-05 21:49:28');
 INSERT INTO `members` VALUES (8, 'test', '0987654322', 'test9933@gmail.com', NULL, '$2y$10$.7otuEpQ/VtfNU9Od94ewusJVCwNPNikKMEK40R2peTzKo0TfVuKi', 'hd', NULL, '2023-10-05 22:37:14', '2023-10-05 22:37:14');
 INSERT INTO `members` VALUES (9, 'test', '0977777777', 'test1@gmail.com', NULL, '$2y$10$xNhddpfP9InUjlq.1RFEke.4kHUc9VxZ.TEJnLL551q649pmKjNIi', 'HN', NULL, '2023-10-05 22:38:41', '2023-10-05 22:38:41');
+INSERT INTO `members` VALUES (10, 'Nguyệt Minh', '0983797737', 'mmnguyet22@gmail.com', NULL, '$2y$10$BWzdN28cI2VG07vB6FmB1OREL2YpvDx9YAfCeiyEhAg0MQZbFHLXC', 'Toà VMT, ngõ 82 Duy Tân, Dịch Vọng Hậu, Cầu Giấy', NULL, '2024-01-13 14:49:04', '2024-01-13 14:49:04');
+INSERT INTO `members` VALUES (11, 'hihi', '0345876925', 'hihi@gmail.com', NULL, '$2y$10$pwSASuPlUYfNd5G5BSdgS.N3cLexrmgD/CPVbBA8H25AM6bQZ2qZG', 'Toà mm, ngõ 86 Duy Tân, Dịch Vọng Hậu, Cầu Giấy', NULL, '2024-01-13 14:53:00', '2024-01-13 14:53:00');
 
 -- ----------------------------
 -- Table structure for migrations
 -- ----------------------------
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL,
+  `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 59 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
@@ -276,9 +299,9 @@ CREATE TABLE `password_resets`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `personal_access_tokens`;
 CREATE TABLE `personal_access_tokens`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
+  `tokenable_id` bigint UNSIGNED NOT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
@@ -300,18 +323,18 @@ CREATE TABLE `personal_access_tokens`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `ten` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `masp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `giathuong` decimal(65, 0) NOT NULL,
   `giakm` decimal(65, 0) NULL DEFAULT NULL,
-  `soluong` int(11) NULL DEFAULT NULL,
+  `soluong` int NULL DEFAULT NULL,
   `hinhanh` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `images` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `chitiet` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `id_danhmuc` bigint(20) UNSIGNED NOT NULL,
-  `status` smallint(6) NOT NULL,
-  `reorder_level` int(11) NOT NULL,
+  `id_danhmuc` bigint UNSIGNED NOT NULL,
+  `status` smallint NOT NULL,
+  `reorder_level` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -328,7 +351,7 @@ INSERT INTO `products` VALUES (7, 'Áo thun nam', 'AC22', 105000, NULL, 50, 'pro
 INSERT INTO `products` VALUES (8, 'Quần short nam', '010S4', 695000, 300000, 50, 'product/hinhanh/1685593793__TC_5443x900x900x4.webp', 'product/images/1685593793-_TC_5437x900x900x4.webp,product/images/1685593793-_TC_5443x900x900x4.webp,product/images/1685593793-_TC_5446x900x900x4.webp,product/images/1685593793-_TC_5447x900x900x4.webp,product/images/1685593793-IMG_5492_1x900x900x4.webp', '<p>FORM D&Aacute;NG: Regular Fit<br />\r\nTHIẾT KẾ:<br />\r\n- Quần shorts &acirc;u phom d&aacute;ng Regular fit với độ su&ocirc;ng rộng vừa phải, tạo sự thoải m&aacute;i cho người mặc.<br />\r\n- Quần được thiết kế cơ bản với m&agrave;u sắc trung t&iacute;nh, gi&uacute;p c&aacute;c anh dễ d&agrave;ng phối hợp với nhiều kiểu trang phục kh&aacute;c nhau, mang lại diện mạo khỏe khoắn, trẻ trung khi mặc.<br />\r\n<br />\r\nCHẤT LIỆU:<br />\r\n- 70% Polyester gi&uacute;p quần bền m&agrave;u, sắc n&eacute;t v&agrave; độ trơn trượt, mỏng nhẹ<br />\r\n- 27% Viscose mịn mượt, gi&uacute;p quần nhẹ, tho&aacute;ng m&aacute;t tối đa<br />\r\n- 3% Spandex tạo độ co gi&atilde;n nhẹ</p>', 2, 1, 10, '2023-06-01 11:29:53', '2023-12-24 13:32:09');
 INSERT INTO `products` VALUES (9, 'Quần short nam', '009S3', 650000, NULL, 50, 'product/hinhanh/1685595176_IMG_3939_1x900x900x4.webp', 'product/images/1685595176-IMG_3939x900x900x4.webp,product/images/1685595176-IMG_3941x900x900x4.webp,product/images/1685595176-IMG_3942x900x900x4.webp,product/images/1685595176-IMG_3943x900x900x4.webp', '<p>FORM D&Aacute;NG: Regular Fit<br />\r\n<br />\r\nTHIẾT KẾ:<br />\r\n- Quần short &acirc;u phom d&aacute;ng regular fit với độ su&ocirc;ng rộng vừa phải, tạo n&ecirc;n sự thoải m&aacute;i trong mọi hoạt động.<br />\r\n- Quần được thiết kế cơ bản với m&agrave;u trắng lịch l&atilde;m, gi&uacute;p c&aacute;c anh dễ d&agrave;ng phối hợp với nhiều kiểu trang phục kh&aacute;c nhau, mang lại diện mạo khỏe khoắn, trẻ trung khi mặc.<br />\r\n<br />\r\nCHẤT LIỆU:<br />\r\n- 77% Polyester gi&uacute;p quần bền m&agrave;u, sắc n&eacute;t, mặt vải trơn trượt, mỏng nhẹ.<br />\r\n- 21% Rayon gi&uacute;p bộ suit c&oacute; độ mềm mại, m&aacute;t mẻ v&agrave; bay rũ tự nhi&ecirc;n<br />\r\n- 2% Spandex tạo độ co gi&atilde;n nhẹ.</p>', 2, 1, 10, '2023-06-01 11:52:56', '2023-12-24 13:32:27');
 INSERT INTO `products` VALUES (10, 'Quần short nam', '025S3', 450000, NULL, 50, 'product/hinhanh/1685602111_NTC_7031x900x900x4.webp', 'product/images/1685602111-IMG_4790_1x900x900x4.webp,product/images/1685602111-NTC_7029x900x900x4.webp,product/images/1685602111-NTC_7032x900x900x4.webp,product/images/1685602111-NTC_7033x900x900x4.webp', '<p>FORM D&Aacute;NG: Regular Fit<br />\r\nTHIẾT KẾ:<br />\r\n- Quần short thể thao phom Regular Fit su&ocirc;ng nhẹ v&agrave; thoải m&aacute;i vận động.<br />\r\n- Kiểu d&aacute;ng thể thao với độ d&agrave;i vừa phải ph&ugrave; hợp với hoạt động thể thao, thiết kế tối giản kết hợp t&uacute;i 2 b&ecirc;n tiện lợi đựng đồ c&aacute; nh&acirc;n khi vận động thể thaoPhần đai quần c&oacute; d&acirc;y chun k&eacute;o gi&uacute;p chỉnh được độ co gi&atilde;n, ph&ugrave; hợp với v&ograve;ng bụng<br />\r\n<br />\r\nCHẤT LIỆU:<br />\r\n- 100% Polyester mang đến độ b&oacute;ng sắc n&eacute;t, kh&ocirc;ng bị bai d&atilde;o, lu&ocirc;n bền m&agrave;u. Quần c&ograve;n c&oacute; khả năng chống b&aacute;m bụi, chống nhăn, hạn chế thấm nước, độ bền cao.</p>', 2, 1, 10, '2023-06-01 13:48:31', '2023-12-24 13:32:42');
-INSERT INTO `products` VALUES (11, 'Quần short nam', '017S3', 495000, NULL, 50, 'product/hinhanh/1685602287__TC_5695x900x900x4.webp', 'product/images/1685602287-_TC_5693x900x900x4.webp,product/images/1685602287-_TC_5697x900x900x4.webp,product/images/1685602287-_TC_5698x900x900x4.webp,product/images/1685602287-IMG_9738x900x900x4.webp', '<p>FORM D&Aacute;NG: Regular Fit<br />\r\nTHIẾT KẾ:<br />\r\n- Quần short thể thao phom Regular Fit su&ocirc;ng nhẹ v&agrave; thoải m&aacute;i vận động.<br />\r\n- Thiết kế basic khỏe khoắn với t&uacute;i quần tiện lợi. Họa tiết h&igrave;nh học in ch&igrave;m tr&agrave;n quần ấn tượng. M&agrave;u sắc cơ bản dễ d&agrave;ng kết hợp với c&aacute;c trang phục kh&aacute;c.<br />\r\n<br />\r\nCHẤT LIỆU:<br />\r\n- 92% Polyester mang đến độ b&oacute;ng sắc n&eacute;t, kh&ocirc;ng bị bai d&atilde;o, lu&ocirc;n bền m&agrave;u. Quần&nbsp;c&ograve;n c&oacute; khả năng chống b&aacute;m bụi, chống nhăn, hạn chế thấm nước, độ bền cao.<br />\r\n- 8% Spandex tạo độ co gi&atilde;n nhẹ.</p>', 2, 1, 10, '2023-06-01 13:51:27', '2023-12-24 13:32:57');
+INSERT INTO `products` VALUES (11, 'Quần short nam', '017S3', 495000, NULL, 49, 'product/hinhanh/1685602287__TC_5695x900x900x4.webp', 'product/images/1685602287-_TC_5693x900x900x4.webp,product/images/1685602287-_TC_5697x900x900x4.webp,product/images/1685602287-_TC_5698x900x900x4.webp,product/images/1685602287-IMG_9738x900x900x4.webp', '<p>FORM D&Aacute;NG: Regular Fit<br />\r\nTHIẾT KẾ:<br />\r\n- Quần short thể thao phom Regular Fit su&ocirc;ng nhẹ v&agrave; thoải m&aacute;i vận động.<br />\r\n- Thiết kế basic khỏe khoắn với t&uacute;i quần tiện lợi. Họa tiết h&igrave;nh học in ch&igrave;m tr&agrave;n quần ấn tượng. M&agrave;u sắc cơ bản dễ d&agrave;ng kết hợp với c&aacute;c trang phục kh&aacute;c.<br />\r\n<br />\r\nCHẤT LIỆU:<br />\r\n- 92% Polyester mang đến độ b&oacute;ng sắc n&eacute;t, kh&ocirc;ng bị bai d&atilde;o, lu&ocirc;n bền m&agrave;u. Quần&nbsp;c&ograve;n c&oacute; khả năng chống b&aacute;m bụi, chống nhăn, hạn chế thấm nước, độ bền cao.<br />\r\n- 8% Spandex tạo độ co gi&atilde;n nhẹ.</p>', 2, 1, 10, '2023-06-01 13:51:27', '2024-01-13 14:55:56');
 INSERT INTO `products` VALUES (12, 'Áo sơ mi ngắn tay nam', '101S1', 695000, 556000, 50, 'product/hinhanh/1685602508_ao-so-mi-aristino-ASS101S1-02x900x900x4.webp', 'product/images/1685602508-ao-so-mi-aristino-ASS101S1-01x900x900x4.webp,product/images/1685602508-ao-so-mi-aristino-ASS101S1-03x900x900x4.webp,product/images/1685602508-ao-so-mi-aristino-ASS101S1-04x900x900x4.webp,product/images/1685602508-ao-so-mi-aristino-ASS101S1x900x900x4.webp', '<p><strong>KIỂU D&Aacute;NG:&nbsp;</strong>PERFECT FIT</p>\r\n\r\n<p><strong>CHI TIẾT:</strong></p>\r\n\r\n<p>- &Aacute;o sơ mi ngắn tay phom perfect fit su&ocirc;ng rộng mặc thả ngo&agrave;i m&agrave; vẫn đảm bảo độ lịch sự chỉn chu cho người mặc.</p>\r\n\r\n<p>- Thiết kế basic với t&agrave; bằng thoải m&aacute;i. Cổ &aacute;o đứng lịch sự c&ugrave;ng t&uacute;i ngực tiện lợi. &Aacute;o in họa tiết sắc n&eacute;t tr&ecirc;n nền trắng tinh t&ecirc; mang đến diện mạo thu h&uacute;t cho người mặc.</p>\r\n\r\n<p><strong>CHẤT LIỆU:&nbsp;</strong></p>\r\n\r\n<p>- Chất liệu 50% Bamboo từ sợi tre thi&ecirc;n nhi&ecirc;n mang đến sự tho&aacute;ng m&aacute;t, thấm h&uacute;t tốt v&agrave; tạo cảm gi&aacute;c thoải m&aacute;i.</p>\r\n\r\n<p>- Kết hợp 50% Polyspun gi&uacute;p tiết kiệm tối đa thời gian cho chuyện l&agrave; ủi nhờ khả năng đ&agrave;n hồi tự nhi&ecirc;n v&agrave; &iacute;t nhăn co trong suốt qu&aacute; tr&igrave;nh sử dụng.</p>', 3, 1, 10, '2023-06-01 13:55:08', '2023-12-24 13:33:08');
 INSERT INTO `products` VALUES (13, 'Áo sơ mi nam ngắn tay', '315S2', 750000, 600000, 49, 'product/hinhanh/1685602803_ao-so-mi-nam-aristino-ASS315S2-02x900x900x4.webp', 'product/images/1685602803-ao-so-mi-nam-aristino-ASS315S2-01x900x900x4.webp,product/images/1685602803-ao-so-mi-nam-aristino-ASS315S2-03x900x900x4.webp,product/images/1685602803-ao-so-mi-nam-aristino-ASS315S2-08x900x900x4.webp,product/images/1685602803-ao-so-mi-nam-aristino-ASS315S2x900x900x4.webp', '<p><strong>KIỂU D&Aacute;NG:&nbsp;</strong>PERFECT FIT</p>\r\n\r\n<p><strong>CHI TIẾT:</strong></p>\r\n\r\n<p>- &Aacute;o sơ mi ngắn tay phom Perfect fit su&ocirc;ng rộng, t&agrave; bằng, độ d&agrave;i &aacute;o vừa phải để mặc thả ngo&agrave;i trong m&ocirc;i trường c&ocirc;ng sở.</p>\r\n\r\n<p>- &Aacute;o thiết kế t&agrave; bằng, c&oacute; t&uacute;i ngực, m&agrave;u xanh đậm với họa tiết kẻ nổi bật, đem lại vẻ ngo&agrave;i trẻ trung nhưng vẫn rất lịch l&atilde;m cho người mặc.</p>\r\n\r\n<p><strong>CHẤT LIỆU:</strong></p>\r\n\r\n<p>- 50% Modal gi&uacute;p &aacute;o mềm mại v&agrave; thấm h&uacute;t tốt.</p>\r\n\r\n<p>- 50% Polyspun mang đến khả năng đ&agrave;n hồi tự nhi&ecirc;n v&agrave; &iacute;t nhăn co trong suốt qu&aacute; tr&igrave;nh sử dụng.</p>', 3, 1, 10, '2023-06-01 14:00:03', '2023-12-24 21:42:03');
 INSERT INTO `products` VALUES (14, 'Áo sơ mi ngắn tay nam', '016S2', 795000, 636000, 50, 'product/hinhanh/1685603198_ao-so-mi-ngan-tay-nam-aristino-ass016s2-4x900x900x4.webp', 'product/images/1685603198-ao-so-mi-ngan-tay-nam-aristino-ass016s2-1x900x900x4.webp,product/images/1685603198-ao-so-mi-ngan-tay-nam-aristino-ass016s2x900x900x4.webp', '<p><strong>KIỂU D&Aacute;NG:&nbsp;</strong>Perfect Fit</p>\r\n\r\n<p><strong>CHI TIẾT:</strong></p>\r\n\r\n<p>- &Aacute;o sơ mi ngắn tay phom Perfect Fit su&ocirc;ng rộng mặc thả ngo&agrave;i m&agrave; vẫn đảm bảo độ lịch sự chỉn chu cho người mặc.</p>\r\n\r\n<p>- Thiết kế basic với t&agrave; bằng thoải m&aacute;i. Cổ &aacute;o đứng lịch sự c&ugrave;ng t&uacute;i ngực tiện lợi. Hiệu ứng xanh t&iacute;m than kẻ dobby lịch l&atilde;m, thời thượng tạo n&ecirc;n dấu ấn thanh lịch cho qu&yacute; &ocirc;ng.</p>\r\n\r\n<p><strong>CHẤT LIỆU:</strong></p>\r\n\r\n<p>- 50% Bamboo từ sợi tre thi&ecirc;n nhi&ecirc;n mang đến sự tho&aacute;ng m&aacute;t, thấm h&uacute;t tốt v&agrave; tạo cảm gi&aacute;c thoải m&aacute;i.<br />\r\n- 50% Polyester gi&uacute;p &aacute;o bền m&agrave;u, sắc n&eacute;t v&agrave; độ trơn trượt, mỏng nhẹ.</p>', 3, 1, 10, '2023-06-01 14:06:38', '2023-12-24 13:33:59');
@@ -351,21 +374,21 @@ INSERT INTO `products` VALUES (28, 'Áo tank-top', 'TTR06', 295000, NULL, 50, 'p
 -- ----------------------------
 DROP TABLE IF EXISTS `stock_transactions`;
 CREATE TABLE `stock_transactions`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `product_id` bigint(20) UNSIGNED NULL DEFAULT NULL,
-  `cart_id` bigint(20) UNSIGNED NULL DEFAULT NULL,
-  `supplier_id` bigint(20) UNSIGNED NULL DEFAULT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `product_id` bigint UNSIGNED NULL DEFAULT NULL,
+  `cart_id` bigint UNSIGNED NULL DEFAULT NULL,
+  `supplier_id` bigint UNSIGNED NULL DEFAULT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `stock_in_price` decimal(65, 0) NULL DEFAULT NULL,
-  `quantity` int(11) NULL DEFAULT NULL,
+  `quantity` int NULL DEFAULT NULL,
   `transaction_date` date NOT NULL,
   `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `status` smallint(6) NOT NULL,
+  `status` smallint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of stock_transactions
@@ -398,20 +421,21 @@ INSERT INTO `stock_transactions` VALUES (25, 27, NULL, 1, 1, 'in', 100000, 50, '
 INSERT INTO `stock_transactions` VALUES (26, 28, NULL, 1, 1, 'in', 100000, 50, '2023-12-24', NULL, 1, '2023-12-24 13:39:29', '2023-12-24 13:39:29');
 INSERT INTO `stock_transactions` VALUES (27, NULL, 3, NULL, 1, 'out', NULL, NULL, '2023-12-24', NULL, 1, '2023-12-24 21:38:05', '2023-12-24 21:38:05');
 INSERT INTO `stock_transactions` VALUES (28, NULL, 4, NULL, 1, 'out', NULL, NULL, '2023-12-24', NULL, 1, '2023-12-24 21:42:04', '2023-12-24 21:42:04');
+INSERT INTO `stock_transactions` VALUES (29, NULL, 9, NULL, 1, 'out', NULL, NULL, '2024-01-13', NULL, 1, '2024-01-13 14:55:56', '2024-01-13 14:55:56');
 
 -- ----------------------------
 -- Table structure for suppliers
 -- ----------------------------
 DROP TABLE IF EXISTS `suppliers`;
 CREATE TABLE `suppliers`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `contact_person` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `contact_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of suppliers
@@ -423,8 +447,8 @@ INSERT INTO `suppliers` VALUES (1, 'Aristino', 'Aristino', '0988776655', '2023-1
 -- ----------------------------
 DROP TABLE IF EXISTS `transports`;
 CREATE TABLE `transports`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `member_id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `member_id` bigint UNSIGNED NOT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -433,7 +457,7 @@ CREATE TABLE `transports`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of transports
@@ -443,33 +467,36 @@ INSERT INTO `transports` VALUES (2, 3, 'Lộc', '0374729196', 'luuloc.02102001@g
 INSERT INTO `transports` VALUES (3, 4, 'Đỗ Huyền', '0327328369', 'minmin38012001@gmail.com', 'Giao Tác, Liên Hà, Đông Anh, Hà Nội', NULL, '2023-06-01 21:19:19', '2023-06-01 21:19:19');
 INSERT INTO `transports` VALUES (4, 5, 'Nguyễn Huy Hoàng', '0867699706', 'huy43412@gmail.com', 'HD', NULL, '2023-06-01 21:33:18', '2023-06-01 21:33:18');
 INSERT INTO `transports` VALUES (5, 6, 'Test', '0888888888', 'test@gmail.com', 'HN', NULL, '2023-10-06 16:43:56', '2023-10-06 16:43:56');
+INSERT INTO `transports` VALUES (6, 10, 'Nguyệt Minh', '0983797737', 'mmnguyet22@gmail.com', 'Toà VMT, ngõ 82 Duy Tân, Dịch Vọng Hậu, Cầu Giấy', NULL, '2024-01-13 14:49:20', '2024-01-13 14:49:20');
+INSERT INTO `transports` VALUES (7, 11, 'hihi', '0345876925', 'hihi@gmail.com', 'Toà mm, ngõ 86 Duy Tân, Dịch Vọng Hậu, Cầu Giấy', NULL, '2024-01-13 14:53:22', '2024-01-13 14:53:22');
 
 -- ----------------------------
 -- Table structure for users
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `level` int(11) NULL DEFAULT NULL,
-  `status` int(11) NOT NULL,
+  `level` int NULL DEFAULT NULL,
+  `status` int NOT NULL,
   `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `users_email_unique`(`email`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'admin', '0987654321', 'admin@gmail.com', NULL, '$2y$10$MLmefJTJ2Lv..7aNB.HoyOtLDZHPE1O69cQLQm7jpVkgaYlprRq0C', 1, 1, '06JPcQDPzeIEgBDDjD8NDO0n0Ux6fMzrms8zI7NA8FXv5A79TQ19A5zMxonn', '2023-05-04 12:00:00', '2023-05-15 14:02:01');
+INSERT INTO `users` VALUES (1, 'admin', '0987654321', 'admin@gmail.com', NULL, '$2y$10$MLmefJTJ2Lv..7aNB.HoyOtLDZHPE1O69cQLQm7jpVkgaYlprRq0C', 1, 1, 'LCtq0DFb8vHcmtQvltlvLCqrbxjdcngICTHQmvhuzUI6BalzlWSIOehzHh5v', '2023-05-04 12:00:00', '2023-05-15 14:02:01');
 INSERT INTO `users` VALUES (6, 'viet', '0988775544', 'viet@gmail.com', NULL, '$2y$10$ID4MXujIIB/1mM7OcOpdleJNFJVH88Hy1/9Lwl2zhcakJELNW2vK6', 2, 0, NULL, '2023-05-24 20:23:06', '2023-05-24 20:23:06');
 INSERT INTO `users` VALUES (7, 'hoàng', '0983412310', 'hoang@gmail.com', NULL, '$2y$10$GtMe7c9GKnvAI2hkULWfBewlBTzqoyMWYbuuXadLXMnoHne05kvdu', 1, 1, NULL, '2023-05-24 20:23:37', '2023-06-01 22:48:45');
 INSERT INTO `users` VALUES (8, 'lộc', '0912367823', 'loc@gmail.com', NULL, '$2y$10$60tYZ1vVxt9IFiuLxSMzHOLJjVLR3D6z1oAY7wt8wOOHEh0qzmvJ.', 2, 1, NULL, '2023-06-01 10:09:07', '2023-06-01 22:48:40');
+INSERT INTO `users` VALUES (9, 'nhân viên', '0926826868', 'nhanvien@gmail.com', NULL, '$2y$10$yXUYOi4M0MA6tvcHEU5omOVH1UMlLONbPn3NGxgozbYn8b390e1p6', 2, 1, NULL, '2024-01-13 14:47:10', '2024-01-13 14:58:37');
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -26,7 +26,7 @@
                                 @endif
                                 <th class="text-white">Ngày {{$title_stock}}</th>
                                 <th class="text-white">Trạng thái</th>
-                                <th class="text-white text-center">Quản lý</th>
+                                {{-- <th class="text-white text-center">Quản lý</th> --}}
                             </tr>
                             </thead>
                             @if(count($stocks)>0)
@@ -96,9 +96,9 @@
                                                 @endif
                                             @endif
                                         </td>
-                                        <td class="text-center">
+                                        {{-- <td class="text-center">
                                             <a class="btn btn-primary btn-sm" href="#"><i class="fas fa-check"></i></a>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                                 </tbody>

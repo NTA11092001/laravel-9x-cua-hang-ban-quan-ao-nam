@@ -77,7 +77,7 @@ class StockTransactionController extends Controller
             } else {
                 $title_stock = 'xuất kho';
                 $data = $request->only(['cart_id','type']);
-                if(auth()->user()->level == 1) {
+                // if(auth()->user()->level == 1) {
                     $cart = Cart::query()->findOrFail($request->cart_id);
                     $cart_detail = $cart->cart_detail;
                     foreach ($cart_detail as $item){
@@ -88,16 +88,16 @@ class StockTransactionController extends Controller
                     $cart->status = 0;
                     $cart->save();
                     CartStatusHistory::query()->create(['cart_id'=>$request->cart_id,'cart_status'=>0,'user_id'=>auth()->user()->id]);
-                }
+                // }
             }
             $data['user_id'] = auth()->user()->id;
             $data['transaction_date'] = date('Y-m-d');
             // check chức vụ
-            if(auth()->user()->level == 1){
+            // if(auth()->user()->level == 1){
                 $data['status'] = 1;
-            } else {
-                $data['status'] = 0;
-            }
+            // } else {
+                // $data['status'] = 0;
+            // }
             //dd($data);
             StockTransactions::query()->create($data);
             return to_route('admin.stockTransaction.index',$request->type)->with('notice_success',ucfirst($title_stock).' thành công');
